@@ -1,0 +1,576 @@
+{
+  "active": false,
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many workflows": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Get many workflows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Prepare File Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare File Content": {
+      "main": [
+        [
+          {
+            "node": "To convert file type to binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "To convert file type to binary": {
+      "main": [
+        [
+          {
+            "node": "Create a file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a file": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    },
+    "Delete a file in GitHub": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List files in GitHub": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-10T20:54:19.657Z",
+  "id": "M9YOMgg69RXSMk8x",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Backup N8N Workflows Automatically:https://youtu.be/o6g0d2TuXS0?si=zDqNPrM5ecWTtPE1",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1632,
+        368
+      ],
+      "id": "da9a3b8c-5e6b-43a9-86cb-85aab678e6a1",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "filters": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        -1184,
+        368
+      ],
+      "id": "2f59b520-e81e-44a6-b98d-bbea6d7ea8d6",
+      "name": "Get many workflows",
+      "credentials": {
+        "n8nApi": {
+          "id": "U21hgMWFKgB95uiJ",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "05ef8bae-d7df-4b8d-a271-c18877641407",
+              "name": "folderName",
+              "value": "=Backup_{{ $now.format('yyyy-MM-dd') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1408,
+        368
+      ],
+      "id": "3072884c-aaaf-4ff0-8ef9-6524d66e0015",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -960,
+        368
+      ],
+      "id": "52a01fd9-1094-4ad0-af38-c2c77fef8f1f",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "54b66bf8-499c-4964-88da-8476c962b195",
+              "name": "nodes",
+              "value": "={{ JSON.stringify($json, null, 2) }}",
+              "type": "string"
+            },
+            {
+              "id": "1a1e0196-e80b-4b0c-b00f-dbfa3f9fda2f",
+              "name": "fileName",
+              "value": "={{ $json.name }}.json",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -736,
+        96
+      ],
+      "id": "6725d040-7462-4fd4-afe7-8aeb3d051d3a",
+      "name": "Prepare File Content"
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "nodes",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        -512,
+        96
+      ],
+      "id": "42cad68b-09e0-459a-b68f-c5d68810369c",
+      "name": "To convert file type to binary"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "owner": {
+          "__rl": true,
+          "value": "ubaidmukhtar237-design",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "My-n8n-Workflows",
+          "mode": "list",
+          "cachedResultName": "My-n8n-Workflows",
+          "cachedResultUrl": "https://github.com/ubaidmukhtar237-design/My-n8n-Workflows"
+        },
+        "filePath": "={{ $('Edit Fields').item.json.folderName }}/{{ $('Prepare File Content').item.json.fileName }}",
+        "binaryData": true,
+        "commitMessage": "={{ $now.setZone('Asia/Karachi').format('yyyy-MM-dd T') }} Backup completed"
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        -288,
+        96
+      ],
+      "id": "18d301a8-22fe-4be7-94ae-291fd66b1348",
+      "name": "Create a file",
+      "webhookId": "7604a6fe-3a10-4e0a-92e6-a48aecf84fbd",
+      "credentials": {
+        "githubApi": {
+          "id": "hZxRF0o4gyR64jWx",
+          "name": "GitHub account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "amount": 1.25
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -64,
+        416
+      ],
+      "id": "d4a78b00-5c3f-4d0b-a467-726379994779",
+      "name": "Wait",
+      "webhookId": "a9a5e420-3aa9-4f99-aa34-ab4e4f34fe3b"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1VfPN92r3Oha4nLKqS76ULaHYSZKGeEB4m47iR7ZKV4o",
+          "mode": "list",
+          "cachedResultName": "n8n-Backup(If github errors) ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VfPN92r3Oha4nLKqS76ULaHYSZKGeEB4m47iR7ZKV4o/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VfPN92r3Oha4nLKqS76ULaHYSZKGeEB4m47iR7ZKV4o/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Error Message": "={{ $json.error }}",
+            "File Name": "={{ $('Prepare File Content').item.json.fileName }}",
+            "DateTime        ": "={{ $now.setZone('Asia/Karachi').format('yyyy-MM-dd T') }} ",
+            "Folder Name": "={{ $('Edit Fields').item.json.folderName }}"
+          },
+          "matchingColumns": [
+            "error"
+          ],
+          "schema": [
+            {
+              "id": "DateTime        ",
+              "displayName": "DateTime        ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Folder Name",
+              "displayName": "Folder Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "File Name",
+              "displayName": "File Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Error Message",
+              "displayName": "Error Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -64,
+        224
+      ],
+      "id": "a6f26c5c-a946-4d65-8930-1c756fa6fa06",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JOHwDixlr7umKmYo",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an intelligent file management agent. Your primary function is to analyze a list of files from an n8n workflow and determine their existence within a specified GitHub repository. You will use your available tools to perform this task.\n\n**Input Analysis:**\n1. You will be provided with a JSON list of n8n workflow files. Each item in this list represents a single workflow.\n2. For each workflow, the most important property is its 'name' which will be used to construct the GitHub file path (e.g., 'workflow-name.json').\n3. You must process each file from the n8n list one by one.\n\n**Action Plan:**\n1. **For each n8n workflow file:**\n    a. Construct the full file path for the corresponding file in GitHub. The path format is typically: 'Backup_YYYY-MM-DD/{{ $json.name }}.json'.\n    b. Use your \"List files in GitHub\" tool, specifically targeting this constructed path.\n    c. **Crucially, analyze the output of the tool:**\n        - If the tool returns a non-empty list of files, the file **exists** in GitHub.\n        - If the tool returns an empty list or an error indicating 'not found', the file **does not exist** in GitHub.\n\n**Response Generation:**\n1. Your final output must be structured to be used by a subsequent Switch node.\n2. You must generate an output that contains **two distinct lists**:\n    a. **List 1 (Non-Existing Files):** This list should contain the n8n workflows that **do not** have a corresponding file in the GitHub repository. This list will be passed to the first field of the Switch node.\n    b. **List 2 (Existing Files):** This list should contain the n8n workflows that **do** have a corresponding file in the GitHub repository. This list will be passed to the second field of the Switch node.\n\n**Example Response Format:**\n\n[\n  {\n    \"newFiles\": [\n      {\n        \"name\": \"New Workflow 1\",\n        \"nodes\": [...]\n      },\n      {\n        \"name\": \"Another New Workflow\",\n        \"nodes\": [...]\n      }\n    ]\n  },\n  {\n    \"existingFiles\": [\n      {\n        \"name\": \"Existing Workflow\",\n        \"nodes\": [...]\n      },\n      {\n        \"name\": \"Workflow Updated\",\n        \"nodes\": [...]\n      }\n    ]\n  }\n]",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        416,
+        -32
+      ],
+      "id": "c988ac38-fcdd-461f-9736-dd0ff124bd9f",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b41cf5f3-06d6-4583-bffa-fdf6e0e70de4",
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        48,
+        -16
+      ],
+      "id": "ccba2182-448e-4fc1-b611-a42df15a9a74",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        160,
+        208
+      ],
+      "id": "ac9d7fa3-a682-404b-8f9c-69699aabd144",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "vjhsYdKrmtQkm6Tt",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "delete",
+        "owner": {
+          "__rl": true,
+          "value": "ubaidmukhtar237-design",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "My-n8n-Workflows",
+          "mode": "list",
+          "cachedResultName": "My-n8n-Workflows",
+          "cachedResultUrl": "https://github.com/ubaidmukhtar237-design/My-n8n-Workflows"
+        },
+        "filePath": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('File_Path', ``, 'string') }}",
+        "commitMessage": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Commit_Message', ``, 'string') }}"
+      },
+      "type": "n8n-nodes-base.githubTool",
+      "typeVersion": 1.1,
+      "position": [
+        576,
+        400
+      ],
+      "id": "02840918-e8d4-476c-980c-78ce974a60b5",
+      "name": "Delete a file in GitHub",
+      "webhookId": "c334e030-5db3-4529-a99f-afc60237cda2",
+      "credentials": {
+        "githubApi": {
+          "id": "hZxRF0o4gyR64jWx",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "list",
+        "owner": {
+          "__rl": true,
+          "value": "ubaidmukhtar237-design",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "My-n8n-Workflows",
+          "mode": "list",
+          "cachedResultName": "My-n8n-Workflows",
+          "cachedResultUrl": "https://github.com/ubaidmukhtar237-design/My-n8n-Workflows"
+        },
+        "filePath": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Path', ``, 'string') }}"
+      },
+      "type": "n8n-nodes-base.githubTool",
+      "typeVersion": 1.1,
+      "position": [
+        432,
+        352
+      ],
+      "id": "f96839d2-ff09-466d-9ba4-14ef5c0e19ac",
+      "name": "List files in GitHub",
+      "webhookId": "962abbbb-87c4-49ee-812f-a756a55a4a38",
+      "credentials": {
+        "githubApi": {
+          "id": "hZxRF0o4gyR64jWx",
+          "name": "GitHub account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-10T20:54:19.659Z",
+      "updatedAt": "2025-09-10T20:54:19.659Z",
+      "role": "workflow:owner",
+      "workflowId": "M9YOMgg69RXSMk8x",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-11T12:13:27.000Z",
+  "versionId": "6408aef9-e92b-47a4-92e9-6e48c5af7e7d"
+}
