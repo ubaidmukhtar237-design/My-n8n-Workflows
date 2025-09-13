@@ -1,0 +1,1241 @@
+{
+  "active": false,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Set Variables",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set Variables1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Variables": {
+      "main": [
+        [
+          {
+            "node": "Get Slots",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Variables1": {
+      "main": [
+        [
+          {
+            "node": "Book Appointment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Are Slots Available": {
+      "main": [
+        [
+          {
+            "node": "Slots Available",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Slots Not  Available",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Slots": {
+      "main": [
+        [
+          {
+            "node": "Are Slots Available",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slots Available": {
+      "main": [
+        []
+      ]
+    },
+    "Book Appointment": {
+      "main": [
+        [
+          {
+            "node": "Booking Success",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Booking Unsucessful",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-12T04:20:32.814Z",
+  "id": "OPV2WikImAqbO6Aj",
+  "isArchived": false,
+  "meta": null,
+  "name": "n8n+cal.com:https://youtu.be/6O9tQrgxgHQ?si=_VwiPvvEl6BqwV2F",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "id",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1024,
+        -144
+      ],
+      "id": "7ae72094-4377-4752-8251-b6c3aa69c37d",
+      "name": "Webhook",
+      "webhookId": "2f31e819-232f-4b1b-9c0a-79c593e6097a"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fc5838bc-3d8f-4c0f-8fa2-b28b6213f024",
+              "name": "requestedTime",
+              "value": "={{ $('Webhook').item.json.body.message.toolCalls[0].function.arguments.requestedApoointment }}",
+              "type": "string"
+            },
+            {
+              "id": "5f781e79-4993-4cc3-996e-083cbe80b2c2",
+              "name": "endTime",
+              "value": "={{ $('Webhook').item.json.body.message.toolCalls[0].function.arguments.requestedApoointment.toDateTime().plus(1, 'days') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -352,
+        -240
+      ],
+      "id": "bd34d2ca-a1ef-46a8-9987-4bfa422c1c78",
+      "name": "Set Variables"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9e377fa5-305a-4236-b276-0edb4032ffdb",
+              "name": "usernames",
+              "value": "=mukhtar-ubaid-6fzxei",
+              "type": "string"
+            },
+            {
+              "id": "dfae7ed6-f50c-49f0-82b2-08d114b5e090",
+              "name": "eventTypeSlug",
+              "value": "appointment-for-therapy-session",
+              "type": "string"
+            },
+            {
+              "id": "a79d6cc1-ee67-4635-b500-cfa12758735a",
+              "name": "getOpenSlot",
+              "value": "={{ $json.body.message.toolCalls[0].function.name }}",
+              "type": "string"
+            },
+            {
+              "id": "5c8ff7eb-93ac-41e4-a1f0-7aae9263b929",
+              "name": "bookAppointment",
+              "value": "={{ $json.body.message.toolCalls[0].function.name }}",
+              "type": "string"
+            },
+            {
+              "id": "874cc7df-53e7-42b9-958b-2bbd33625757",
+              "name": "eventTypeId",
+              "value": "3311116",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -800,
+        -144
+      ],
+      "id": "5802fe07-230c-47e6-a0bb-8c50948ced2b",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.getOpenSlot }}",
+                    "rightValue": "=getOpenSlot",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "c9eba4bc-3a12-4faa-b769-fb9d14d3020a"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "get Open Slots"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "53936eec-b2d6-4832-950f-05f95a151d03",
+                    "leftValue": "={{ $('Webhook').item.json.body.message.toolCallList[0].function.name }}",
+                    "rightValue": "=bookAppointment2",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "book Appointment"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -576,
+        -144
+      ],
+      "id": "e2108330-9d05-4574-abf8-8aafb9309e19",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fc5838bc-3d8f-4c0f-8fa2-b28b6213f024",
+              "name": "name",
+              "value": "={{ $('Webhook').item.json.body.message.toolCalls[0].function.arguments.name }}",
+              "type": "string"
+            },
+            {
+              "id": "5f781e79-4993-4cc3-996e-083cbe80b2c2",
+              "name": "email  ",
+              "value": "={{ $('Webhook').item.json.body.message.toolCalls[0].function.arguments.email }}",
+              "type": "string"
+            },
+            {
+              "id": "4909e414-7e39-4325-b552-7e48d72f196e",
+              "name": "callerTimezone",
+              "value": "={{ $('Webhook').item.json.body.message.toolCalls[0].function.arguments.callerTimezone }}",
+              "type": "string"
+            },
+            {
+              "id": "6bbae476-a676-4b89-a652-2391448a6a75",
+              "name": "requestedApoointment",
+              "value": "={{ $('Webhook').item.json.body.message.toolCalls[0].function.arguments.requestedApoointment }}",
+              "type": "string"
+            },
+            {
+              "id": "92c1db79-9401-4d89-bf23-9fbfbd8bef6a",
+              "name": "endTime",
+              "value": "={{ $('Webhook').item.json.body.message.toolCalls[0].function.arguments.requestedApoointment.toDateTime().plus(1, 'days') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -352,
+        -48
+      ],
+      "id": "18aecdfe-a669-4b9d-b44f-4cf177445013",
+      "name": "Set Variables1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b4d3ea44-d385-455c-a91b-12551c02925d",
+              "leftValue": "={{ $json.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        96,
+        -240
+      ],
+      "id": "974c3119-babe-411d-894c-3850dcfe8c95",
+      "name": "Are Slots Available"
+    },
+    {
+      "parameters": {
+        "url": "https://api.cal.com/v2/slots",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "start",
+              "value": "={{ $json.requestedTime }}"
+            },
+            {
+              "name": "end",
+              "value": "={{ $json.endTime }}"
+            },
+            {
+              "name": "eventTypeId",
+              "value": "3311116"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "cal-api-version",
+              "value": "2024-09-04"
+            },
+            {
+              "name": "apiKey",
+              "value": "cal_live_e51c24e87b178ffec9e5ac8afa178ae7"
+            },
+            {
+              "name": "timeZone",
+              "value": "={{ $('Webhook').item.json.body.message.toolCallList[0].function.arguments.callerTimezone }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -128,
+        -240
+      ],
+      "id": "8800e017-522e-4903-aab0-22102fae3ef3",
+      "name": "Get Slots"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"results\": [ { \"toolCallId\": $('Webhook').item.json.body.message.toolCalls[0].id, \"result\": JSON.stringify($('Get Slots').item.json.data) } ] } }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        320,
+        -336
+      ],
+      "id": "1f9658bb-3826-49c7-9501-5610a3b8d529",
+      "name": "Slots Available"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"results\": [\n    {\n      \"toolCallId\": \"{{ $('Webhook').item.json.body.message.toolCalls[0].id }}\",\n      \"result\": \"There were no open slots, try selecting another day/time.\"\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        320,
+        -144
+      ],
+      "id": "8c67c3dd-bb0c-4270-a3ec-a798ad6dae64",
+      "name": "Slots Not  Available"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.cal.com/v2/bookings",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "cal-api-version",
+              "value": "2024-08-13"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"attendee\": {\n    \"language\": \"en\",\n    \"name\": \"{{ $json.name }}\",\n    \"timeZone\": \"{{ $json.callerTimezone }}\",\n    \"email\": \"{{ $json['email  '] }}\"\n  },\n  \"start\": \"{{ $json.requestedApoointment }}\",\n  \"eventTypeId\": {{ $('Edit Fields').item.json.eventTypeId }}\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -128,
+        -48
+      ],
+      "id": "47750c86-94f8-424a-92ae-63d62f2eab7f",
+      "name": "Book Appointment",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "1KUi1Z17BqtoNnPl",
+          "name": "Header Auth account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"results\": [\n    {\n      \"toolCallId\": \"{{ $('Webhook').item.json.body.message.toolCalls[0].id }}\",\n      \"result\": \"\"\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        96,
+        -64
+      ],
+      "id": "3e73b616-23b6-4cc1-aae5-aa3237370b1e",
+      "name": "Booking Success"
+    },
+    {
+      "parameters": {
+        "content": "## Get Slots.Book Appointment according to available slots by only providing perfect date,email,time and pkt\n",
+        "height": 608,
+        "width": 1696,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1072,
+        -368
+      ],
+      "typeVersion": 1,
+      "id": "62bb4cd0-eba3-45a8-be49-4c65b5eead49",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"results\": [\n    {\n      \"toolCallId\": \"{{ $('Webhook').item.json.body.message.toolCalls[0].id }}\",\n      \"result\": \"Booking not successful.\"\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        96,
+        80
+      ],
+      "id": "967d62c3-8131-4a6c-adcd-91e94c2d0d91",
+      "name": "Booking Unsucessful"
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.srv997234.hstgr.cloud",
+            "user-agent": "axios/1.8.3",
+            "content-length": "24155",
+            "accept": "application/json, text/plain, */*",
+            "accept-encoding": "gzip, compress, deflate, br",
+            "baggage": "sentry-environment=production,sentry-public_key=fac6f282c765ce50b18c3fa0305f8a8b,sentry-trace_id=96728bc759e34619b65dee840e45063c",
+            "content-type": "application/json",
+            "cookie": "callId=",
+            "sentry-trace": "96728bc759e34619b65dee840e45063c-9620cbdb766367f2",
+            "traceparent": "00-0c609fb0dc540e75d8947f1ace33d1eb-9867d63e4b31fc8e-01",
+            "x-chat-id": "523c7f30-9551-4dbc-8fb2-1507a5e96f0f",
+            "x-forwarded-for": "35.161.221.26",
+            "x-forwarded-host": "n8n.srv997234.hstgr.cloud",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "afc3eb9ce8b3",
+            "x-real-ip": "35.161.221.26",
+            "x-vapi-secret": ""
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "message": {
+              "timestamp": 1757716341791,
+              "type": "tool-calls",
+              "toolCalls": [
+                {
+                  "id": "call_hIhXfmLXKPf1GpQJ2pMyRQk9",
+                  "type": "function",
+                  "function": {
+                    "name": "bookAppointment2",
+                    "arguments": {
+                      "name": "UbaidNasir",
+                      "email": "ubaidnasir1631@gmail.com",
+                      "callerTimezone": "Asia/Karachi",
+                      "requestedApoointment": "2025-09-17T13:45:00"
+                    }
+                  }
+                }
+              ],
+              "toolCallList": [
+                {
+                  "id": "call_hIhXfmLXKPf1GpQJ2pMyRQk9",
+                  "type": "function",
+                  "function": {
+                    "name": "bookAppointment2",
+                    "arguments": {
+                      "name": "UbaidNasir",
+                      "email": "ubaidnasir1631@gmail.com",
+                      "callerTimezone": "Asia/Karachi",
+                      "requestedApoointment": "2025-09-17T13:45:00"
+                    }
+                  }
+                }
+              ],
+              "toolWithToolCallList": [
+                {
+                  "type": "function",
+                  "function": {
+                    "name": "bookAppointment2",
+                    "parameters": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "callerTimezone",
+                        "requestedApoointment",
+                        "email"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "default": "",
+                          "description": "name of the caller"
+                        },
+                        "email": {
+                          "type": "string",
+                          "default": "",
+                          "description": "email of the caller"
+                        },
+                        "callerTimezone": {
+                          "type": "string",
+                          "default": "",
+                          "description": "Give me the timezone of the caller in the IANA time zone database standard format. For example if the caller is in PKT this value should be 'Asia/Karachi'."
+                        },
+                        "requestedApoointment": {
+                          "type": "string",
+                          "default": "",
+                          "description": "Certainly, here is the text from that image:\n\nThe requested appointment date and time in ISO 8601 format, using the caller's local timezone.\n\nRules:\n\nIf the caller specifies a full datetime (e.g., \"tomorrow at 2PM\" on April 11, 2025), set as:\n2025-04-12T14:00:00-04:00\n\nIf only a date or general day is provided (e.g., \"Saturday\"), use midnight for that day:\n2025-04-12T00:00:00-04:00\n\nIf no preference is given, default to midnight on the next day:\n2025-04-12T00:00:00-04:00"
+                        }
+                      }
+                    },
+                    "description": "Used to book appointments on the calendar."
+                  },
+                  "server": {
+                    "url": "https://n8n.srv997234.hstgr.cloud/webhook-test/id",
+                    "headers": {
+                      "X-Chat-Id": "523c7f30-9551-4dbc-8fb2-1507a5e96f0f"
+                    }
+                  },
+                  "messages": [
+                    {
+                      "type": "request-start",
+                      "contents": [],
+                      "conditions": [],
+                      "blocking": false
+                    }
+                  ],
+                  "toolCall": {
+                    "id": "call_hIhXfmLXKPf1GpQJ2pMyRQk9",
+                    "type": "function",
+                    "function": {
+                      "name": "bookAppointment2",
+                      "arguments": {
+                        "name": "UbaidNasir",
+                        "email": "ubaidnasir1631@gmail.com",
+                        "callerTimezone": "Asia/Karachi",
+                        "requestedApoointment": "2025-09-17T13:45:00"
+                      }
+                    }
+                  }
+                }
+              ],
+              "artifact": {
+                "messages": [
+                  {
+                    "role": "system",
+                    "message": "[Identity]  \nYou are a dedicated and courteous appointment setting agent with a focus on assisting users in scheduling appointments efficiently.\n\n[Style]  \n- Use a polite, formal tone that conveys professionalism.  \n- Speak naturally, incorporating stutters or hesitations sparingly to sound more personable.  \n- Ensure all communication is clear and easy to understand, especially when discussing times and dates.\n\n[Response Guidelines]  \n- Present times using natural language without mentioning the year.  \n- Ensure each question targets collecting important information succinctly.  \n- Repeat back any provided details for confirmation to avoid errors.\n\n[Task & Goals]  \n1. Greet the user warmly and introduce yourself as their appointment setting assistant.  \n2. Confirm the current time in PKT to align schedules: {\"now\" | date: \"%b %d, %Y, %l:%M %p\", \"Asia/Karachi\"}.  \n3. Gather mandatory information from the user:  \n   - Ask for their name.  \n   - Request their email address.  \n   - Obtain...",
+                    "time": 1757716340423,
+                    "secondsFromStart": 0
+                  },
+                  {
+                    "role": "bot",
+                    "message": "Hello.",
+                    "time": 1757716340423,
+                    "secondsFromStart": 0,
+                    "endTime": 1757716340423
+                  },
+                  {
+                    "role": "user",
+                    "message": "name is UbaidNasir email is ubaidnasir1631@gmail.com.PKT and i wanna book at 9/17/2025",
+                    "time": 1757716340423,
+                    "secondsFromStart": 0,
+                    "endTime": 1757716340423
+                  },
+                  {
+                    "role": "bot",
+                    "message": "Thank you for providing your details, Ubaid. Just to confirm, your email is ubaidnasir1631@gmail.com, and you are in the PKT time zone. You'd like to book an appointment for September 17th.  \n\nI'll now check the available slots for that date. Please hold on a moment.",
+                    "time": 1757716340423,
+                    "secondsFromStart": 0,
+                    "endTime": 1757716340423
+                  },
+                  {
+                    "role": "user",
+                    "message": "check it",
+                    "time": 1757716340423,
+                    "secondsFromStart": 0,
+                    "endTime": 1757716340423
+                  },
+                  {
+                    "role": "tool_calls",
+                    "toolCalls": [
+                      {
+                        "id": "call_A6AnvoBE6aauuogS4exN9qMj",
+                        "type": "function",
+                        "function": {
+                          "name": "getOpenSlot",
+                          "arguments": "{\"name\": \"Ubaid\"}"
+                        }
+                      }
+                    ],
+                    "message": "",
+                    "time": 1757716340423,
+                    "secondsFromStart": 0
+                  },
+                  {
+                    "role": "tool_call_result",
+                    "toolCallId": "call_A6AnvoBE6aauuogS4exN9qMj",
+                    "name": "call_A6AnvoBE6aauuogS4exN9qMj",
+                    "result": "No result returned.",
+                    "time": 1757716340423,
+                    "secondsFromStart": 0
+                  },
+                  {
+                    "role": "bot",
+                    "message": "Hello Ubaid! I'm your appointment setting assistant. To help find the best time for your appointment, could you please confirm a few details for me?  \n\nFirst, the current time in PKT is approximately 9:36 AM.  \n\nMay I confirm your name again? And could you please provide your email address? Also, just to make sure we're on the same page, your timezone is PKT, right?  \n\nOnce I have these details, I'll check the available slots for September 17th and find a suitable time.",
+                    "time": 1757716340423,
+                    "secondsFromStart": 0,
+                    "endTime": 1757716340423
+                  },
+                  {
+                    "role": "user",
+                    "message": "name is UbaidNasir email is ubaidnasir1631@gmail.com.PKT and i wanna book at 9/17/2025",
+                    "time": 1757716340423,
+                    "secondsFromStart": 0,
+                    "endTime": 1757716340423
+                  },
+                  {
+                    "role": "tool_calls",
+                    "toolCalls": [
+                      {
+                        "id": "call_rRCysKq1egPG5kztKrRdmlQY",
+                        "type": "function",
+                        "function": {
+                          "name": "getOpenSlot",
+                          "arguments": "{\n  \"name\": \"UbaidNasir\",\n  \"email\": \"ubaidnasir1631@gmail.com\",\n  \"callerTimezone\": \"Asia/Karachi\",\n  \"requestedApoointment\": \"2025-09-17\"\n}"
+                        }
+                      }
+                    ],
+                    "message": "",
+                    "time": 1757716340423,
+                    "secondsFromStart": 0
+                  },
+                  {
+                    "role": "tool_call_result",
+                    "toolCallId": "call_rRCysKq1egPG5kztKrRdmlQY",
+                    "name": "call_rRCysKq1egPG5kztKrRdmlQY",
+                    "result": "{\"2025-09-17\":[{\"start\":\"2025-09-17T08:30:00.000Z\"},{\"start\":\"2025-09-17T09:15:00.000Z\"},{\"start\":\"2025-09-17T10:00:00.000Z\"},{\"start\":\"2025-09-17T10:45:00.000Z\"},{\"start\":\"2025-09-17T11:30:00.000Z\"},{\"start\":\"2025-09-17T12:15:00.000Z\"},{\"start\":\"2025-09-17T13:00:00.000Z\"},{\"start\":\"2025-09-17T13:45:00.000Z\"},{\"start\":\"2025-09-17T14:30:00.000Z\"}]}",
+                    "time": 1757716340423,
+                    "secondsFromStart": 0
+                  },
+                  {
+                    "role": "bot",
+                    "message": "The available time slots for September 17th are as follows, all in PKT (Pakistan Standard Time):  \n- 8:30 AM  \n- 9:15 AM  \n- 10:00 AM  \n- 10:45 AM  \n- 11:30 AM  \n- 12:15 PM  \n- 1:00 PM  \n- 1:45 PM  \n- 2:30 PM  \n\nPlease let me know which specific time you would like to book, and I will finalize the appointment for you.",
+                    "time": 1757716340423,
+                    "secondsFromStart": 0,
+                    "endTime": 1757716340423
+                  },
+                  {
+                    "role": "user",
+                    "message": "at 1:45PM",
+                    "time": 1757716340423,
+                    "secondsFromStart": 0,
+                    "endTime": 1757716340423
+                  },
+                  {
+                    "role": "tool_calls",
+                    "toolCalls": [
+                      {
+                        "id": "call_S5Orno3bWg4v8ERrQmkraqVO",
+                        "type": "function",
+                        "function": {
+                          "name": "bookAppointment2",
+                          "arguments": "{\n  \"name\": \"UbaidNasir\",\n  \"email\": \"ubaidnasir1631@gmail.com\",\n  \"callerTimezone\": \"Asia/Karachi\",\n  \"requestedApoointment\": \"2025-09-17T13:45:00\"\n}"
+                        }
+                      }
+                    ],
+                    "message": "",
+                    "time": 1757716340423,
+                    "secondsFromStart": 0
+                  },
+                  {
+                    "role": "tool_call_result",
+                    "toolCallId": "call_S5Orno3bWg4v8ERrQmkraqVO",
+                    "name": "call_S5Orno3bWg4v8ERrQmkraqVO",
+                    "result": "No result returned.",
+                    "time": 1757716340423,
+                    "secondsFromStart": 0
+                  },
+                  {
+                    "role": "bot",
+                    "message": "Hello again! I'm your appointment setting assistant. It looks like there was a little hiccup while trying to book the 1:45 PM slot on September 17th.  \n\nWould you like to choose a different time from the available slots, or shall I try booking that specific time again? Please let me know how you'd like to proceed!",
+                    "time": 1757716340423,
+                    "secondsFromStart": 0,
+                    "endTime": 1757716340423
+                  },
+                  {
+                    "role": "user",
+                    "message": "name is UbaidNasir email is ubaidnasir1631@gmail.com.PKT and i wanna book at 9/17/2025 at 1:45PM",
+                    "time": 1757716340423,
+                    "secondsFromStart": 0,
+                    "endTime": 1757716340423
+                  },
+                  {
+                    "role": "tool_calls",
+                    "toolCalls": [
+                      {
+                        "id": "call_0960mBdJqAwERqp898vvR677",
+                        "type": "function",
+                        "function": {
+                          "name": "getOpenSlot",
+                          "arguments": "{\n  \"name\": \"UbaidNasir\",\n  \"email\": \"ubaidnasir1631@gmail.com\",\n  \"callerTimezone\": \"Asia/Karachi\",\n  \"requestedApoointment\": \"2025-09-17T13:45:00\"\n}"
+                        }
+                      }
+                    ],
+                    "message": "",
+                    "time": 1757716340423,
+                    "secondsFromStart": 0
+                  },
+                  {
+                    "role": "tool_call_result",
+                    "toolCallId": "call_0960mBdJqAwERqp898vvR677",
+                    "name": "call_0960mBdJqAwERqp898vvR677",
+                    "result": "{\"2025-09-17\":[{\"start\":\"2025-09-17T13:45:00.000Z\"},{\"start\":\"2025-09-17T14:30:00.000Z\"}],\"2025-09-18\":[{\"start\":\"2025-09-18T08:00:00.000Z\"},{\"start\":\"2025-09-18T08:45:00.000Z\"},{\"start\":\"2025-09-18T09:30:00.000Z\"},{\"start\":\"2025-09-18T10:15:00.000Z\"},{\"start\":\"2025-09-18T11:00:00.000Z\"}]}",
+                    "time": 1757716340423,
+                    "secondsFromStart": 0
+                  },
+                  {
+                    "role": "bot",
+                    "message": "Hello! I'm here to assist you with scheduling your appointment. Currently, it’s approximately 9:36 AM PKT.  \n\nTo make sure I get everything right, could you please confirm your full name for the appointment? And also, your email address is ubaidnasir1631@gmail.com, correct?  \n\nOnce I have these details, I will proceed to book your chosen time.",
+                    "time": 1757716340423,
+                    "secondsFromStart": 0,
+                    "endTime": 1757716340423
+                  },
+                  {
+                    "role": "user",
+                    "message": "name is UbaidNasir email is ubaidnasir1631@gmail.com.PKT and i wanna book at 9/17/2025",
+                    "time": 1757716340423,
+                    "secondsFromStart": 0,
+                    "endTime": 1757716340423
+                  },
+                  {
+                    "role": "tool_calls",
+                    "toolCalls": [
+                      {
+                        "id": "call_w91nnWqVk92lLwY52nITnMPZ",
+                        "type": "function",
+                        "function": {
+                          "name": "getOpenSlot",
+                          "arguments": "{\n  \"name\": \"UbaidNasir\",\n  \"email\": \"ubaidnasir1631@gmail.com\",\n  \"callerTimezone\": \"Asia/Karachi\",\n  \"requestedApoointment\": \"2025-09-17T00:00:00\"\n}"
+                        }
+                      }
+                    ],
+                    "message": "",
+                    "time": 1757716340423,
+                    "secondsFromStart": 0
+                  },
+                  {
+                    "role": "tool_call_result",
+                    "toolCallId": "call_w91nnWqVk92lLwY52nITnMPZ",
+                    "name": "call_w91nnWqVk92lLwY52nITnMPZ",
+                    "result": "{\"2025-09-17\":[{\"start\":\"2025-09-17T08:30:00.000Z\"},{\"start\":\"2025-09-17T09:15:00.000Z\"},{\"start\":\"2025-09-17T10:00:00.000Z\"},{\"start\":\"2025-09-17T10:45:00.000Z\"},{\"start\":\"2025-09-17T11:30:00.000Z\"},{\"start\":\"2025-09-17T12:15:00.000Z\"},{\"start\":\"2025-09-17T13:00:00.000Z\"},{\"start\":\"2025-09-17T13:45:00.000Z\"},{\"start\":\"2025-09-17T14:30:00.000Z\"}]}",
+                    "time": 1757716340423,
+                    "secondsFromStart": 0
+                  },
+                  {
+                    "role": "bot",
+                    "message": "The available slots on September 17th are:  \n- 8:30 AM  \n- 9:15 AM  \n- 10:00 AM  \n- 10:45 AM  \n- 11:30 AM  \n- 12:15 PM  \n- 1:00 PM  \n- 1:45 PM  \n- 2:30 PM  \n\nYou mentioned wanting to book for the 17th. Please select a time that suits you best, and I will proceed to confirm the appointment.",
+                    "time": 1757716340423,
+                    "secondsFromStart": 0,
+                    "endTime": 1757716340423
+                  },
+                  {
+                    "role": "user",
+                    "message": "1;45PM",
+                    "time": 1757716340423,
+                    "secondsFromStart": 0,
+                    "endTime": 1757716340423
+                  },
+                  {
+                    "toolCalls": [
+                      {
+                        "id": "call_hIhXfmLXKPf1GpQJ2pMyRQk9",
+                        "type": "function",
+                        "function": {
+                          "name": "bookAppointment2",
+                          "arguments": "{\n  \"name\": \"UbaidNasir\",\n  \"email\": \"ubaidnasir1631@gmail.com\",\n  \"callerTimezone\": \"Asia/Karachi\",\n  \"requestedApoointment\": \"2025-09-17T13:45:00\"\n}"
+                        }
+                      }
+                    ],
+                    "role": "tool_calls",
+                    "message": "",
+                    "time": 1757716341756,
+                    "secondsFromStart": 1.333
+                  }
+                ],
+                "messagesOpenAIFormatted": [
+                  {
+                    "role": "system",
+                    "content": "[Identity]  \nYou are a dedicated and courteous appointment setting agent with a focus on assisting users in scheduling appointments efficiently.\n\n[Style]  \n- Use a polite, formal tone that conveys professionalism.  \n- Speak naturally, incorporating stutters or hesitations sparingly to sound more personable.  \n- Ensure all communication is clear and easy to understand, especially when discussing times and dates.\n\n[Response Guidelines]  \n- Present times using natural language without mentioning the year.  \n- Ensure each question targets collecting important information succinctly.  \n- Repeat back any provided details for confirmation to avoid errors.\n\n[Task & Goals]  \n1. Greet the user warmly and introduce yourself as their appointment setting assistant.  \n2. Confirm the current time in PKT to align schedules: {\"now\" | date: \"%b %d, %Y, %l:%M %p\", \"Asia/Karachi\"}.  \n3. Gather mandatory information from the user:  \n   - Ask for their name.  \n   - Request their email address.  \n   - Obtain..."
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "Hello."
+                  },
+                  {
+                    "role": "user",
+                    "content": "name is UbaidNasir email is ubaidnasir1631@gmail.com.PKT and i wanna book at 9/17/2025"
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "Thank you for providing your details, Ubaid. Just to confirm, your email is ubaidnasir1631@gmail.com, and you are in the PKT time zone. You'd like to book an appointment for September 17th.  \n\nI'll now check the available slots for that date. Please hold on a moment."
+                  },
+                  {
+                    "role": "user",
+                    "content": "check it"
+                  },
+                  {
+                    "role": "assistant",
+                    "tool_calls": [
+                      {
+                        "id": "call_A6AnvoBE6aauuogS4exN9qMj",
+                        "type": "function",
+                        "function": {
+                          "name": "getOpenSlot",
+                          "arguments": "{\"name\": \"Ubaid\"}"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "role": "tool",
+                    "tool_call_id": "call_A6AnvoBE6aauuogS4exN9qMj",
+                    "content": "No result returned."
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "Hello Ubaid! I'm your appointment setting assistant. To help find the best time for your appointment, could you please confirm a few details for me?  \n\nFirst, the current time in PKT is approximately 9:36 AM.  \n\nMay I confirm your name again? And could you please provide your email address? Also, just to make sure we're on the same page, your timezone is PKT, right?  \n\nOnce I have these details, I'll check the available slots for September 17th and find a suitable time."
+                  },
+                  {
+                    "role": "user",
+                    "content": "name is UbaidNasir email is ubaidnasir1631@gmail.com.PKT and i wanna book at 9/17/2025"
+                  },
+                  {
+                    "role": "assistant",
+                    "tool_calls": [
+                      {
+                        "id": "call_rRCysKq1egPG5kztKrRdmlQY",
+                        "type": "function",
+                        "function": {
+                          "name": "getOpenSlot",
+                          "arguments": "{\n  \"name\": \"UbaidNasir\",\n  \"email\": \"ubaidnasir1631@gmail.com\",\n  \"callerTimezone\": \"Asia/Karachi\",\n  \"requestedApoointment\": \"2025-09-17\"\n}"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "role": "tool",
+                    "tool_call_id": "call_rRCysKq1egPG5kztKrRdmlQY",
+                    "content": "{\"2025-09-17\":[{\"start\":\"2025-09-17T08:30:00.000Z\"},{\"start\":\"2025-09-17T09:15:00.000Z\"},{\"start\":\"2025-09-17T10:00:00.000Z\"},{\"start\":\"2025-09-17T10:45:00.000Z\"},{\"start\":\"2025-09-17T11:30:00.000Z\"},{\"start\":\"2025-09-17T12:15:00.000Z\"},{\"start\":\"2025-09-17T13:00:00.000Z\"},{\"start\":\"2025-09-17T13:45:00.000Z\"},{\"start\":\"2025-09-17T14:30:00.000Z\"}]}"
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "The available time slots for September 17th are as follows, all in PKT (Pakistan Standard Time):  \n- 8:30 AM  \n- 9:15 AM  \n- 10:00 AM  \n- 10:45 AM  \n- 11:30 AM  \n- 12:15 PM  \n- 1:00 PM  \n- 1:45 PM  \n- 2:30 PM  \n\nPlease let me know which specific time you would like to book, and I will finalize the appointment for you."
+                  },
+                  {
+                    "role": "user",
+                    "content": "at 1:45PM"
+                  },
+                  {
+                    "role": "assistant",
+                    "tool_calls": [
+                      {
+                        "id": "call_S5Orno3bWg4v8ERrQmkraqVO",
+                        "type": "function",
+                        "function": {
+                          "name": "bookAppointment2",
+                          "arguments": "{\n  \"name\": \"UbaidNasir\",\n  \"email\": \"ubaidnasir1631@gmail.com\",\n  \"callerTimezone\": \"Asia/Karachi\",\n  \"requestedApoointment\": \"2025-09-17T13:45:00\"\n}"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "role": "tool",
+                    "tool_call_id": "call_S5Orno3bWg4v8ERrQmkraqVO",
+                    "content": "No result returned."
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "Hello again! I'm your appointment setting assistant. It looks like there was a little hiccup while trying to book the 1:45 PM slot on September 17th.  \n\nWould you like to choose a different time from the available slots, or shall I try booking that specific time again? Please let me know how you'd like to proceed!"
+                  },
+                  {
+                    "role": "user",
+                    "content": "name is UbaidNasir email is ubaidnasir1631@gmail.com.PKT and i wanna book at 9/17/2025 at 1:45PM"
+                  },
+                  {
+                    "role": "assistant",
+                    "tool_calls": [
+                      {
+                        "id": "call_0960mBdJqAwERqp898vvR677",
+                        "type": "function",
+                        "function": {
+                          "name": "getOpenSlot",
+                          "arguments": "{\n  \"name\": \"UbaidNasir\",\n  \"email\": \"ubaidnasir1631@gmail.com\",\n  \"callerTimezone\": \"Asia/Karachi\",\n  \"requestedApoointment\": \"2025-09-17T13:45:00\"\n}"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "role": "tool",
+                    "tool_call_id": "call_0960mBdJqAwERqp898vvR677",
+                    "content": "{\"2025-09-17\":[{\"start\":\"2025-09-17T13:45:00.000Z\"},{\"start\":\"2025-09-17T14:30:00.000Z\"}],\"2025-09-18\":[{\"start\":\"2025-09-18T08:00:00.000Z\"},{\"start\":\"2025-09-18T08:45:00.000Z\"},{\"start\":\"2025-09-18T09:30:00.000Z\"},{\"start\":\"2025-09-18T10:15:00.000Z\"},{\"start\":\"2025-09-18T11:00:00.000Z\"}]}"
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "Hello! I'm here to assist you with scheduling your appointment. Currently, it’s approximately 9:36 AM PKT.  \n\nTo make sure I get everything right, could you please confirm your full name for the appointment? And also, your email address is ubaidnasir1631@gmail.com, correct?  \n\nOnce I have these details, I will proceed to book your chosen time."
+                  },
+                  {
+                    "role": "user",
+                    "content": "name is UbaidNasir email is ubaidnasir1631@gmail.com.PKT and i wanna book at 9/17/2025"
+                  },
+                  {
+                    "role": "assistant",
+                    "tool_calls": [
+                      {
+                        "id": "call_w91nnWqVk92lLwY52nITnMPZ",
+                        "type": "function",
+                        "function": {
+                          "name": "getOpenSlot",
+                          "arguments": "{\n  \"name\": \"UbaidNasir\",\n  \"email\": \"ubaidnasir1631@gmail.com\",\n  \"callerTimezone\": \"Asia/Karachi\",\n  \"requestedApoointment\": \"2025-09-17T00:00:00\"\n}"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "role": "tool",
+                    "tool_call_id": "call_w91nnWqVk92lLwY52nITnMPZ",
+                    "content": "{\"2025-09-17\":[{\"start\":\"2025-09-17T08:30:00.000Z\"},{\"start\":\"2025-09-17T09:15:00.000Z\"},{\"start\":\"2025-09-17T10:00:00.000Z\"},{\"start\":\"2025-09-17T10:45:00.000Z\"},{\"start\":\"2025-09-17T11:30:00.000Z\"},{\"start\":\"2025-09-17T12:15:00.000Z\"},{\"start\":\"2025-09-17T13:00:00.000Z\"},{\"start\":\"2025-09-17T13:45:00.000Z\"},{\"start\":\"2025-09-17T14:30:00.000Z\"}]}"
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "The available slots on September 17th are:  \n- 8:30 AM  \n- 9:15 AM  \n- 10:00 AM  \n- 10:45 AM  \n- 11:30 AM  \n- 12:15 PM  \n- 1:00 PM  \n- 1:45 PM  \n- 2:30 PM  \n\nYou mentioned wanting to book for the 17th. Please select a time that suits you best, and I will proceed to confirm the appointment."
+                  },
+                  {
+                    "role": "user",
+                    "content": "1;45PM"
+                  },
+                  {
+                    "role": "assistant",
+                    "tool_calls": [
+                      {
+                        "id": "call_hIhXfmLXKPf1GpQJ2pMyRQk9",
+                        "type": "function",
+                        "function": {
+                          "name": "bookAppointment2",
+                          "arguments": "{\n  \"name\": \"UbaidNasir\",\n  \"email\": \"ubaidnasir1631@gmail.com\",\n  \"callerTimezone\": \"Asia/Karachi\",\n  \"requestedApoointment\": \"2025-09-17T13:45:00\"\n}"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "role": "tool",
+                    "tool_call_id": "call_hIhXfmLXKPf1GpQJ2pMyRQk9",
+                    "content": "Tool Result Still Pending But Proceed Further If Possible."
+                  }
+                ]
+              },
+              "chat": {
+                "id": "523c7f30-9551-4dbc-8fb2-1507a5e96f0f",
+                "orgId": "c4f8cd04-306b-4920-abaa-23888922703a",
+                "createdAt": "2025-09-02T08:02:26.836Z",
+                "updatedAt": "2025-09-09T23:32:16.187Z"
+              },
+              "assistant": {
+                "id": "adb107fb-f420-49bf-8452-0292d47ed97b",
+                "orgId": "c4f8cd04-306b-4920-abaa-23888922703a",
+                "name": "cal.com(voice agent)",
+                "voice": {
+                  "model": "aura",
+                  "voiceId": "luna",
+                  "provider": "deepgram"
+                },
+                "createdAt": "2025-09-12T02:49:13.874Z",
+                "updatedAt": "2025-09-12T22:11:17.281Z",
+                "model": {
+                  "model": "gpt-4.1-nano",
+                  "toolIds": [
+                    "c3be6519-03ba-454a-a627-f18c4f0fc1af",
+                    "46791ba9-8c4e-477d-9bce-1eff92de1205"
+                  ],
+                  "messages": [
+                    {
+                      "role": "system",
+                      "content": "[Identity]  \nYou are a dedicated and courteous appointment setting agent with a focus on assisting users in scheduling appointments efficiently.\n\n[Style]  \n- Use a polite, formal tone that conveys professionalism.  \n- Speak naturally, incorporating stutters or hesitations sparingly to sound more personable.  \n- Ensure all communication is clear and easy to understand, especially when discussing times and dates.\n\n[Response Guidelines]  \n- Present times using natural language without mentioning the year.  \n- Ensure each question targets collecting important information succinctly.  \n- Repeat back any provided details for confirmation to avoid errors.\n\n[Task & Goals]  \n1. Greet the user warmly and introduce yourself as their appointment setting assistant.  \n2. Confirm the current time in PKT to align schedules: {\"now\" | date: \"%b %d, %Y, %l:%M %p\", \"Asia/Karachi\"}.  \n3. Gather mandatory information from the user:  \n   - Ask for their name.  \n   - Request their email address.  \n   - Obtain their timezone to coordinate accurately.  \n4. Use the `getOpenSlots` tool to verify the availability of the requested appointment times.  \n   - < wait for tool response >  \n5. Share available options with the user.   \n6. Upon selecting a time, use the `bookAppointment2` tool to finalize the booking on the calendar.  \n   - < wait for tool confirmation >  \n7. Confirm the appointment details back to the user, reiterating the time in a friendly tone.\n\n[Error Handling / Fallback]  \n- If any user input is unclear, politely ask for clarification.  \n- If the `getOpenSlots` or `bookAppointment2` tool fails, apologize for the inconvenience and suggest alternative times.  \n- Handle any tool-related errors gracefully by maintaining professionalism and providing reassurance to the user."
+                    }
+                  ],
+                  "provider": "openai",
+                  "tools": [
+                    {
+                      "id": "c3be6519-03ba-454a-a627-f18c4f0fc1af",
+                      "createdAt": "2025-09-12T07:24:33.617Z",
+                      "updatedAt": "2025-09-12T22:14:21.937Z",
+                      "type": "function",
+                      "function": {
+                        "name": "getOpenSlot",
+                        "parameters": {
+                          "type": "object",
+                          "required": [
+                            "name",
+                            "callerTimezone",
+                            "requestedApoointment"
+                          ],
+                          "properties": {
+                            "name": {
+                              "type": "string",
+                              "default": "",
+                              "description": "name of the caller"
+                            },
+                            "email": {
+                              "type": "string",
+                              "default": "",
+                              "description": "email of the caller"
+                            },
+                            "callerTimezone": {
+                              "type": "string",
+                              "default": "",
+                              "description": "Give me the timezone of the caller in the IANA time zone database standard format. For example if the caller is in PKT this value should be 'Asia/Karachi'."
+                            },
+                            "requestedApoointment": {
+                              "type": "string",
+                              "default": "",
+                              "description": "Certainly, here is the text from that image:\n\nThe requested appointment date and time in ISO 8601 format, using the caller's local timezone.\n\nRules:\n\nIf the caller specifies a full datetime (e.g., \"tomorrow at 2PM\" on April 11, 2025), set as:\n2025-04-12T14:00:00-04:00\n\nIf only a date or general day is provided (e.g., \"Saturday\"), use midnight for that day:\n2025-04-12T00:00:00-04:00\n\nIf no preference is given, default to midnight on the next day:\n2025-04-12T00:00:00-04:00"
+                            }
+                          }
+                        },
+                        "description": "Query the calendar for available slots."
+                      },
+                      "messages": [
+                        {
+                          "type": "request-start",
+                          "blocking": false
+                        }
+                      ],
+                      "orgId": "c4f8cd04-306b-4920-abaa-23888922703a",
+                      "server": {
+                        "url": "https://n8n.srv997234.hstgr.cloud/webhook-test/id",
+                        "headers": {
+                          "X-Chat-Id": "523c7f30-9551-4dbc-8fb2-1507a5e96f0f"
+                        }
+                      }
+                    },
+                    {
+                      "id": "46791ba9-8c4e-477d-9bce-1eff92de1205",
+                      "createdAt": "2025-09-12T07:33:22.334Z",
+                      "updatedAt": "2025-09-12T22:14:16.534Z",
+                      "type": "function",
+                      "function": {
+                        "name": "bookAppointment2",
+                        "parameters": {
+                          "type": "object",
+                          "required": [
+                            "name",
+                            "callerTimezone",
+                            "requestedApoointment",
+                            "email"
+                          ],
+                          "properties": {
+                            "name": {
+                              "type": "string",
+                              "default": "",
+                              "description": "name of the caller"
+                            },
+                            "email": {
+                              "type": "string",
+                              "default": "",
+                              "description": "email of the caller"
+                            },
+                            "callerTimezone": {
+                              "type": "string",
+                              "default": "",
+                              "description": "Give me the timezone of the caller in the IANA time zone database standard format. For example if the caller is in PKT this value should be 'Asia/Karachi'."
+                            },
+                            "requestedApoointment": {
+                              "type": "string",
+                              "default": "",
+                              "description": "Certainly, here is the text from that image:\n\nThe requested appointment date and time in ISO 8601 format, using the caller's local timezone.\n\nRules:\n\nIf the caller specifies a full datetime (e.g., \"tomorrow at 2PM\" on April 11, 2025), set as:\n2025-04-12T14:00:00-04:00\n\nIf only a date or general day is provided (e.g., \"Saturday\"), use midnight for that day:\n2025-04-12T00:00:00-04:00\n\nIf no preference is given, default to midnight on the next day:\n2025-04-12T00:00:00-04:00"
+                            }
+                          }
+                        },
+                        "description": "Used to book appointments on the calendar."
+                      },
+                      "messages": [
+                        {
+                          "type": "request-start",
+                          "blocking": false
+                        }
+                      ],
+                      "orgId": "c4f8cd04-306b-4920-abaa-23888922703a",
+                      "server": {
+                        "url": "https://n8n.srv997234.hstgr.cloud/webhook-test/id",
+                        "headers": {
+                          "X-Chat-Id": "523c7f30-9551-4dbc-8fb2-1507a5e96f0f"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "firstMessage": "Hello.",
+                "voicemailMessage": "Please call back when you're available.",
+                "endCallMessage": "Goodbye.",
+                "transcriber": {
+                  "model": "nova-2",
+                  "language": "en",
+                  "provider": "deepgram"
+                }
+              }
+            }
+          },
+          "webhookUrl": "https://n8n.srv997234.hstgr.cloud/webhook-test/id",
+          "executionMode": "test"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-12T04:20:32.816Z",
+      "updatedAt": "2025-09-12T04:20:32.816Z",
+      "role": "workflow:owner",
+      "workflowId": "OPV2WikImAqbO6Aj",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-09-12T22:40:00.000Z",
+  "versionId": "9d40870c-688c-42c6-ad16-7eaee09052fe"
+}
