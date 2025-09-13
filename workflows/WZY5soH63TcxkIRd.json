@@ -137,7 +137,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
+        "jsCode": "// Get the single item from the Aggregate node\nconst item = $input.first();\n\n// The 'Summary' field is an array of event descriptions\nconst eventsArray = item.json.Summary;\n\n// A professional-looking introduction\nconst introText = \"Here is a summary of your upcoming events. Please review them at your convenience.\";\n\n// Build the HTML for the list of events\nlet eventListHtml = '';\nif (Array.isArray(eventsArray) && eventsArray.length > 0) {\n  // Create a list item for each event\n  const listItems = eventsArray.map(event => `  <li style=\"margin-bottom: 10px;\">${event}</li>`).join('\\n');\n  eventListHtml = `<ul style=\"list-style-type: disc; padding-left: 20px;\">\\n${listItems}\\n</ul>`;\n} else {\n  eventListHtml = \"<p>You have no upcoming events.</p>\";\n}\n\n// Combine everything into a final, clean HTML body\nitem.json.emailBody = `\n<div style=\"font-family: Arial, sans-serif; font-size: 16px; color: #333;\">\n  <p>${introText}</p>\n  <h3 style=\"color: #444; border-bottom: 2px solid #eee; padding-bottom: 5px;\">Your Events:</h3>\n  ${eventListHtml}\n  <p style=\"margin-top: 20px; font-size: 14px; color: #777;\">\n    <em>This is an automated reminder.</em>\n  </p>\n</div>\n`;\n\n// Return the modified item\nreturn item;"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -151,9 +151,11 @@
     {
       "parameters": {
         "sendTo": "hello6tysm@gmail.com",
-        "subject": "={{ $json.Summary }}",
-        "message": "={{ $json.description }}",
-        "options": {}
+        "subject": "=Happy {{ $now.plus(1, 'day').format('EEEE') }}! {{ $now.format('yyyy-MM-dd') }}",
+        "message": "={{ $json.emailBody }}",
+        "options": {
+          "appendAttribution": false
+        }
       },
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
@@ -363,6 +365,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-13T17:28:26.000Z",
-  "versionId": "3d7cf1ae-cf4b-448a-b530-8237f540a21e"
+  "updatedAt": "2025-09-13T17:50:47.000Z",
+  "versionId": "0968db86-afa3-4f0c-8f1c-bfc541e57e54"
 }
