@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "n8n": {
       "main": [
@@ -534,8 +534,8 @@
         "rule": {
           "interval": [
             {
-              "field": "hours",
-              "hoursInterval": 3
+              "field": "minutes",
+              "minutesInterval": 30
             }
           ]
         }
@@ -744,6 +744,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-09-13T02:19:51.000Z",
-  "versionId": "94f67c4f-4356-429a-b98a-c2cbe5a0cb0d"
+  "updatedAt": "2025-09-13T02:22:20.000Z",
+  "versionId": "47a12a55-ee32-493a-b364-5cedec7370e0"
 }
