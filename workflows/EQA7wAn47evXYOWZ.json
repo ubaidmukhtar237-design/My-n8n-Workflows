@@ -1,0 +1,186 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-13T21:22:03.536Z",
+  "id": "EQA7wAn47evXYOWZ",
+  "isArchived": false,
+  "meta": null,
+  "name": "Practice_filter and switch node",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -144
+      ],
+      "id": "5b605a48-1537-42cf-8e25-65bb2e7ea0d0",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1oJHktughC9EO4StRA0ZllrBPSuDHVBm0VynjlaH85Es",
+          "mode": "list",
+          "cachedResultName": "Practice:if and filter",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1oJHktughC9EO4StRA0ZllrBPSuDHVBm0VynjlaH85Es/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1oJHktughC9EO4StRA0ZllrBPSuDHVBm0VynjlaH85Es/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        192,
+        -144
+      ],
+      "id": "bedf0960-b6eb-4581-bea3-dae123a9f25f",
+      "name": "Get row(s) in sheet"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4962b673-79cb-4b22-9f97-fde006e7a953",
+              "leftValue": "={{ $json.Email }}",
+              "rightValue": "gmail.com",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        400,
+        -128
+      ],
+      "id": "3379aeb2-1bf8-471f-af81-75dc046c27f0",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appEmk8vrCyQtHbxS",
+          "mode": "list",
+          "cachedResultName": "n8n 9",
+          "cachedResultUrl": "https://airtable.com/appEmk8vrCyQtHbxS"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbllSOm6bHyVeXt5x",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/appEmk8vrCyQtHbxS/tbllSOm6bHyVeXt5x"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Email": "={{ $json.Email }}"
+          },
+          "matchingColumns": [
+            "Name"
+          ],
+          "schema": [
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        608,
+        -128
+      ],
+      "id": "61bbcf0e-529d-496c-a42c-49e001ae194f",
+      "name": "Create a record"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-13T21:22:03.537Z",
+      "updatedAt": "2025-09-13T21:22:03.537Z",
+      "role": "workflow:owner",
+      "workflowId": "EQA7wAn47evXYOWZ",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-13T21:22:10.000Z",
+  "versionId": "c4f940dc-3cff-4c28-aa2e-88126eee5fc0"
+}
