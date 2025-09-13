@@ -119,25 +119,7 @@
             {
               "id": "1335c266-f16b-4ced-a21a-a7caf3842849",
               "name": "Summary",
-              "value": "={{ $json.summary }}",
-              "type": "string"
-            },
-            {
-              "id": "c4f6bba7-93a7-48fc-b3ee-f18d14db37cd",
-              "name": "start.dateTime",
-              "value": "={{ $json.start }}",
-              "type": "string"
-            },
-            {
-              "id": "9f806272-ffd7-4c6a-9d34-6001ac17c938",
-              "name": "end.dateTime",
-              "value": "={{ $json.end }}",
-              "type": "string"
-            },
-            {
-              "id": "65b859ce-aa30-4d7a-8283-5414f5397d94",
-              "name": "description",
-              "value": "={{ $json.description }}",
+              "value": "={{ $json.summary }} - {{ $json.start.dateTime.toDateTime().format('HH-MM-dd') }}",
               "type": "string"
             }
           ]
@@ -169,7 +151,7 @@
     {
       "parameters": {
         "sendTo": "hello6tysm@gmail.com",
-        "subject": "={{ $json.summary }}",
+        "subject": "={{ $json.Summary }}",
         "message": "={{ $json.description }}",
         "options": {}
       },
@@ -211,21 +193,10 @@
           "fieldToAggregate": [
             {
               "fieldToAggregate": "Summary"
-            },
-            {
-              "fieldToAggregate": "start"
-            },
-            {
-              "fieldToAggregate": "end"
-            },
-            {
-              "fieldToAggregate": "description"
             }
           ]
         },
-        "options": {
-          "mergeLists": false
-        }
+        "options": {}
       },
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
@@ -392,6 +363,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-13T16:53:48.000Z",
-  "versionId": "200a0247-9534-4220-984c-6fb641421319"
+  "updatedAt": "2025-09-13T17:28:26.000Z",
+  "versionId": "3d7cf1ae-cf4b-448a-b530-8237f540a21e"
 }
