@@ -1,0 +1,28 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-09-12T23:43:43.577Z",
+  "id": "MVAqVS9ktpkqGmbw",
+  "isArchived": false,
+  "meta": null,
+  "name": "Ai Chat Bot long Term Memory:https://youtu.be/TqRaCpQJbEA?si=uL8ituY5jAJ5das0",
+  "nodes": [],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-12T23:43:43.580Z",
+      "updatedAt": "2025-09-12T23:43:43.580Z",
+      "role": "workflow:owner",
+      "workflowId": "MVAqVS9ktpkqGmbw",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-12T23:43:43.000Z",
+  "versionId": "61f714f1-e1df-4478-82d7-72cc0925d3e1"
+}
