@@ -1,0 +1,28 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-09-11T12:22:22.949Z",
+  "id": "IThhe0HPDbd92wx9",
+  "isArchived": false,
+  "meta": null,
+  "name": "n8n + 11Labs:https://youtu.be/O86apIsR8YU?si=PF1lZnukMJganuCz",
+  "nodes": [],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-11T12:22:22.951Z",
+      "updatedAt": "2025-09-11T12:22:22.951Z",
+      "role": "workflow:owner",
+      "workflowId": "IThhe0HPDbd92wx9",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-11T12:22:22.000Z",
+  "versionId": "08f9c6e6-9bf7-4839-b191-bb0c21a13811"
+}
