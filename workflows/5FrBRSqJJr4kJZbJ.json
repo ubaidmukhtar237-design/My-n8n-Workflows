@@ -1,0 +1,28 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-09-10T19:11:49.918Z",
+  "id": "5FrBRSqJJr4kJZbJ",
+  "isArchived": true,
+  "meta": null,
+  "name": "Managing My Vps",
+  "nodes": [],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-10T19:11:49.920Z",
+      "updatedAt": "2025-09-10T19:11:49.920Z",
+      "role": "workflow:owner",
+      "workflowId": "5FrBRSqJJr4kJZbJ",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-10T19:11:59.000Z",
+  "versionId": "98a36e9e-5465-4905-bc66-42221c632a6b"
+}
