@@ -5,7 +5,7 @@
       "main": [
         [
           {
-            "node": "Extract from File",
+            "node": "Edit Fields",
             "type": "main",
             "index": 0
           }
@@ -15,17 +15,6 @@
     "Edit Fields": {
       "main": [
         []
-      ]
-    },
-    "Extract from File": {
-      "main": [
-        [
-          {
-            "node": "Edit Fields",
-            "type": "main",
-            "index": 0
-          }
-        ]
       ]
     }
   },
@@ -49,7 +38,7 @@
         "simple": false,
         "filters": {},
         "options": {
-          "downloadAttachments": true
+          "downloadAttachments": false
         }
       },
       "type": "n8n-nodes-base.gmailTrigger",
@@ -114,29 +103,84 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -304,
+        -528,
         -224
       ],
       "id": "ee68e8f6-6c87-44e3-82c0-31c79246c11b",
       "name": "Edit Fields"
-    },
-    {
-      "parameters": {
-        "operation": "pdf",
-        "binaryPropertyName": "attachment_0",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.extractFromFile",
-      "typeVersion": 1,
-      "position": [
-        -608,
-        -224
-      ],
-      "id": "b3b0586f-3de7-418f-9a5f-44cc08d80074",
-      "name": "Extract from File"
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "Gmail Trigger": [
+      {
+        "json": {
+          "id": "19944e4e903f6101",
+          "threadId": "19944e4e903f6101",
+          "labelIds": [
+            "UNREAD",
+            "CATEGORY_UPDATES",
+            "INBOX"
+          ],
+          "sizeEstimate": 25698,
+          "headers": {
+            "delivered-to": "Delivered-To: ubaidmukhtar237@gmail.com",
+            "received": "Received: by mta201a-ord.mtasv.net id hone683b84ke for <ubaidmukhtar237@gmail.com>; Sat, 13 Sep 2025 17:04:36 -0400 (envelope-from <pm_bounces@pm-bounces.cal.com>)",
+            "x-google-smtp-source": "X-Google-Smtp-Source: AGHT+IEqWL/yXfT9w6cH7wa7a4J8EbWVEcpuwYOuzPOwEERx23NW4fqs5YG/7qGW80t39C8zXohx",
+            "x-received": "X-Received: by 2002:a92:cd81:0:b0:423:fc1e:ed25 with SMTP id e9e14a558f8ab-423fc1ef1bfmr12829365ab.19.1757797476414;\r\n        Sat, 13 Sep 2025 14:04:36 -0700 (PDT)",
+            "arc-seal": "ARC-Seal: i=1; a=rsa-sha256; t=1757797476; cv=none;\r\n        d=google.com; s=arc-20240605;\r\n        b=OAdZ5+UctJR5p849Hmzr6/wJRhIvmwPjD+egIaJS5d+N6kTH2lKDaV58hhtIQ1nYDx\r\n         kaz7N+0pMW4xRQ9lvAPlWLnJ9Fzx9G+UcRhh/gNVYgssfwAFx61fQuz5UV/AN46ErD/M\r\n         RCAs9v50wBcRZ4XQhkIxpgIWiNINVlWuFbxnt/tMGxCpOBvqnD6Q1pM/xyqXdK+bMe+F\r\n         OeHCjQYRleujWnFcPdcLXEniwROSO4qMVK9UHpukZXhkvjRHb6wZptKjM48dQzAENK0E\r\n         r4ZTxCCXizjY/dEtldCPP4lcKf6g6uXMW7AGC1ALXjQTFIqNV6ZtWIar44iT5LHwciZL\r\n         2HSA==",
+            "arc-message-signature": "ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;\r\n        h=mime-version:feedback-id:to:message-id:subject:date:from\r\n         :dkim-signature:dkim-signature;\r\n        bh=aCxZcbxl/auzBHA0g4MJePX3dzUjEqskJkF0PzalEto=;\r\n        fh=ReBrfMTr5+85PYGAc4GvsVZATN57CEtI5fQdWy0hTpE=;\r\n        b=beuu3gJ+6wn82BTc/0L5/cOwTBmpvzTxTdPm6aDrdj5G0HV5Pp8bbMntCU99vLI1oP\r\n         u28ORDvyaLNTXkFI4FlnsHfBHkX09qXadXbYt0sRvCBNvCH8Rj4LGxT5spjJY4wr1xrt\r\n         B9VuGmYirajzn7bTWMKSFpN/RA64y1q/y0+lhAvzyrbLl2gueQXeKoZXZi3TNBUgusfM\r\n         BGJJNKNkJwDmrlLKUjeEZS7oC1ClNVpTe00zqxxRC7JvB0rGb39jvzPYze8b9rnyUxO9\r\n         OpaOdxQYfH739QoXWv876okpp93Ms7oOwprIYzaeE0bTtzTDOPR7Us942Edwtr1NgZDN\r\n         S7Xw==;\r\n        dara=google.com",
+            "arc-authentication-results": "ARC-Authentication-Results: i=1; mx.google.com;\r\n       dkim=pass header.i=@pm.mtasv.net header.s=pm20250324 header.b=HIuTccno;\r\n       dkim=pass header.i=@cal.com header.s=20231003111759pm header.b=BgbEVykK;\r\n       spf=pass (google.com: domain of pm_bounces@pm-bounces.cal.com designates 104.245.209.201 as permitted sender) smtp.mailfrom=pm_bounces@pm-bounces.cal.com;\r\n       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=cal.com",
+            "return-path": "Return-Path: <pm_bounces@pm-bounces.cal.com>",
+            "received-spf": "Received-SPF: pass (google.com: domain of pm_bounces@pm-bounces.cal.com designates 104.245.209.201 as permitted sender) client-ip=104.245.209.201;",
+            "authentication-results": "Authentication-Results: mx.google.com;\r\n       dkim=pass header.i=@pm.mtasv.net header.s=pm20250324 header.b=HIuTccno;\r\n       dkim=pass header.i=@cal.com header.s=20231003111759pm header.b=BgbEVykK;\r\n       spf=pass (google.com: domain of pm_bounces@pm-bounces.cal.com designates 104.245.209.201 as permitted sender) smtp.mailfrom=pm_bounces@pm-bounces.cal.com;\r\n       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=cal.com",
+            "dkim-signature": "DKIM-Signature: v=1; a=rsa-sha256; d=cal.com; s=20231003111759pm;\r\n\tc=relaxed/relaxed; i=hello@cal.com; t=1757797476; x=1757970276;\r\n\th=date:date:from:from:message-id:reply-to:sender:subject:subject:to:to:cc:\r\n\tfeedback-id:mime-version:content-type;\r\n\tbh=aCxZcbxl/auzBHA0g4MJePX3dzUjEqskJkF0PzalEto=;\r\n\tb=BgbEVykKNvJ0jVJSRZRxv/S6BgZnSYn8ORZERppYwJy5Ht00+MuGUuyiYMKjQwacQGSZc8DF3/I\r\n\th+WSCl2pzKpbHKn35/Ud+9V/r5dDq3K7L4r+jYCo2RmL50k5dxX/Qy76eXkYOUk4kgnY3IiXLtjai\r\n\tebhcqOLRHau5bebwJ8g=",
+            "x-pm-ip": "X-PM-IP: 104.245.209.201",
+            "x-iadb-ip": "X-IADB-IP: 104.245.209.201",
+            "x-iadb-ip-reverse": "X-IADB-IP-REVERSE: 201.209.245.104",
+            "from": "From: \"Cal.com\" <hello@cal.com>",
+            "date": "Date: Sat, 13 Sep 2025 21:04:35 +0000",
+            "subject": "Subject: Canceled: APPOINTMENT FOR THERAPY SESSION between Mukhtar Ubaid and\r\n UbaidNasir at 6:45pm - 7:15pm, Wednesday, September 17, 2025",
+            "message-id": "Message-Id: <a3da0032-9806-4e43-8520-ce2c0f6e165c@mtasv.net>",
+            "to": "To: ubaidmukhtar237@gmail.com",
+            "feedback-id": "Feedback-ID: s11718888-_:s11718888:a294406:postmark",
+            "x-complaints-to": "X-Complaints-To: abuse@postmarkapp.com",
+            "x-pm-message-id": "X-PM-Message-Id: a3da0032-9806-4e43-8520-ce2c0f6e165c",
+            "x-pm-rcpt": "X-PM-RCPT: |bTB8Mjk0NDA2fDExNzE4ODg4fHViYWlkbXVraHRhcjIzN0BnbWFpbC5jb20=|",
+            "x-pm-message-options": "X-PM-Message-Options: v1;1.vKngARqeh9QAW8MzAXt2CA.wXLisciLXZSpm1SBiB4-pHJOyp0cYpUKiEWkTkPLx1-WoLjDmQ6M7CRQtPXvA2aycv78018t7hF-XzE-WtAzYEsjryM1RCDZ77boES3yjyAmgdXf3eN9PYi9GDrXlJDVeTtkcF0DkJNnCpaXGaJTBeA5m21GCjsOOTkFx9GmBzJVMQ6r5eCP_N4asJqv-824",
+            "mime-version": "MIME-Version: 1.0",
+            "x-pm-mta-pool": "X-PM-MTA-Pool: transactional-3",
+            "content-type": "Content-Type: multipart/mixed; boundary=mk3-4339cb21de644805b2849c643a8fed48"
+          },
+          "html": "<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\"><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" as=\"image\" href=\"https://app.cal.com/emails/xCircle@2x.png\"/><link rel=\"preload\" as=\"image\" href=\"https://app.cal.com/emails/logo.png\"/><title>event_cancelled_subject</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/><!--[if !mso]><!--><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><!--<![endif]--><style type=\"text/css\">\n          #outlook a {\n            padding: 0;\n          }\n\n          body {\n            margin: 0;\n            padding: 0;\n            -webkit-text-size-adjust: 100%;\n            -ms-text-size-adjust: 100%;\n          }\n\n          table,\n          td {\n            border-collapse: collapse;\n            mso-table-lspace: 0pt;\n            mso-table-rspace: 0pt;\n          }\n\n          img {\n            border: 0;\n            height: auto;\n            line-height: 100%;\n            outline: none;\n            text-decoration: none;\n            -ms-interpolation-mode: bicubic;\n          }\n\n          p {\n            display: block;\n            margin: 13px 0;\n          }\n        </style><!--[if mso]><noscript><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript><![endif]--><!--[if lte mso 11]><style type=\"text/css\">.mj-outlook-group-fix { width:100% !important; }</style><![endif]--><!--[if !mso]><!--><link href=\"https://fonts.googleapis.com/css?family=Roboto:400,500,700\" rel=\"stylesheet\" type=\"text/css\"/>\n      <style type=\"text/css\">@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700);</style><!--<![endif]--><style type=\"text/css\">\n          @media only screen and (min-width: 480px) {\n            .mj-column-per-100 {\n              width: 100% !important;\n              max-width: 100%;\n            }\n          }\n        </style><style media=\"screen and (min-width:480px)\">\n          .moz-text-html .mj-column-per-100 {\n            width: 100% !important;\n            max-width: 100%;\n          }\n        </style><style type=\"text/css\">\n          @media only screen and (max-width: 480px) {\n            table.mj-full-width-mobile {\n              width: 100% !important;\n            }\n\n            td.mj-full-width-mobile {\n              width: auto !important;\n            }\n          }\n        </style></head><body style=\"word-spacing:normal;background-color:#F3F4F6\"><!doctype html><div style=\"background-color:#F3F4F6\"><!--[if mso | IE]><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"margin:0px auto;max-width:600px\"><table cellPadding=\"0\" cellSpacing=\"0\" role=\"presentation\" align=\"center\" border=\"0\" style=\"width:100%\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:0px;padding-top:40px;text-align:center\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr></tr></table><![endif]--></td></tr></tbody></table></div><div style=\"margin:0px auto;max-width:600px;border-radius:8px;border:1px solid #E5E7EB;padding:2px;background-color:#FFFFFF\"><!--[if mso | IE]></td></tr></table><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" bgcolor=\"#FFFFFF\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px\"><table cellPadding=\"0\" cellSpacing=\"0\" role=\"presentation\" align=\"center\" border=\"0\" style=\"background:#FFFFFF;background-color:#FFFFFF;width:100%\"><tbody><tr><td style=\"border-left:1px solid #E1E1E1;border-right:1px solid #E1E1E1;direction:ltr;font-size:0;padding:30px 30px 0 30px;text-align:center;border-top:1px solid #E1E1E1;border:0\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td class=\"\" style=\"vertical-align:top;width:598px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%\"><table cellPadding=\"0\" cellSpacing=\"0\" role=\"presentation\" border=\"0\" style=\"vertical-align:top\" width=\"100%\"><tbody><tr><td align=\"center\" style=\"font-size:0px;padding:10px 25px;word-break:break-word\"><table cellPadding=\"0\" cellSpacing=\"0\" role=\"presentation\" border=\"0\" style=\"border-collapse:collapse;border-spacing:0px\"><tbody><tr><td style=\"width:64px\"><img height=\"64\" src=\"https://app.cal.com/emails/xCircle@2x.png\" style=\"border:0;display:block;outline:none;text-decoration:none;height:64px;width:100%;font-size:13px\" width=\"64\" alt=\"\"/></td></tr></tbody></table></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" bgcolor=\"#FFFFFF\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px\"><table cellPadding=\"0\" cellSpacing=\"0\" role=\"presentation\" align=\"center\" border=\"0\" style=\"background:#FFFFFF;background-color:#FFFFFF;width:100%\"><tbody><tr><td style=\"border-left:1px solid #E1E1E1;border-right:1px solid #E1E1E1;direction:ltr;font-size:0;padding:0;text-align:center;border:0\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td class=\"\" style=\"vertical-align:top;width:598px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%\"><table cellPadding=\"0\" cellSpacing=\"0\" role=\"presentation\" border=\"0\" style=\"vertical-align:top\" width=\"100%\"><tbody><tr><td align=\"center\" style=\"font-size:0;padding:10px 25px;padding-top:24px;padding-bottom:0;word-break:break-word\"><div data-testid=\"heading\" style=\"font-family:Roboto, Helvetica, sans-serif;font-size:24px;font-weight:700;line-height:24px;text-align:center;color:#111827\">Your scheduled event was canceled</div></td></tr><tr><td align=\"center\" style=\"font-size:0;padding:10px 25px;word-break:break-word\"><div data-testid=\"subHeading\" style=\"font-family:Roboto, Helvetica, sans-serif;font-size:16px;font-weight:400;line-height:24px;text-align:center;color:#4B5563\">We sent an email to everyone with this information.</div></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" bgcolor=\"#FFFFFF\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px\"><table cellPadding=\"0\" cellSpacing=\"0\" role=\"presentation\" align=\"center\" border=\"0\" style=\"background:#FFFFFF;background-color:#FFFFFF;width:100%\"><tbody><tr><td style=\"border-left:1px solid #E1E1E1;border-right:1px solid #E1E1E1;direction:ltr;font-size:0;padding:15px 0px 0 0px;text-align:center;border:0\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td class=\"\" style=\"vertical-align:top;width:598px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%\"><table cellPadding=\"0\" cellSpacing=\"0\" role=\"presentation\" border=\"0\" style=\"vertical-align:top\" width=\"100%\"><tbody><tr><td align=\"center\" style=\"font-size:0;padding:10px 25px;padding-bottom:15px;word-break:break-word\"><p style=\"border-top:solid 1px #E1E1E1;font-size:1px;margin:0px auto;width:100%\"></p><!--[if mso | IE]><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-top:solid 1px #E1E1E1;font-size:1px;margin:0px auto;width:548px;\" role=\"presentation\" width=\"548px\" ><tr><td style=\"height:0;line-height:0;\"> &nbsp;</td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" className=\"\" style=\"width:600px;\" width=\"600\" bgcolor=\"#FFFFFF\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px\"><table cellPadding=\"0\" cellSpacing=\"0\" role=\"presentation\" align=\"center\" border=\"0\" style=\"background:#FFFFFF;background-color:#FFFFFF;width:100%\"><tbody><tr><td style=\"direction:ltr;font-size:0;padding:0;text-align:center\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td className=\"\" style=\"vertical-align:top;width:598px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%\"><table cellPadding=\"0\" cellSpacing=\"0\" role=\"presentation\" border=\"0\" style=\"vertical-align:top\" width=\"100%\"><tbody><tr><td align=\"left\" style=\"font-size:0;padding:10px 25px;word-break:break-word\"><div style=\"font-family:Roboto, Helvetica, sans-serif;font-size:16px;font-weight:500;line-height:1;text-align:left;color:#101010\"><p style=\"height:6px\"></p><div><p style=\"color:#101010\">Reason for cancellation (optional)</p><p style=\"color:#101010;font-weight:400;line-height:24px;white-space:pre-wrap\">da</p></div><p style=\"height:6px\"></p><div><p style=\"color:#101010\">What</p><p style=\"color:#101010;font-weight:400;line-height:24px;white-space:pre-wrap\">APPOINTMENT FOR THERAPY SESSION between Mukhtar Ubaid and UbaidNasir</p></div><div><p style=\"height:6px\"></p><div><p style=\"color:#101010\">When </p><p style=\"color:#101010;font-weight:400;line-height:24px;white-space:pre-wrap;text-decoration:line-through\"><span data-testid=\"when\">Wednesday, September 17, 2025 | 6:45pm - 7:15pm <span style=\"color:#4B5563\">(Asia/Karachi)</span></span></p></div></div><p style=\"height:6px\"></p><div><p style=\"color:#101010\">Who</p><p style=\"color:#101010;font-weight:400;line-height:24px;white-space:pre-wrap\"><div style=\"color:#101010;font-weight:400;line-height:24px\">Mukhtar Ubaid - Organizer <span style=\"color:#4B5563\"><a href=\"mailto:ubaidmukhtar237@gmail.com\" style=\"color:#4B5563\">ubaidmukhtar237@gmail.com</a></span></div><div style=\"color:#101010;font-weight:400;line-height:24px\">UbaidNasir - Guest <span style=\"color:#4B5563\"><a href=\"mailto:ubaidnasir1631@gmail.com\" style=\"color:#4B5563\">ubaidnasir1631@gmail.com</a></span></div></p></div><p style=\"height:6px\"></p><div><p style=\"color:#101010\">Where</p><p style=\"color:#101010;font-weight:400;line-height:24px;white-space:pre-wrap\">Bright Smile Dental Care, 12-B Gulshan Avenue, Block D, Lahore, Punjab, Pakistan 54000.</p></div><p style=\"height:6px\"></p><div><p style=\"color:#101010\">Description</p><p style=\"color:#101010;font-weight:400;line-height:24px;white-space:pre-wrap\"><p class=\"dark:text-darkgray-600 mt-2 text-sm text-gray-500 [&amp;_a]:text-blue-500 [&amp;_a]:underline [&amp;_a]:hover:text-blue-600\"><p style=\"color: '#101010'; font-weight: 400; line-height: 24px; margin: 0;\">AN APPOINTMENT FOR THE THERAPY SESSION IN MY DENTAL CLINIC.</p>\n</p></p></div></div></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" className=\"\" style=\"width:600px;\" width=\"600\" bgcolor=\"#FFFFFF\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px\"><table cellPadding=\"0\" cellSpacing=\"0\" role=\"presentation\" align=\"center\" border=\"0\" style=\"background:#FFFFFF;background-color:#FFFFFF;width:100%\"><tbody><tr><td style=\"direction:ltr;font-size:0;padding:0;text-align:center\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td className=\"\" style=\"vertical-align:top;width:598px;\" ><![endif]--><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div></div><!--[if mso | IE]></td></tr></table><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"></td><![endif]--><div style=\"margin:0px auto;max-width:600px\"><table cellPadding=\"0\" cellSpacing=\"0\" role=\"presentation\" align=\"center\" border=\"0\" style=\"width:100%\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:0px;text-align:center\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td style=\"vertical-align:top;width:600px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%\"><table cellPadding=\"0\" cellSpacing=\"0\" role=\"presentation\" border=\"0\" style=\"vertical-align:top\" width=\"100%\"><tbody><tr><td align=\"center\" style=\"font-size:0px;padding:10px 25px;padding-top:32px;word-break:break-word\"><table cellPadding=\"0\" cellSpacing=\"0\" role=\"presentation\" border=\"0\" style=\"border-collapse:collapse;border-spacing:0px\"><tbody><tr><td style=\"width:89px\"><a href=\"https://app.cal.com\" target=\"_blank\" rel=\"noreferrer\"><img height=\"19\" src=\"https://app.cal.com/emails/logo.png\" style=\"border:0;display:block;outline:none;text-decoration:none;height:19px;width:100%;font-size:13px\" width=\"89\" alt=\"\"/></a></td></tr></tbody></table></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></div></body></html>\n",
+          "text": "Your scheduled event was canceled\nWe sent an email to everyone with this information.\n\nReason for cancellation (optional):\nda\n\nWhat:\nAPPOINTMENT FOR THERAPY SESSION between Mukhtar Ubaid and UbaidNasir\n\nInvitee Time Zone:\nAsia/Karachi\n\nWho:\nMukhtar Ubaid - Organizer\nubaidmukhtar237@gmail.com\nUbaidNasir\nubaidnasir1631@gmail.com\n\nWhere:\nBright Smile Dental Care, 12-B Gulshan Avenue, Block D, Lahore, Punjab, Pakistan 54000.\n\nDescription\nAN APPOINTMENT FOR THE THERAPY SESSION IN MY DENTAL CLINIC.\n\nNeed to reschedule or cancel? https://cal.com/booking/rWiqxYX9JUFNWCZrmEj4CQ?changes=true\n",
+          "textAsHtml": "<p>Your scheduled event was canceled<br/>We sent an email to everyone with this information.</p><p>Reason for cancellation (optional):<br/>da</p><p>What:<br/>APPOINTMENT FOR THERAPY SESSION between Mukhtar Ubaid and UbaidNasir</p><p>Invitee Time Zone:<br/>Asia/Karachi</p><p>Who:<br/>Mukhtar Ubaid - Organizer<br/><a href=\"mailto:ubaidmukhtar237@gmail.com\">ubaidmukhtar237@gmail.com</a><br/>UbaidNasir<br/><a href=\"mailto:ubaidnasir1631@gmail.com\">ubaidnasir1631@gmail.com</a></p><p>Where:<br/>Bright Smile Dental Care, 12-B Gulshan Avenue, Block D, Lahore, Punjab, Pakistan 54000.</p><p>Description<br/>AN APPOINTMENT FOR THE THERAPY SESSION IN MY DENTAL CLINIC.</p><p>Need to reschedule or cancel? <a href=\"https://cal.com/booking/rWiqxYX9JUFNWCZrmEj4CQ?changes=true\">https://cal.com/booking/rWiqxYX9JUFNWCZrmEj4CQ?changes=true</a></p>",
+          "subject": "Canceled: APPOINTMENT FOR THERAPY SESSION between Mukhtar Ubaid and UbaidNasir at 6:45pm - 7:15pm, Wednesday, September 17, 2025",
+          "date": "2025-09-13T21:04:35.000Z",
+          "to": {
+            "value": [
+              {
+                "address": "ubaidmukhtar237@gmail.com",
+                "name": ""
+              }
+            ],
+            "html": "<span class=\"mp_address_group\"><a href=\"mailto:ubaidmukhtar237@gmail.com\" class=\"mp_address_email\">ubaidmukhtar237@gmail.com</a></span>",
+            "text": "ubaidmukhtar237@gmail.com"
+          },
+          "from": {
+            "value": [
+              {
+                "address": "hello@cal.com",
+                "name": "Cal.com"
+              }
+            ],
+            "html": "<span class=\"mp_address_group\"><span class=\"mp_address_name\">Cal.com</span> &lt;<a href=\"mailto:hello@cal.com\" class=\"mp_address_email\">hello@cal.com</a>&gt;</span>",
+            "text": "\"Cal.com\" <hello@cal.com>"
+          },
+          "messageId": "<a3da0032-9806-4e43-8520-ce2c0f6e165c@mtasv.net>"
+        }
+      }
+    ]
+  },
   "settings": {
     "executionOrder": "v1"
   },
@@ -158,6 +202,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-09-13T20:57:06.000Z",
-  "versionId": "e7ee0941-996a-40d0-bb3c-23acdb1c019e"
+  "updatedAt": "2025-09-13T21:05:21.000Z",
+  "versionId": "3dad2b72-b9d9-4b6e-aa22-72499b250f58"
 }
