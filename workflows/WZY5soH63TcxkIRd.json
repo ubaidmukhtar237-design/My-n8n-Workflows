@@ -1,12 +1,225 @@
 {
   "active": false,
-  "connections": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get many events",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many events": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "createdAt": "2025-09-13T03:28:04.498Z",
   "id": "WZY5soH63TcxkIRd",
   "isArchived": false,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "AI Agents for Business:https://youtu.be/dqMT-T0ywrA?si=EPf7_Y5U1aEm3c1T",
-  "nodes": [],
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -528,
+        48
+      ],
+      "id": "bc506614-a082-48e6-ad2b-ce967a4dc37b",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        -304,
+        48
+      ],
+      "id": "5a824c08-27ec-4d83-9447-56193a4581c9",
+      "name": "Get many events",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "cXzASFAyNaVtWAiR",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -96,
+        48
+      ],
+      "id": "a049f3b3-2347-4bef-bb9a-43fc475f8c0c",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        272,
+        48
+      ],
+      "id": "036a54d7-189c-45c1-9a50-94fe73036d10",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        496,
+        48
+      ],
+      "id": "bb667590-c633-4f81-9158-2f0878075109",
+      "name": "Send a message",
+      "webhookId": "43ab0e59-a311-4c6a-8007-120d78d2282e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "3ZDGrufM0JFl2Z0X",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Automation to get your meetings from the calender and send a formated and clean summary to your gmail for reminding you.",
+        "height": 496,
+        "width": 1328,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -608,
+        -160
+      ],
+      "typeVersion": 1,
+      "id": "8d8c99fc-b116-45d6-923b-e7b271eecb9b",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        32,
+        48
+      ],
+      "id": "dab1ae11-1612-4c4f-9393-f9a85b05e888",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "content": "Formatting the data into clean state.",
+        "height": 240,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        208,
+        -32
+      ],
+      "typeVersion": 1,
+      "id": "4d757e96-21c5-4a45-9308-62fb3256baa4",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "Combining the data the splitted data coming from calendar node.",
+        "height": 240,
+        "width": 288
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -128,
+        -32
+      ],
+      "typeVersion": 1,
+      "id": "8ddb966a-c5e4-4a8a-bdf1-99ee80aaa152",
+      "name": "Sticky Note2"
+    }
+  ],
   "pinData": {},
   "settings": {
     "executionOrder": "v1"
@@ -23,6 +236,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-13T03:28:04.000Z",
-  "versionId": "652d4d09-7bdb-4273-90aa-a47b360bbb0f"
+  "updatedAt": "2025-09-13T15:56:50.000Z",
+  "versionId": "b8fd6ff6-57d4-4b09-a54c-4971c0966788"
 }
