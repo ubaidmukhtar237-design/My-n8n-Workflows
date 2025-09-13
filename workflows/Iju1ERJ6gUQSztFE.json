@@ -14,7 +14,13 @@
     },
     "Edit Fields": {
       "main": [
-        []
+        [
+          {
+            "node": "Markdown",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     }
   },
@@ -44,8 +50,8 @@
       "type": "n8n-nodes-base.gmailTrigger",
       "typeVersion": 1.3,
       "position": [
-        -816,
-        -224
+        -992,
+        -256
       ],
       "id": "fd747f52-c0a5-41bc-9914-dc467b21aca9",
       "name": "Gmail Trigger",
@@ -103,11 +109,57 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -528,
-        -224
+        -752,
+        -256
       ],
       "id": "ee68e8f6-6c87-44e3-82c0-31c79246c11b",
       "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "html": "={{ $json.textAsHtml }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.markdown",
+      "typeVersion": 1,
+      "position": [
+        -464,
+        -256
+      ],
+      "id": "4aba6131-fb40-4adf-bf2c-ce29160e5178",
+      "name": "Markdown"
+    },
+    {
+      "parameters": {
+        "content": "Passing the required data.",
+        "height": 224,
+        "width": 272,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -832,
+        -320
+      ],
+      "typeVersion": 1,
+      "id": "6fb47a1f-5c57-4bea-b350-74049b8e706a",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "Formatting data:To convert the text as html to text",
+        "height": 224,
+        "width": 272,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -512,
+        -320
+      ],
+      "typeVersion": 1,
+      "id": "058c9d74-76a6-474d-98a7-fc98c2be0b7c",
+      "name": "Sticky Note1"
     }
   ],
   "pinData": {
@@ -202,6 +254,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-09-13T21:05:21.000Z",
-  "versionId": "3dad2b72-b9d9-4b6e-aa22-72499b250f58"
+  "updatedAt": "2025-09-13T22:28:28.000Z",
+  "versionId": "22969bc4-a9ae-4071-b391-b80390a99606"
 }
