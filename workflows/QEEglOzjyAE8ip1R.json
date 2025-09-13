@@ -1,0 +1,56 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-09-13T21:25:56.200Z",
+  "id": "QEEglOzjyAE8ip1R",
+  "isArchived": false,
+  "meta": null,
+  "name": "9 Best Ways to Scrape:https://youtu.be/y-eEbmNeFZo?si=4CwJTEuJjCnh37j3",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -528,
+        32
+      ],
+      "id": "58b89d0f-7ede-4de3-b98c-8026cad0e444",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "content": "## Web Scraping by MARKDOWN",
+        "height": 560,
+        "width": 1360,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -592,
+        -176
+      ],
+      "typeVersion": 1,
+      "id": "98c3f35f-3acd-435a-98c6-3cdebe89acfd",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-13T21:25:56.202Z",
+      "updatedAt": "2025-09-13T21:25:56.202Z",
+      "role": "workflow:owner",
+      "workflowId": "QEEglOzjyAE8ip1R",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-13T21:27:12.000Z",
+  "versionId": "f5f4ef1d-f38b-4155-9cc3-a617e24e8100"
+}
