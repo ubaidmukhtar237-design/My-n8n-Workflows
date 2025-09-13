@@ -1,0 +1,505 @@
+{
+  "active": false,
+  "connections": {
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-13T20:48:29.536Z",
+  "id": "CGTp8YRelqWZcqYG",
+  "isArchived": false,
+  "meta": null,
+  "name": "n8n with vapi",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a fully autonomous and proactive AI assistant. You are also an expert communicator, tasked with drafting first-class, polished, and perfectly human-like emails. Your primary directive is to understand a user's goal, independently find the necessary contact information from Google Sheets, and execute the task with the highest quality.\n\nTool Definitions\nfind_contact_in_sheets\n\nPurpose: To search a specific Google Sheet to find a contact's details, including their email address.\n\nInput: {{ $json.body.message.toolCalls[0].function.arguments.Name }} (the name of the person you need to find).\n\nOutput: The contact's email_address.\n\ngmail\n\nPurpose: Your exclusive tool for sending emails. You will autonomously draft a professional subject and body.\n\nInput: recipient_email, subject, body which is all stored in {{ $json.body.message.toolCalls[0].function.arguments.Message }}\n\nProhibited Actions - You Must Avoid These at All Costs:\nDO NOT ask for the email address. You must always use the find_contact_in_sheets tool to get it.\n\nDO NOT ask for the email's subject or body. You must generate the content yourself.\n\nDO NOT ask for permission to draft the email. You are expected to do it by default.\n\nDO NOT ask for confirmation of the name. Immediately use the find_contact_in_sheets tool.\n\nWorkflow Protocol: Find, Draft, and Send\nWhen a user asks you to send an email to a person by name, you will follow this exact, non-deviating sequence:\n\nUnderstand Intent: Immediately grasp the two key components: the recipient's name and the purpose of the email.\n\nUser says: \"send an email to ubaid nasir about wishing him his birthday\"\n\nYou understand: Find \"Ubaid Nasir\", then send a birthday email.\n\nFind Contact in Google Sheets: Your first action is to silently use the find_contact_in_sheets tool with the provided name to retrieve their email address.\n\nDraft First-Class Content: After successfully finding the email, you must autonomously draft a high-quality, polished email based on the purpose.\n\nQuality Standard: The subject must be clear and professional. The body must be well-structured with a greeting, a clear message, and a professional closing on behalf of the user.\n\nExample Draft:\n\nSubject: Happy Birthday!\n\nBody: Hi Ubaid, Sending a quick note on behalf of [User's Name] to wish you a very happy birthday! Hope you have a fantastic day. All the best.\n\nState and Execute: Immediately state the single action you are taking and use the gmail tool to send the email to the address you found.\n\nCORRECT RESPONSE: \"Okay, sending a happy birthday email to Ubaid Nasir now.\"\n\nHandle Failures: If the find_contact_in_sheets tool fails to find the name, and then stops the execution.\n\nFailure Example: \"I couldn't find 'Ubaid Nasir' in our Google Sheets directory. I couldn't help you with this\"",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        272,
+        -224
+      ],
+      "id": "6e17fea5-61a1-45d5-af7d-48133bf1867a",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        144,
+        0
+      ],
+      "id": "446b60f7-c6d6-4e60-9cf6-bc26d32c768d",
+      "name": "Google Gemini Chat Model"
+    },
+    {
+      "parameters": {
+        "sendTo": "um8380963@gmail.com",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        400,
+        0
+      ],
+      "id": "fefe33be-1905-465e-b507-703ba26832f2",
+      "name": "Send a message in Gmail",
+      "webhookId": "8dfa3402-4cfe-4ac0-8123-071dfefb6569"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "88ef3801-ba2a-4078-a8c9-27c311228ca9",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -80,
+        -224
+      ],
+      "id": "b4988f45-61e7-4145-a9b0-4b04029a9e29",
+      "name": "Webhook",
+      "webhookId": "88ef3801-ba2a-4078-a8c9-27c311228ca9"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        736,
+        -224
+      ],
+      "id": "d5aa27c5-dc67-44ab-b285-7c68c0f08d89",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1I2SjbujKD3GmqzKt2cA2VYIAS_EJOyHTl5XUej1ICfw",
+          "mode": "list",
+          "cachedResultName": "vapi with n8n",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1I2SjbujKD3GmqzKt2cA2VYIAS_EJOyHTl5XUej1ICfw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1I2SjbujKD3GmqzKt2cA2VYIAS_EJOyHTl5XUej1ICfw/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        528,
+        0
+      ],
+      "id": "0e24634d-0fc1-43f9-8273-3b3d31b4783c",
+      "name": "Get row(s) in sheet in Google Sheets"
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8ncloud123321.app.n8n.cloud",
+            "user-agent": "axios/1.8.3",
+            "content-length": "11969",
+            "accept": "application/json, text/plain, */*",
+            "accept-encoding": "gzip, br",
+            "baggage": "sentry-environment=production,sentry-public_key=fac6f282c765ce50b18c3fa0305f8a8b,sentry-trace_id=0c8f008745c0423e897cec9b2d9c4243",
+            "cdn-loop": "cloudflare; loops=1; subreqs=1",
+            "cf-connecting-ip": "35.165.153.227",
+            "cf-ew-via": "15",
+            "cf-ipcountry": "US",
+            "cf-ray": "9797fbb355d1ff01-PDX",
+            "cf-visitor": "{\"scheme\":\"https\"}",
+            "cf-worker": "n8n.cloud",
+            "content-type": "application/json",
+            "cookie": "callId=",
+            "sentry-trace": "0c8f008745c0423e897cec9b2d9c4243-9cd6b8a9da83f92e",
+            "traceparent": "00-f394abbbe26cc4139f6b0be59268a33f-039656791e756ed7-01",
+            "x-chat-id": "f9854328-36cb-4640-ad19-711d2b999871",
+            "x-forwarded-for": "35.165.153.227, 172.68.174.138",
+            "x-forwarded-host": "n8ncloud123321.app.n8n.cloud",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "traefik-prod-users-gwc-38-6f9f659dd9-knjgv",
+            "x-is-trusted": "yes",
+            "x-real-ip": "35.165.153.227",
+            "x-vapi-secret": ""
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "message": {
+              "timestamp": 1756931197827,
+              "type": "tool-calls",
+              "toolCalls": [
+                {
+                  "id": "call_gMCFlXzpgWNy2z4c6SH2TFAH",
+                  "type": "function",
+                  "function": {
+                    "name": "agent1",
+                    "arguments": {
+                      "Name": "Ubaid Nasir",
+                      "Message": "Subject: Happy Birthday Ubaid Nasir\n\nHi Ubaid,\n\nI wanted to take a moment to wish you a very happy birthday on behalf of [Your Name]. May your day be filled with joy, laughter, and everything you love. Here's to a wonderful year ahead.\n\nAll the best,\n[Your Name]"
+                    }
+                  }
+                }
+              ],
+              "toolCallList": [
+                {
+                  "id": "call_gMCFlXzpgWNy2z4c6SH2TFAH",
+                  "type": "function",
+                  "function": {
+                    "name": "agent1",
+                    "arguments": {
+                      "Name": "Ubaid Nasir",
+                      "Message": "Subject: Happy Birthday Ubaid Nasir\n\nHi Ubaid,\n\nI wanted to take a moment to wish you a very happy birthday on behalf of [Your Name]. May your day be filled with joy, laughter, and everything you love. Here's to a wonderful year ahead.\n\nAll the best,\n[Your Name]"
+                    }
+                  }
+                }
+              ],
+              "toolWithToolCallList": [
+                {
+                  "type": "function",
+                  "function": {
+                    "name": "agent1",
+                    "parameters": {
+                      "type": "object",
+                      "required": [
+                        "Name",
+                        "Message"
+                      ],
+                      "properties": {
+                        "Name": {
+                          "type": "string",
+                          "default": "",
+                          "description": "Name of the person"
+                        },
+                        "Message": {
+                          "type": "string",
+                          "default": "",
+                          "description": "The message that the person  want to send in an email."
+                        }
+                      }
+                    },
+                    "description": "Call this tool when the person you are assistant of needs to send an email."
+                  },
+                  "server": {
+                    "url": "https://n8ncloud123321.app.n8n.cloud/webhook-test/88ef3801-ba2a-4078-a8c9-27c311228ca9",
+                    "timeoutSeconds": 60,
+                    "headers": {
+                      "X-Chat-Id": "f9854328-36cb-4640-ad19-711d2b999871"
+                    }
+                  },
+                  "messages": [
+                    {
+                      "type": "request-start",
+                      "contents": [],
+                      "conditions": [],
+                      "blocking": false
+                    }
+                  ],
+                  "toolCall": {
+                    "id": "call_gMCFlXzpgWNy2z4c6SH2TFAH",
+                    "type": "function",
+                    "function": {
+                      "name": "agent1",
+                      "arguments": {
+                        "Name": "Ubaid Nasir",
+                        "Message": "Subject: Happy Birthday Ubaid Nasir\n\nHi Ubaid,\n\nI wanted to take a moment to wish you a very happy birthday on behalf of [Your Name]. May your day be filled with joy, laughter, and everything you love. Here's to a wonderful year ahead.\n\nAll the best,\n[Your Name]"
+                      }
+                    }
+                  }
+                }
+              ],
+              "artifact": {
+                "messages": [
+                  {
+                    "role": "system",
+                    "message": "# Assistant Persona: Riley\n\nYou are Riley, a fully autonomous, professional, and proactive AI assistant for Wellness Partners. You are also an **expert communicator**, tasked with drafting **first-class, polished, and perfectly human-like emails** on the user's behalf. Your primary directive is to understand a user's goal and execute it with the highest quality output.\n\n# Core Directives\n\n1.  **Full Autonomy & Quality:** Once a task is requested, you are expected to handle all intermediate steps (looking up contacts, drafting high-quality content) independently.\n2.  **Implicit Approval:** Assume any request from the user is an approval to complete the entire task to the best of your ability.\n3.  **Strict Tool Adherence:** You must use the tools exactly as defined.\n\n# Tool Definitions\n\n1.  **`contact_lookup`**\n    * **Purpose:** To find a contact's email address using their name.\n    * **Required Input:** `name`\n    * **Output:** `email_address`\n\n2.  **`agent1`**\n    * **Purpose:** Your...",
+                    "time": 1756931196049,
+                    "secondsFromStart": 0
+                  },
+                  {
+                    "role": "bot",
+                    "message": "Thank you for calling Wellness Partners. This is Riley, your scheduling assistant. How may I help you today?",
+                    "time": 1756931196048,
+                    "secondsFromStart": 0.001,
+                    "endTime": 1756931196048
+                  },
+                  {
+                    "role": "user",
+                    "message": "send an email to ubaid nasir about wishing him happy birthday",
+                    "time": 1756931196049,
+                    "secondsFromStart": 0.001,
+                    "endTime": 1756931196049
+                  },
+                  {
+                    "toolCalls": [
+                      {
+                        "id": "call_gMCFlXzpgWNy2z4c6SH2TFAH",
+                        "type": "function",
+                        "function": {
+                          "name": "agent1",
+                          "arguments": "{\n  \"Name\": \"Ubaid Nasir\",\n  \"Message\": \"Subject: Happy Birthday Ubaid Nasir\\n\\nHi Ubaid,\\n\\nI wanted to take a moment to wish you a very happy birthday on behalf of [Your Name]. May your day be filled with joy, laughter, and everything you love. Here's to a wonderful year ahead.\\n\\nAll the best,\\n[Your Name]\"\n}"
+                        }
+                      }
+                    ],
+                    "role": "tool_calls",
+                    "message": "",
+                    "time": 1756931197814,
+                    "secondsFromStart": 1.765
+                  }
+                ],
+                "messagesOpenAIFormatted": [
+                  {
+                    "role": "assistant",
+                    "content": "Thank you for calling Wellness Partners. This is Riley, your scheduling assistant. How may I help you today?"
+                  },
+                  {
+                    "role": "system",
+                    "content": "# Assistant Persona: Riley\n\nYou are Riley, a fully autonomous, professional, and proactive AI assistant for Wellness Partners. You are also an **expert communicator**, tasked with drafting **first-class, polished, and perfectly human-like emails** on the user's behalf. Your primary directive is to understand a user's goal and execute it with the highest quality output.\n\n# Core Directives\n\n1.  **Full Autonomy & Quality:** Once a task is requested, you are expected to handle all intermediate steps (looking up contacts, drafting high-quality content) independently.\n2.  **Implicit Approval:** Assume any request from the user is an approval to complete the entire task to the best of your ability.\n3.  **Strict Tool Adherence:** You must use the tools exactly as defined.\n\n# Tool Definitions\n\n1.  **`contact_lookup`**\n    * **Purpose:** To find a contact's email address using their name.\n    * **Required Input:** `name`\n    * **Output:** `email_address`\n\n2.  **`agent1`**\n    * **Purpose:** Your..."
+                  },
+                  {
+                    "role": "user",
+                    "content": "send an email to ubaid nasir about wishing him happy birthday"
+                  },
+                  {
+                    "role": "assistant",
+                    "tool_calls": [
+                      {
+                        "id": "call_gMCFlXzpgWNy2z4c6SH2TFAH",
+                        "type": "function",
+                        "function": {
+                          "name": "agent1",
+                          "arguments": "{\n  \"Name\": \"Ubaid Nasir\",\n  \"Message\": \"Subject: Happy Birthday Ubaid Nasir\\n\\nHi Ubaid,\\n\\nI wanted to take a moment to wish you a very happy birthday on behalf of [Your Name]. May your day be filled with joy, laughter, and everything you love. Here's to a wonderful year ahead.\\n\\nAll the best,\\n[Your Name]\"\n}"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "role": "tool",
+                    "tool_call_id": "call_gMCFlXzpgWNy2z4c6SH2TFAH",
+                    "content": "Tool Result Still Pending But Proceed Further If Possible."
+                  }
+                ]
+              },
+              "chat": {
+                "id": "f9854328-36cb-4640-ad19-711d2b999871",
+                "orgId": "c4f8cd04-306b-4920-abaa-23888922703a",
+                "createdAt": "2025-09-02T08:02:26.836Z",
+                "updatedAt": "2025-09-03T20:14:31.366Z"
+              },
+              "assistant": {
+                "id": "d49f0191-7e7f-43f6-8077-6a4470f9667a",
+                "orgId": "c4f8cd04-306b-4920-abaa-23888922703a",
+                "name": "Riley",
+                "voice": {
+                  "voiceId": "Kylie",
+                  "provider": "vapi"
+                },
+                "createdAt": "2025-09-02T08:02:26.850Z",
+                "updatedAt": "2025-09-03T20:25:59.881Z",
+                "model": {
+                  "model": "gpt-5-nano",
+                  "toolIds": [
+                    "31b5f004-03da-4749-9464-cff6853f0aff"
+                  ],
+                  "messages": [
+                    {
+                      "role": "system",
+                      "content": "# Assistant Persona: Riley\n\nYou are Riley, a fully autonomous, professional, and proactive AI assistant for Wellness Partners. You are also an **expert communicator**, tasked with drafting **first-class, polished, and perfectly human-like emails** on the user's behalf. Your primary directive is to understand a user's goal and execute it with the highest quality output.\n\n# Core Directives\n\n1.  **Full Autonomy & Quality:** Once a task is requested, you are expected to handle all intermediate steps (looking up contacts, drafting high-quality content) independently.\n2.  **Implicit Approval:** Assume any request from the user is an approval to complete the entire task to the best of your ability.\n3.  **Strict Tool Adherence:** You must use the tools exactly as defined.\n\n# Tool Definitions\n\n1.  **`contact_lookup`**\n    * **Purpose:** To find a contact's email address using their name.\n    * **Required Input:** `name`\n    * **Output:** `email_address`\n\n2.  **`agent1`**\n    * **Purpose:** Your exclusive tool for sending emails. You will autonomously draft a **first-class, well-structured, and professional** `subject` and `body` based on the user's high-level request.\n    * **Required Inputs:** `recipient_email`, `subject`, `body`\n\n# **PROHIBITED ACTIONS - YOU MUST AVOID THESE AT ALL COSTS:**\n\n1.  **DO NOT ASK FOR EMAIL CONTENT:** You must **never** ask the user to provide the subject or the body of the email.\n2.  **DO NOT ASK FOR PERMISSION TO DRAFT:** You must **never** ask for permission to draft the email or propose a version.\n3.  **DO NOT ASK FOR NAME CONFIRMATION:** You must **never** ask the user to confirm the spelling or existence of a name. Immediately use the `contact_lookup` tool.\n\n# Workflow Protocol: Drafting and Sending an Email (Autonomous)\n\nWhen a user asks you to send an email, you will follow this exact, non-deviating sequence:\n\n1.  **Understand Intent:** Immediately grasp the core goal.\n    * *User says:* \"send an email to ubaid nasir about wishing him his birthday\"\n    * *You understand:* Goal is to send a high-quality birthday email to \"Ubaid Nasir\".\n\n2.  **Lookup Contact (Silently):** Without comment, use the `contact_lookup` tool with the name \"Ubaid Nasir\".\n\n3.  **Draft First-Class Content (Autonomously):** This is your most critical creative task. You must generate a polished, professional email that sounds natural and human-written.\n\n    * **Quality Standard for Drafting:**\n        * **Subject:** The subject line must be clear, professional, and directly relevant. For a birthday, it should be warm and personal.\n        * **Body:** The message must be well-structured. It must include a polite greeting, a clear and thoughtful statement of purpose, and a professional closing. The tone must always be appropriate for the context.\n        * **Signature:** Always conclude the email on behalf of the user (e.g., 'All the best, [User's Name].').\n\n    * **Example Execution:**\n        * *Drafted Subject:* `Happy Birthday!`\n        * *Drafted Body:* `Hi Ubaid, Just wanted to send a quick note on behalf of [User's Name] to wish you a very happy birthday! Hope you have a wonderful day filled with joy and celebration. All the best.`\n\n4.  **State and Execute:** Immediately state the single action you are taking and execute the `agent1` tool.\n    * **CORRECT RESPONSE:** \"Okay, sending a happy birthday email to Ubaid Nasir now.\"\n"
+                    }
+                  ],
+                  "provider": "openai",
+                  "temperature": 0.5,
+                  "tools": [
+                    {
+                      "id": "31b5f004-03da-4749-9464-cff6853f0aff",
+                      "createdAt": "2025-09-03T19:47:24.518Z",
+                      "updatedAt": "2025-09-03T20:18:38.870Z",
+                      "type": "function",
+                      "function": {
+                        "name": "agent1",
+                        "parameters": {
+                          "type": "object",
+                          "required": [
+                            "Name",
+                            "Message"
+                          ],
+                          "properties": {
+                            "Name": {
+                              "type": "string",
+                              "default": "",
+                              "description": "Name of the person"
+                            },
+                            "Message": {
+                              "type": "string",
+                              "default": "",
+                              "description": "The message that the person  want to send in an email."
+                            }
+                          }
+                        },
+                        "description": "Call this tool when the person you are assistant of needs to send an email."
+                      },
+                      "messages": [
+                        {
+                          "type": "request-start",
+                          "blocking": false
+                        }
+                      ],
+                      "orgId": "c4f8cd04-306b-4920-abaa-23888922703a",
+                      "server": {
+                        "url": "https://n8ncloud123321.app.n8n.cloud/webhook-test/88ef3801-ba2a-4078-a8c9-27c311228ca9",
+                        "timeoutSeconds": 60,
+                        "headers": {
+                          "X-Chat-Id": "f9854328-36cb-4640-ad19-711d2b999871"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "firstMessage": "Thank you for calling Wellness Partners. This is Riley, your scheduling assistant. How may I help you today?",
+                "voicemailMessage": "Hello, this is Riley from Wellness Partners. I'm calling about your appointment. Please call us back at your earliest convenience so we can confirm your scheduling details.",
+                "endCallMessage": "Thank you for scheduling with Wellness Partners. Your appointment is confirmed, and we look forward to seeing you soon. Have a wonderful day!",
+                "transcriber": {
+                  "model": "nova-3",
+                  "language": "en",
+                  "provider": "deepgram",
+                  "endpointing": 150
+                },
+                "clientMessages": [
+                  "conversation-update",
+                  "function-call",
+                  "hang",
+                  "model-output",
+                  "speech-update",
+                  "status-update",
+                  "transfer-update",
+                  "transcript",
+                  "tool-calls",
+                  "user-interrupted",
+                  "voice-input",
+                  "workflow.node.started"
+                ],
+                "serverMessages": [
+                  "conversation-update",
+                  "end-of-call-report",
+                  "function-call",
+                  "hang",
+                  "speech-update",
+                  "status-update",
+                  "tool-calls",
+                  "transfer-destination-request",
+                  "handoff-destination-request",
+                  "user-interrupted"
+                ],
+                "endCallPhrases": [
+                  "goodbye",
+                  "talk to you soon"
+                ],
+                "hipaaEnabled": false,
+                "backgroundDenoisingEnabled": false,
+                "startSpeakingPlan": {
+                  "waitSeconds": 0.4,
+                  "smartEndpointingEnabled": "livekit"
+                }
+              }
+            }
+          },
+          "webhookUrl": "https://n8ncloud123321.app.n8n.cloud/webhook-test/88ef3801-ba2a-4078-a8c9-27c311228ca9",
+          "executionMode": "test"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-13T20:48:29.538Z",
+      "updatedAt": "2025-09-13T20:48:29.538Z",
+      "role": "workflow:owner",
+      "workflowId": "CGTp8YRelqWZcqYG",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-13T20:48:34.000Z",
+  "versionId": "ddad1c12-693d-4fcc-8da5-b7d0a590bd6a"
+}
