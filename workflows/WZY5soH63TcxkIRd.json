@@ -89,9 +89,12 @@
         "operation": "getAll",
         "calendar": {
           "__rl": true,
+          "value": "ubaidmukhtar237@gmail.com",
           "mode": "list",
-          "value": ""
+          "cachedResultName": "ubaidmukhtar237@gmail.com"
         },
+        "returnAll": true,
+        "timeMax": "={{ $now.plus({ day: 1 }) }}",
         "options": {}
       },
       "type": "n8n-nodes-base.googleCalendar",
@@ -137,6 +140,9 @@
     },
     {
       "parameters": {
+        "sendTo": "hello6tysm@gmail.com",
+        "subject": "={{ $json.summary }}",
+        "message": "={{ $json.description }}",
         "options": {}
       },
       "type": "n8n-nodes-base.gmail",
@@ -193,7 +199,7 @@
       "parameters": {
         "content": "Formatting the data into clean state.",
         "height": 240,
-        "color": 2
+        "color": 3
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
@@ -208,7 +214,8 @@
       "parameters": {
         "content": "Combining the data the splitted data coming from calendar node.",
         "height": 240,
-        "width": 288
+        "width": 288,
+        "color": 3
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
@@ -220,7 +227,115 @@
       "name": "Sticky Note2"
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "Get many events": [
+      {
+        "json": {
+          "id": "3u9cedjf08p5rcdpcnfpdofhut",
+          "summary": "Birthday of my cousin",
+          "start": {
+            "dateTime": "2025-09-14T11:00:00+05:00",
+            "timeZone": "Asia/Karachi"
+          },
+          "end": {
+            "dateTime": "2025-09-14T12:00:00+05:00",
+            "timeZone": "Asia/Karachi"
+          },
+          "creator": {
+            "email": "ubaidmukhtar237@gmail.com",
+            "self": true
+          },
+          "organizer": {
+            "email": "ubaidmukhtar237@gmail.com",
+            "self": true
+          },
+          "description": "Birthday of my cousin Usman Shahid.",
+          "created": "2025-09-13T15:57:46.000Z",
+          "updated": "2025-09-13T16:19:34.891Z",
+          "etag": "\"3515560749782142\"",
+          "eventType": "default",
+          "htmlLink": "https://www.google.com/calendar/event?eid=M3U5Y2VkamYwOHA1cmNkcGNuZnBkb2ZodXQgdWJhaWRtdWtodGFyMjM3QG0",
+          "iCalUID": "3u9cedjf08p5rcdpcnfpdofhut@google.com",
+          "kind": "calendar#event",
+          "reminders": {
+            "useDefault": true
+          },
+          "sequence": 0,
+          "status": "confirmed"
+        }
+      },
+      {
+        "json": {
+          "id": "2unifajr12df9kk03de5j1jdpv",
+          "summary": "Meet 1 for dentist clinic",
+          "start": {
+            "dateTime": "2025-09-14T13:30:00+05:00",
+            "timeZone": "Asia/Karachi"
+          },
+          "end": {
+            "dateTime": "2025-09-14T14:30:00+05:00",
+            "timeZone": "Asia/Karachi"
+          },
+          "creator": {
+            "email": "ubaidmukhtar237@gmail.com",
+            "self": true
+          },
+          "organizer": {
+            "email": "ubaidmukhtar237@gmail.com",
+            "self": true
+          },
+          "description": "Meeting with Doctor For my Teeths.",
+          "created": "2025-09-13T15:57:25.000Z",
+          "updated": "2025-09-13T16:19:48.637Z",
+          "etag": "\"3515560777274590\"",
+          "eventType": "default",
+          "htmlLink": "https://www.google.com/calendar/event?eid=MnVuaWZhanIxMmRmOWtrMDNkZTVqMWpkcHYgdWJhaWRtdWtodGFyMjM3QG0",
+          "iCalUID": "2unifajr12df9kk03de5j1jdpv@google.com",
+          "kind": "calendar#event",
+          "reminders": {
+            "useDefault": true
+          },
+          "sequence": 0,
+          "status": "confirmed"
+        }
+      },
+      {
+        "json": {
+          "id": "3s86l78s1762dh0dho1o3gjvvc",
+          "summary": "meeting with boss",
+          "start": {
+            "dateTime": "2025-09-14T16:30:00+05:00",
+            "timeZone": "Asia/Karachi"
+          },
+          "end": {
+            "dateTime": "2025-09-14T17:30:00+05:00",
+            "timeZone": "Asia/Karachi"
+          },
+          "creator": {
+            "email": "ubaidmukhtar237@gmail.com",
+            "self": true
+          },
+          "organizer": {
+            "email": "ubaidmukhtar237@gmail.com",
+            "self": true
+          },
+          "description": "Meeting with my angry boss.",
+          "created": "2025-09-13T15:57:34.000Z",
+          "updated": "2025-09-13T16:19:58.020Z",
+          "etag": "\"3515560796041758\"",
+          "eventType": "default",
+          "htmlLink": "https://www.google.com/calendar/event?eid=M3M4Nmw3OHMxNzYyZGgwZGhvMW8zZ2p2dmMgdWJhaWRtdWtodGFyMjM3QG0",
+          "iCalUID": "3s86l78s1762dh0dho1o3gjvvc@google.com",
+          "kind": "calendar#event",
+          "reminders": {
+            "useDefault": true
+          },
+          "sequence": 0,
+          "status": "confirmed"
+        }
+      }
+    ]
+  },
   "settings": {
     "executionOrder": "v1"
   },
@@ -236,6 +351,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-13T15:56:50.000Z",
-  "versionId": "b8fd6ff6-57d4-4b09-a54c-4971c0966788"
+  "updatedAt": "2025-09-13T16:20:41.000Z",
+  "versionId": "25e1e4d3-d701-4eb8-91cc-6f4172e0e836"
 }
