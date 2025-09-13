@@ -1,0 +1,28 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-09-12T23:42:50.387Z",
+  "id": "Wfc4pEzfJlEACvAG",
+  "isArchived": false,
+  "meta": null,
+  "name": "Chat with Your SQL Database:https://youtu.be/7C1A5GXiYsE?si=-E5w45yvESaMvhJs",
+  "nodes": [],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-12T23:42:50.389Z",
+      "updatedAt": "2025-09-12T23:42:50.389Z",
+      "role": "workflow:owner",
+      "workflowId": "Wfc4pEzfJlEACvAG",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-12T23:42:50.000Z",
+  "versionId": "68c4f080-2a26-4bc7-b193-3f4cb7ed1dc4"
+}
