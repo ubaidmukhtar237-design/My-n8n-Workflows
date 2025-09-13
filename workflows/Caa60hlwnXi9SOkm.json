@@ -1,0 +1,28 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-09-10T20:22:07.565Z",
+  "id": "Caa60hlwnXi9SOkm",
+  "isArchived": false,
+  "meta": null,
+  "name": "AI Agent for Recruiters HR:https://youtu.be/tx_EP0pBWx8?si=sIvm5Elsq_u78qAj",
+  "nodes": [],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-10T20:22:07.568Z",
+      "updatedAt": "2025-09-10T20:22:07.568Z",
+      "role": "workflow:owner",
+      "workflowId": "Caa60hlwnXi9SOkm",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-11T12:18:48.000Z",
+  "versionId": "ee1b9aea-bdc2-41ca-969e-1898b4d5c717"
+}
