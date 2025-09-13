@@ -1,0 +1,137 @@
+{
+  "active": false,
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-13T20:49:12.162Z",
+  "id": "QI5BOfQrWoYrwLp9",
+  "isArchived": false,
+  "meta": null,
+  "name": "WebHook with Lovable Ai_SIMPLE AI AGENT LIKE CHAT GPT",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.message }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        112,
+        -176
+      ],
+      "id": "dbd941da-2a45-4593-8948-f4790e27c1d6",
+      "name": "AI Agent",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        96,
+        32
+      ],
+      "id": "a9bc1620-451f-4c85-88dc-aa47a0085d10",
+      "name": "OpenAI Chat Model"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        464,
+        -176
+      ],
+      "id": "d62657c1-a175-445b-a69f-8fd762b0463a",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        832,
+        -160
+      ],
+      "id": "55512e41-c53e-4cdf-a4aa-7d737a5bf2dd",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "0d282dc2-da44-409b-a7ee-b669a96b4110",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -192,
+        -144
+      ],
+      "id": "924404f7-da5f-4624-bd07-965b8d9159fd",
+      "name": "Webhook",
+      "webhookId": "0d282dc2-da44-409b-a7ee-b669a96b4110"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-13T20:49:12.166Z",
+      "updatedAt": "2025-09-13T20:49:12.166Z",
+      "role": "workflow:owner",
+      "workflowId": "QI5BOfQrWoYrwLp9",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-13T20:49:22.000Z",
+  "versionId": "3ccc700a-099d-4aba-9d68-811125e6ebe2"
+}
