@@ -22,6 +22,33 @@
           }
         ]
       ]
+    },
+    "Markdown": {
+      "main": [
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        []
+      ]
     }
   },
   "createdAt": "2025-09-13T19:54:57.729Z",
@@ -43,9 +70,7 @@
         },
         "simple": false,
         "filters": {},
-        "options": {
-          "downloadAttachments": false
-        }
+        "options": {}
       },
       "type": "n8n-nodes-base.gmailTrigger",
       "typeVersion": 1.3,
@@ -60,7 +85,8 @@
           "id": "3ZDGrufM0JFl2Z0X",
           "name": "Gmail account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -113,7 +139,8 @@
         -256
       ],
       "id": "ee68e8f6-6c87-44e3-82c0-31c79246c11b",
-      "name": "Edit Fields"
+      "name": "Edit Fields",
+      "disabled": true
     },
     {
       "parameters": {
@@ -127,14 +154,15 @@
         -256
       ],
       "id": "4aba6131-fb40-4adf-bf2c-ce29160e5178",
-      "name": "Markdown"
+      "name": "Markdown",
+      "disabled": true
     },
     {
       "parameters": {
         "content": "Passing the required data.",
         "height": 224,
         "width": 272,
-        "color": 7
+        "color": 6
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
@@ -147,19 +175,347 @@
     },
     {
       "parameters": {
-        "content": "Formatting data:To convert the text as html to text",
-        "height": 224,
+        "content": "Formatting data:To convert the text as html to text.\nNo Use of this node in this workflow.\nCan be used if there is not text from the starting and you want to convert text as html to simple text",
+        "height": 288,
         "width": 272,
-        "color": 7
+        "color": 6
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
         -512,
-        -320
+        -384
       ],
       "typeVersion": 1,
       "id": "058c9d74-76a6-474d-98a7-fc98c2be0b7c",
       "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appjPm3t9mtwcgnxn",
+          "mode": "list",
+          "cachedResultName": "To Extract Pdf file data from Emails",
+          "cachedResultUrl": "https://airtable.com/appjPm3t9mtwcgnxn"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbllSOm6bHyVeXt5x",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/appjPm3t9mtwcgnxn/tbllSOm6bHyVeXt5x"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "threadId": "={{ $json.threadId }}",
+            "from": "={{ $json['From '] }}",
+            "Subject": "={{ $json.Subject }}",
+            "textAsHtml": "={{ $json.textAsHtml }}",
+            "text": "={{ $json.data }}"
+          },
+          "matchingColumns": [
+            "Name"
+          ],
+          "schema": [
+            {
+              "id": "from",
+              "displayName": "from",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "threadId",
+              "displayName": "threadId",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Subject",
+              "displayName": "Subject",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "textAsHtml",
+              "displayName": "textAsHtml",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "text",
+              "displayName": "text",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -176,
+        -256
+      ],
+      "id": "303dde41-abc8-475f-985c-8f816f49a4fb",
+      "name": "Create a record",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "Itr6Ev0jStqTjVXC",
+          "name": "Airtable Personal Access Token account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## To convert text as html to formatted data from gmail.",
+        "height": 464,
+        "width": 1312,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1072,
+        -480
+      ],
+      "typeVersion": 1,
+      "id": "09efa299-edd0-4798-842e-2083a48b7c4a",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## To convert binary attachments(pdf) to text from gmail\n**Double click** to edit me. [Guide](https://docs.n8n.io/workflows/sticky-notes/)",
+        "height": 528,
+        "width": 1312,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1072,
+        32
+      ],
+      "typeVersion": 1,
+      "id": "2f028efb-dc34-431d-a9d1-caa4f0119274",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {},
+        "options": {
+          "downloadAttachments": true
+        }
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -1024,
+        240
+      ],
+      "id": "d0fb72ca-d5af-4e9a-99fb-b76d7ad697a7",
+      "name": "Gmail Trigger1",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "3ZDGrufM0JFl2Z0X",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6af5835b-92ab-47ea-8636-9640c8ff4731",
+              "name": "From ",
+              "value": "={{ $('Gmail Trigger1').item.json.headers.from }}",
+              "type": "string"
+            },
+            {
+              "id": "66284a3d-5848-4535-ab34-4e79cf8ef97a",
+              "name": "Subject",
+              "value": "={{ $('Gmail Trigger1').item.json.subject }}",
+              "type": "string"
+            },
+            {
+              "id": "52da4b5c-0ab3-4bef-8c29-fb5d868779e0",
+              "name": "Id",
+              "value": "={{ $('Gmail Trigger1').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "c95ef8c1-5949-4c3b-97f9-a455fae496c3",
+              "name": "threadId",
+              "value": "={{ $('Gmail Trigger1').item.json.threadId }}",
+              "type": "string"
+            },
+            {
+              "id": "fe740961-f75f-426c-a01d-6a533e27618c",
+              "name": "textAsHtml",
+              "value": "={{ $('Gmail Trigger1').item.json.textAsHtml }}",
+              "type": "string"
+            },
+            {
+              "id": "219577d8-d077-4804-9c1e-a79ed411e01c",
+              "name": "text",
+              "value": "={{ $('Gmail Trigger1').item.json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -896,
+        240
+      ],
+      "id": "7af4ef48-268f-4fe1-93a6-7dcb4dc0bbe0",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appjPm3t9mtwcgnxn",
+          "mode": "list",
+          "cachedResultName": "To Extract Pdf file data from Emails",
+          "cachedResultUrl": "https://airtable.com/appjPm3t9mtwcgnxn"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbllSOm6bHyVeXt5x",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/appjPm3t9mtwcgnxn/tbllSOm6bHyVeXt5x"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "threadId": "={{ $json.threadId }}",
+            "from": "={{ $json['From '] }}",
+            "Subject": "={{ $json.Subject }}",
+            "textAsHtml": "={{ $json.textAsHtml }}",
+            "text": "={{ $json.data }}"
+          },
+          "matchingColumns": [
+            "Name"
+          ],
+          "schema": [
+            {
+              "id": "from",
+              "displayName": "from",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "threadId",
+              "displayName": "threadId",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Subject",
+              "displayName": "Subject",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "textAsHtml",
+              "displayName": "textAsHtml",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "text",
+              "displayName": "text",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        96,
+        240
+      ],
+      "id": "9038369d-c66f-4367-b97c-dfa4f44efddb",
+      "name": "Create a record1",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "Itr6Ev0jStqTjVXC",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
     }
   ],
   "pinData": {
@@ -231,6 +587,19 @@
           "messageId": "<a3da0032-9806-4e43-8520-ce2c0f6e165c@mtasv.net>"
         }
       }
+    ],
+    "Markdown": [
+      {
+        "json": {
+          "From ": "From: \"Cal.com\" <hello@cal.com>",
+          "Subject": "Canceled: APPOINTMENT FOR THERAPY SESSION between Mukhtar Ubaid and UbaidNasir at 6:45pm - 7:15pm, Wednesday, September 17, 2025",
+          "Id": "19944e4e903f6101",
+          "threadId": "19944e4e903f6101",
+          "textAsHtml": "<p>Your scheduled event was canceled<br/>We sent an email to everyone with this information.</p><p>Reason for cancellation (optional):<br/>da</p><p>What:<br/>APPOINTMENT FOR THERAPY SESSION between Mukhtar Ubaid and UbaidNasir</p><p>Invitee Time Zone:<br/>Asia/Karachi</p><p>Who:<br/>Mukhtar Ubaid - Organizer<br/><a href=\"mailto:ubaidmukhtar237@gmail.com\">ubaidmukhtar237@gmail.com</a><br/>UbaidNasir<br/><a href=\"mailto:ubaidnasir1631@gmail.com\">ubaidnasir1631@gmail.com</a></p><p>Where:<br/>Bright Smile Dental Care, 12-B Gulshan Avenue, Block D, Lahore, Punjab, Pakistan 54000.</p><p>Description<br/>AN APPOINTMENT FOR THE THERAPY SESSION IN MY DENTAL CLINIC.</p><p>Need to reschedule or cancel? <a href=\"https://cal.com/booking/rWiqxYX9JUFNWCZrmEj4CQ?changes=true\">https://cal.com/booking/rWiqxYX9JUFNWCZrmEj4CQ?changes=true</a></p>",
+          "text": "Your scheduled event was canceled\nWe sent an email to everyone with this information.\n\nReason for cancellation (optional):\nda\n\nWhat:\nAPPOINTMENT FOR THERAPY SESSION between Mukhtar Ubaid and UbaidNasir\n\nInvitee Time Zone:\nAsia/Karachi\n\nWho:\nMukhtar Ubaid - Organizer\nubaidmukhtar237@gmail.com\nUbaidNasir\nubaidnasir1631@gmail.com\n\nWhere:\nBright Smile Dental Care, 12-B Gulshan Avenue, Block D, Lahore, Punjab, Pakistan 54000.\n\nDescription\nAN APPOINTMENT FOR THE THERAPY SESSION IN MY DENTAL CLINIC.\n\nNeed to reschedule or cancel? https://cal.com/booking/rWiqxYX9JUFNWCZrmEj4CQ?changes=true\n",
+          "data": "Your scheduled event was canceled  \nWe sent an email to everyone with this information.\n\nReason for cancellation (optional):  \nda\n\nWhat:  \nAPPOINTMENT FOR THERAPY SESSION between Mukhtar Ubaid and UbaidNasir\n\nInvitee Time Zone:  \nAsia/Karachi\n\nWho:  \nMukhtar Ubaid - Organizer  \n[ubaidmukhtar237@gmail.com](mailto:ubaidmukhtar237@gmail.com)  \nUbaidNasir  \n[ubaidnasir1631@gmail.com](mailto:ubaidnasir1631@gmail.com)\n\nWhere:  \nBright Smile Dental Care, 12-B Gulshan Avenue, Block D, Lahore, Punjab, Pakistan 54000.\n\nDescription  \nAN APPOINTMENT FOR THE THERAPY SESSION IN MY DENTAL CLINIC.\n\nNeed to reschedule or cancel? <https://cal.com/booking/rWiqxYX9JUFNWCZrmEj4CQ?changes=true>"
+        }
+      }
     ]
   },
   "settings": {
@@ -254,6 +623,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-09-13T22:28:28.000Z",
-  "versionId": "22969bc4-a9ae-4071-b391-b80390a99606"
+  "updatedAt": "2025-09-13T22:59:14.000Z",
+  "versionId": "35ccd177-3b9c-4fe4-a098-cb4f09ea01c5"
 }
