@@ -1,0 +1,246 @@
+{
+  "active": false,
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-13T20:46:43.246Z",
+  "id": "UvwRLMqyCDJAIlXE",
+  "isArchived": false,
+  "meta": null,
+  "name": "CREATING WORKFLOW WITHOUT JSON",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        96,
+        -112
+      ],
+      "id": "45d9d2b1-207a-4c15-b432-11f791a3fe81",
+      "name": "When chat message received",
+      "webhookId": "712b2823-3a80-4a17-91bb-8a632f18a7c2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=<AgentInstructions>\n<Role>\n<name>RecipeGeneratorAgent</name>\n<description>A helpful cooking assistant that generates custom recipes.</description>\n</Role>\n<Goal>\n<Primary>Provide a complete recipe including ingredients and step-by-step instructions\nbased on the <user's> requested dish. </Primary>\n</Goal>\n<Instructions>\n<Instruction1>Once you receive the <user's> dish name note them down carefully.\n</Instruction1>\n<Instruction2>Generate a list of ingredients with accurate quantities tailored to the\nspecified serving size.</Instruction2>\n<Instruction3>Provide clear, step-by-step instructions on how to prepare the dish.\n</Instruction3>\n<Instruction4>Where applicable, include cooking times, tips, or variations to enhance the\nrecipe.</Instruction4>\n</Instructions>\n<user's> {{ $json.chatInput }}  </user's>\n</AgentInstructions>\n",
+        "hasOutputParser": true,
+        "needsFallback": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        304,
+        -112
+      ],
+      "id": "c2dbaad9-8862-49a6-a9a6-b5d3d1ee7e5b",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        96
+      ],
+      "id": "6f4bc579-dbdc-4f97-b681-cdb4120ac998",
+      "name": "OpenAI Chat Model"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appc9T7RrR1divHse",
+          "mode": "list",
+          "cachedResultName": "n8n7",
+          "cachedResultUrl": "https://airtable.com/appc9T7RrR1divHse"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbllSOm6bHyVeXt5x",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/appc9T7RrR1divHse/tbllSOm6bHyVeXt5x"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "RECIPE NAME": "={{ $json.output.DishName }}",
+            "INSTRUCTIONS": "={{ $json.output.Instructions }}",
+            "TIPS": "={{ $json.output.Tips }}",
+            "INGREDIENTS": "={{ $json.output.Ingredients }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "RECIPE NAME",
+              "displayName": "RECIPE NAME",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "INGREDIENTS",
+              "displayName": "INGREDIENTS",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "INSTRUCTIONS",
+              "displayName": "INSTRUCTIONS",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "TIPS",
+              "displayName": "TIPS",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        656,
+        -112
+      ],
+      "id": "d708d35f-7003-49b7-a4b0-b9579fa7fd71",
+      "name": "Create a record"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        336,
+        96
+      ],
+      "id": "6a79ff38-2876-425c-be2c-f61aefbbda01",
+      "name": "OpenRouter Chat Model"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": " {\n  \"DishName\": \"Spaghetti Carbonara\",\n  \"ServingSize\": 2,\n  \"CookingTime\": \"20 minutes\",\n  \"Ingredients\": \"- 200g Spaghetti\\n- 2 Egg yolks\\n- 50g Parmesan cheese (grated)\\n- 75g Pancetta (diced)\\n- 1 clove Garlic (minced)\\n- Black pepper (to taste)\\n- 1 tbsp Olive oil\",\n  \"Instructions\": \"1. Bring a pot of salted water to boil and cook spaghetti until al dente.\\n2. In a bowl, whisk together egg yolks and grated Parmesan cheese.\\n3. In a pan, heat olive oil and cook pancetta until crispy. Add garlic and sauté briefly.\\n4. Drain pasta (reserve some pasta water) and add it to the pan with pancetta.\\n5. Remove from heat, pour in the egg-cheese mixture, and toss quickly to create a creamy sauce.\\n6. Add reserved pasta water if needed to loosen the sauce.\\n7. Season with black pepper and serve immediately.\",\n  \"Tips\": \"- Remove the pan from heat before adding the eggs to avoid scrambling.\\n- You can substitute pancetta with guanciale or bacon.\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        480,
+        96
+      ],
+      "id": "af584203-6c4c-4676-86d6-91b904f3c7d4",
+      "name": "Structured Output Parser"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-13T20:46:43.248Z",
+      "updatedAt": "2025-09-13T20:46:43.248Z",
+      "role": "workflow:owner",
+      "workflowId": "UvwRLMqyCDJAIlXE",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-13T20:46:57.000Z",
+  "versionId": "85dd5838-de90-4d4a-a898-e2c5b97b3d66"
+}
