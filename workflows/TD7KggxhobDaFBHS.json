@@ -1,0 +1,120 @@
+{
+  "active": false,
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-13T21:20:04.779Z",
+  "id": "TD7KggxhobDaFBHS",
+  "isArchived": false,
+  "meta": null,
+  "name": "My Own Practice_1_recipe of every dish u name",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        -112
+      ],
+      "id": "636781d6-5fe5-4bab-8916-8b88058cda9d",
+      "name": "When chat message received",
+      "webhookId": "cd1969af-160d-4c2c-b0f9-61fbd1756f6e"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=<recipe_request>\n  <instruction>\n    You are a professional chef AI.  \n    Always reply ONLY in **valid JSON** that matches this schema:  \n\n    {\n      \"recipe\": {\n        \"name\": \"Dish name here\",\n        \"description\": \"Short description of the dish\",\n        \"ingredients\": [\"Ingredient + measurement\"],\n        \"steps\": [\"Step 1\", \"Step 2\"],\n        \"time\": { \"prep\": \"X minutes\", \"cook\": \"Y minutes\" },\n        \"serving\": \"Serving suggestion\"\n      }\n    }\n  </instruction>\n\n  <user_input>\n    {{ $json.chatInput }}\n  </user_input>\n</recipe_request>\n",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        224,
+        -112
+      ],
+      "id": "b052e993-a28d-477c-8413-0073bf75bc04",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-lite",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        80,
+        96
+      ],
+      "id": "35e66c4b-ca1a-41b5-a24a-b0b99dda9a25",
+      "name": "Google Gemini Chat Model"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"recipe\": {\n    \"name\": \"Dish name here\",\n    \"description\": \"Short description of the dish\",\n    \"ingredients\": [\n      \"Ingredient 1 with measurement\",\n      \"Ingredient 2 with measurement\"\n    ],\n    \"steps\": [\n      \"Step 1 instruction\",\n      \"Step 2 instruction\"\n    ],\n    \"time\": {\n      \"prep\": \"X minutes\",\n      \"cook\": \"Y minutes\"\n    },\n    \"serving\": \"Serving suggestion\"\n  }\n}\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        400,
+        96
+      ],
+      "id": "b9263d68-eee5-4537-a8e4-3bd4acd33ab6",
+      "name": "Structured Output Parser"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-13T21:20:04.783Z",
+      "updatedAt": "2025-09-13T21:20:04.783Z",
+      "role": "workflow:owner",
+      "workflowId": "TD7KggxhobDaFBHS",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-13T21:20:10.000Z",
+  "versionId": "c223953c-53df-4bc4-b464-467ed2a240e1"
+}
