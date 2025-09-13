@@ -1,0 +1,28 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-09-13T03:28:04.498Z",
+  "id": "WZY5soH63TcxkIRd",
+  "isArchived": false,
+  "meta": null,
+  "name": "AI Agents for Business:https://youtu.be/dqMT-T0ywrA?si=EPf7_Y5U1aEm3c1T",
+  "nodes": [],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-13T03:28:04.501Z",
+      "updatedAt": "2025-09-13T03:28:04.501Z",
+      "role": "workflow:owner",
+      "workflowId": "WZY5soH63TcxkIRd",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-13T03:28:04.000Z",
+  "versionId": "652d4d09-7bdb-4273-90aa-a47b360bbb0f"
+}
