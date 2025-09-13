@@ -1,0 +1,28 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-09-11T12:29:42.345Z",
+  "id": "PrfcRI2yrfBy2qyw",
+  "isArchived": false,
+  "meta": null,
+  "name": "Ads:Nano Banana + n8n Tutorial:https://youtu.be/gXEYKIwk7j8?si=bZUWWp3d9rWAmpcg",
+  "nodes": [],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-11T12:29:42.348Z",
+      "updatedAt": "2025-09-11T12:29:42.348Z",
+      "role": "workflow:owner",
+      "workflowId": "PrfcRI2yrfBy2qyw",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-11T12:31:00.000Z",
+  "versionId": "87cdc818-b1f0-4c2c-ab37-e4ac055f8323"
+}
