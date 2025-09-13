@@ -1,13 +1,145 @@
 {
   "active": false,
-  "connections": {},
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "createdAt": "2025-09-13T19:54:57.729Z",
   "id": "Iju1ERJ6gUQSztFE",
   "isArchived": false,
-  "meta": null,
-  "name": "Part2",
-  "nodes": [],
-  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Part2:To Extract Pdf file data from Emails",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -576,
+        -144
+      ],
+      "id": "fd747f52-c0a5-41bc-9914-dc467b21aca9",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "3ZDGrufM0JFl2Z0X",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6af5835b-92ab-47ea-8636-9640c8ff4731",
+              "name": "From ",
+              "value": "={{ $json.headers.from }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -368,
+        -144
+      ],
+      "id": "ee68e8f6-6c87-44e3-82c0-31c79246c11b",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {
+    "Gmail Trigger": [
+      {
+        "json": {
+          "id": "19944c1b41c615f0",
+          "threadId": "19944c1b41c615f0",
+          "labelIds": [
+            "UNREAD",
+            "IMPORTANT",
+            "CATEGORY_PERSONAL",
+            "INBOX"
+          ],
+          "sizeEstimate": 27526,
+          "headers": {
+            "delivered-to": "Delivered-To: ubaidmukhtar237@gmail.com",
+            "received": "Received: from mail-sor-f65.google.com (mail-sor-f65.google.com. [209.85.220.65])\r\n        by mx.google.com with SMTPS id 98e67ed59e1d1-32dd980ad1esor6211845a91.2.2025.09.13.13.26.09\r\n        for <ubaidmukhtar237@gmail.com>\r\n        (Google Transport Security);\r\n        Sat, 13 Sep 2025 13:26:09 -0700 (PDT)",
+            "x-received": "X-Received: by 2002:a17:90b:394e:b0:32e:11f7:bfdf with SMTP id\r\n 98e67ed59e1d1-32e11f7c0b9mr3044484a91.28.1757795168217; Sat, 13 Sep 2025\r\n 13:26:08 -0700 (PDT)",
+            "arc-seal": "ARC-Seal: i=1; a=rsa-sha256; t=1757795169; cv=none;\r\n        d=google.com; s=arc-20240605;\r\n        b=DMNZKlq8b+Yveb9y6SUvyW5Cpswh4m3iXvV1csyRnAO0xOoYMiw7rzyMVXy4rJDUAU\r\n         BKkmb8XbKVXLosp9H4cCAABzavzHCjNMiNODuAo+l6GKwwxFrH89aNbe0wLQgwLRwO2I\r\n         zckD4g7HWNsLURTlxkFP5hWI5OD4K7lqQcrobxvKi9MgGQIhhs/A0ujodpQ1aOCX9bLb\r\n         wYsckdlgKeDdZCfwWEErVrVcjNVuHsMtvgrw8fdF+0EO/ems05mAztNiAmaz1OWe1ZtW\r\n         vEVVXWVR+On4fBtoyTBRMuQzyl8+7Imqlzr7jmf/76D0X4ERKZjLB1Ya9fxqjVSPif4W\r\n         IkTA==",
+            "arc-message-signature": "ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;\r\n        h=to:subject:message-id:date:from:mime-version:dkim-signature;\r\n        bh=xfx/NgvAou1nxQlzhg2MVL5LMTEC+dQ7oqufmVWwlj0=;\r\n        fh=ZPmkLqWAwLiNxaiqRYJXB5HEpgo7KXKIKg4UhmstvWo=;\r\n        b=LBwwCvNIjcuk8luubsAvHw2aa0M4aLgs7uVGHJEPVaXx7zgbBOq28RIXlWFcSQ1WRU\r\n         HRdOgMP2TIQAutiNy0KRb/Dddlf7MNlKH0vHvtPEpY+2BshFe9ChHmSndYx0GmApWlmI\r\n         W2agUf+5HiZbZU6z9eYtDwhnNFM9XhqzMxu9K95R9np7pGTwmZmb8vJVz+Hr0IIgCj3b\r\n         gW3om3tW3Dy2msxZgmU+nCN5ASFbU3nC8lGz7enWBWS2kIR428VIRj1bfhvww9aJ/g8g\r\n         /d2BhA5YaMEolJGh5pjsQHx3xp2TffS0vVMw3LrFxfoI+7BPm+vERgTcyZpvRPOtyg1i\r\n         et3A==;\r\n        dara=google.com",
+            "arc-authentication-results": "ARC-Authentication-Results: i=1; mx.google.com;\r\n       dkim=pass header.i=@gmail.com header.s=20230601 header.b=lAReQUSs;\r\n       spf=pass (google.com: domain of hello6tysm@gmail.com designates 209.85.220.65 as permitted sender) smtp.mailfrom=hello6tysm@gmail.com;\r\n       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com;\r\n       dara=pass header.i=@gmail.com",
+            "return-path": "Return-Path: <hello6tysm@gmail.com>",
+            "received-spf": "Received-SPF: pass (google.com: domain of hello6tysm@gmail.com designates 209.85.220.65 as permitted sender) client-ip=209.85.220.65;",
+            "authentication-results": "Authentication-Results: mx.google.com;\r\n       dkim=pass header.i=@gmail.com header.s=20230601 header.b=lAReQUSs;\r\n       spf=pass (google.com: domain of hello6tysm@gmail.com designates 209.85.220.65 as permitted sender) smtp.mailfrom=hello6tysm@gmail.com;\r\n       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com;\r\n       dara=pass header.i=@gmail.com",
+            "dkim-signature": "DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;\r\n        d=gmail.com; s=20230601; t=1757795168; x=1758399968; dara=google.com;\r\n        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject\r\n         :date:message-id:reply-to;\r\n        bh=xfx/NgvAou1nxQlzhg2MVL5LMTEC+dQ7oqufmVWwlj0=;\r\n        b=lAReQUSsqgInbZwdfmQVdEQneYtXuW7ckwKIQFsWe4wUqFxwecB2xyGSyi60zYyplY\r\n         vP/xkozlFHGKrXeDNIfCfq+Eq9TNKxUwrOKRz29EmAmhFDs2OEnC6peiV5duJi0w2fOa\r\n         IXZzI9txGgIuZF7P2Sa6+MfjqdYjJwS/U8nQqovV6iSwmIaydWqRjxKsny2Vdm6vann/\r\n         JWzn/K/uGt62PU4Mr7JnQ/GL8khub+C34/MWAoDUeV+L5taOcX+1nQM27pTy2zDKYSZW\r\n         g0Cv/HDDMal12WDgcCp1lOE3UC5cPdzBGYf6t/MkhVMEm3YvG8ssd5/Nj01NjHX+Nn98\r\n         60KA==",
+            "x-google-dkim-signature": "X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;\r\n        d=1e100.net; s=20230601; t=1757795168; x=1758399968;\r\n        h=to:subject:message-id:date:from:mime-version:x-gm-message-state\r\n         :from:to:cc:subject:date:message-id:reply-to;\r\n        bh=xfx/NgvAou1nxQlzhg2MVL5LMTEC+dQ7oqufmVWwlj0=;\r\n        b=TVVHjUa9Sb7zGvVWVnsZFRcXEYjwsHlYE1KeYCfaqifRe/AKCCWVuc+uErdaLh3CCF\r\n         U+UQiU3hTzhA+gYnXAvZUxOSmfax65ffNeQI7RZJ6xgxKG9tUfBaUyf3oJiuG2HDMzs3\r\n         KVc0JS+0oC5rDQuQPSKCn7O7KOUF/GMJa1JRg5gpVYqKc+WRSxymuxE38Frr/K6sH01l\r\n         nUx27hwcjva1jIsH+8fo4eRGP9zaf+652SzAZ4dCcnCT/urLqs71gePej1Mbcl1quW17\r\n         +FAx9bhd1RRdMYjM9ljmHmusJOYJtvC6kcIVdnvniZRZtMCDZYuFxUb7M1rsVPXsaN7O\r\n         2yPg==",
+            "x-gm-message-state": "X-Gm-Message-State: AOJu0YxTLhJn644zQ5s/VcOHVhAePJ2KLb1xwBYZG6FDULOE9dRmal2Q\r\n\t1H/kc0EvL3i9y77wBvWmI0oEjEqp1DxthpucrhlZYwQ2rO0giAA/Y4JLxcIWCF/CARAU20TYmDs\r\n\t1XCxMlSMxrnOiKGrKxGUvKNKOPg1PWvEOyE2o",
+            "x-gm-gg": "X-Gm-Gg: ASbGnctKmUclnV6hBkQOmzvNQSf6uHSUpAjLIXpgjSjYkaYaZNi9TZGTYbuM+14YS1A\r\n\tESMKtOfqraNPWAQjRodaa38xIvdm+444iyu9FWQ3EhlRM9sEixwPUrPPkM3zbbk9owDqlcnQKc1\r\n\tItkGd974SeanfdhMYaWDvEUGTiL6mc2YIKtZHT6URXyZk7TRz3MYXwyevPRVK/qRDNQrouX+dHP\r\n\ttDYCTGL9teHpLp3VBV0Jpqzdb5avTByuNxIHttEB45/rc+OTj2z",
+            "x-google-smtp-source": "X-Google-Smtp-Source: AGHT+IHgcjq8ld6/OQAfdvx5zPTkcz95ZR/x567RH/rEo+JAAJR6YTo/pn03YTtpGdlToQwfpq02f9Cl4rU+Eur5W4w=",
+            "mime-version": "MIME-Version: 1.0",
+            "from": "From: Hello <hello6tysm@gmail.com>",
+            "date": "Date: Sun, 14 Sep 2025 01:25:53 +0500",
+            "x-gm-features": "X-Gm-Features: Ac12FXxCVneqM-SB-q6ZO441fQKRXx9_y1sN7MIHkYtOcV7BHQb8il3Jw9PFMsM",
+            "message-id": "Message-ID: <CAKpXnr60GNGDB_Z=Q3jM_RUe6Kmgk5e5Zt-8PgeyhCphNSp_Wg@mail.gmail.com>",
+            "subject": "Subject: Hi",
+            "to": "To: \"ubaidmukhtar237@gmail.com\" <ubaidmukhtar237@gmail.com>",
+            "content-type": "Content-Type: multipart/mixed; boundary=\"000000000000977513063eb4947d\""
+          },
+          "html": "<div dir=\"ltr\"><br></div>\n",
+          "text": "\n",
+          "textAsHtml": "<p></p>",
+          "subject": "Hi",
+          "date": "2025-09-13T20:25:53.000Z",
+          "to": {
+            "value": [
+              {
+                "address": "ubaidmukhtar237@gmail.com",
+                "name": ""
+              }
+            ],
+            "html": "<span class=\"mp_address_group\"><a href=\"mailto:ubaidmukhtar237@gmail.com\" class=\"mp_address_email\">ubaidmukhtar237@gmail.com</a></span>",
+            "text": "ubaidmukhtar237@gmail.com"
+          },
+          "from": {
+            "value": [
+              {
+                "address": "hello6tysm@gmail.com",
+                "name": "Hello"
+              }
+            ],
+            "html": "<span class=\"mp_address_group\"><span class=\"mp_address_name\">Hello</span> &lt;<a href=\"mailto:hello6tysm@gmail.com\" class=\"mp_address_email\">hello6tysm@gmail.com</a>&gt;</span>",
+            "text": "\"Hello\" <hello6tysm@gmail.com>"
+          },
+          "messageId": "<CAKpXnr60GNGDB_Z=Q3jM_RUe6Kmgk5e5Zt-8PgeyhCphNSp_Wg@mail.gmail.com>"
+        }
+      }
+    ]
+  },
   "settings": {
     "executionOrder": "v1"
   },
@@ -20,9 +152,15 @@
       "projectId": "HHLWOKEAArOwm3kN"
     }
   ],
-  "staticData": null,
+  "staticData": {
+    "node:Gmail Trigger": {
+      "Gmail Trigger": {
+        "lastTimeChecked": 1757794299
+      }
+    }
+  },
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2025-09-13T19:54:57.000Z",
-  "versionId": "839644d9-1d82-48a5-bacd-f450955fc21d"
+  "triggerCount": 1,
+  "updatedAt": "2025-09-13T20:26:24.000Z",
+  "versionId": "f27aa54e-d778-4f3d-b6a6-ffc07ccdbc02"
 }
