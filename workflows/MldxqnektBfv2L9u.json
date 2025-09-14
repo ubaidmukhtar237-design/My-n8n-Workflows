@@ -1,0 +1,60 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-09-14T02:38:59.183Z",
+  "id": "MldxqnektBfv2L9u",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "n8n AI Agent with Long-Term Memory:https://youtu.be/7nCHU-Pf1G0?si=_XHTcQfFWiX7xDZJ",
+  "nodes": [
+    {
+      "parameters": {
+        "trigger": [
+          "message"
+        ],
+        "channelId": {
+          "__rl": true,
+          "value": "C09DE5VGC2H",
+          "mode": "list",
+          "cachedResultName": "cloud"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.slackTrigger",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        -32
+      ],
+      "id": "39901e75-6fe2-4284-bed3-4b0d533c233b",
+      "name": "Slack Trigger",
+      "webhookId": "0a1e3fed-076e-4108-8d7f-46557cc65931",
+      "credentials": {
+        "slackApi": {
+          "id": "EHkrBNjWKBi9posn",
+          "name": "Slack account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-14T02:38:59.187Z",
+      "updatedAt": "2025-09-14T02:38:59.187Z",
+      "role": "workflow:owner",
+      "workflowId": "MldxqnektBfv2L9u",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-14T02:46:40.000Z",
+  "versionId": "5a584afd-5ec1-446d-a6c6-77064d6340e3"
+}
