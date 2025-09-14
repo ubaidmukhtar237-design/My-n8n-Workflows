@@ -38,12 +38,7 @@
       "main": [
         [
           {
-            "node": "Extract from File",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "If",
+            "node": "Loop Over Items",
             "type": "main",
             "index": 0
           }
@@ -66,6 +61,91 @@
         [
           {
             "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Text": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Create a record1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a record1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
             "type": "main",
             "index": 0
           }
@@ -322,12 +402,12 @@
       "parameters": {
         "content": "## To convert text as html to formatted data from gmail.",
         "height": 464,
-        "width": 1312,
+        "width": 1328,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1072,
+        -1088,
         -480
       ],
       "typeVersion": 1,
@@ -337,13 +417,13 @@
     {
       "parameters": {
         "content": "## To convert binary attachments(pdf) to text from gmail\n**Double click** to edit me. [Guide](https://docs.n8n.io/workflows/sticky-notes/)",
-        "height": 528,
-        "width": 1312,
+        "height": 592,
+        "width": 1680,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1072,
+        -1120,
         32
       ],
       "typeVersion": 1,
@@ -368,7 +448,7 @@
       "type": "n8n-nodes-base.gmailTrigger",
       "typeVersion": 1.3,
       "position": [
-        -1024,
+        -1072,
         240
       ],
       "id": "d0fb72ca-d5af-4e9a-99fb-b76d7ad697a7",
@@ -433,8 +513,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -736,
-        240
+        -368,
+        224
       ],
       "id": "7af4ef48-268f-4fe1-93a6-7dcb4dc0bbe0",
       "name": "Edit Fields1"
@@ -533,7 +613,7 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2.1,
       "position": [
-        64,
+        336,
         224
       ],
       "id": "9038369d-c66f-4367-b97c-dfa4f44efddb",
@@ -554,22 +634,23 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        -864,
-        240
+        -528,
+        224
       ],
       "id": "6b835934-ed05-4522-a876-4416641e6a9a",
       "name": "Extract from File"
     },
     {
       "parameters": {
-        "content": "FORMATTING DATA",
-        "height": 208,
+        "content": "FORMATTING DATA.For feild input->name of the binary file set in edit feild node,meaning it will also give clean output of binary file text.",
+        "height": 272,
+        "width": 192,
         "color": 5
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -576,
-        176
+        -240,
+        96
       ],
       "typeVersion": 1,
       "id": "89940a24-9ba6-485a-8a59-3c547cbb4876",
@@ -582,8 +663,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -528,
-        240
+        -176,
+        224
       ],
       "id": "f889f4bc-6639-459b-bf76-62b4ff61edc6",
       "name": "Format Text"
@@ -616,11 +697,117 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -864,
-        112
+        -704,
+        256
       ],
       "id": "64bb49ae-1b24-4281-9f09-a5bb21c8af76",
       "name": "If"
+    },
+    {
+      "parameters": {
+        "content": "To pass emails with binary file to true path and pass emails without binary file to false path.",
+        "height": 272,
+        "width": 160,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -736,
+        112
+      ],
+      "typeVersion": 1,
+      "id": "7539a72d-260c-406d-a404-16c8f40f2d60",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  const messyText = item.json.text;\n\n  // Check if the 'text' field exists and is a string\n  if (typeof messyText === 'string') {\n    // 1. Replace all newline characters with a single space\n    let cleanedText = messyText.replace(/(\\r\\n|\\n|\\r)/gm, \" \");\n\n    // 2. Remove any character that is NOT a letter, number, space, comma, or full stop\n    cleanedText = cleanedText.replace(/[^a-zA-Z0-9 ,.]/g, \"\");\n    \n    // 3. Tidy up by replacing multiple spaces with a single space and trimming ends\n    cleanedText = cleanedText.replace(/\\s+/g, ' ').trim();\n\n    // Add the cleaned text to the new field\n    item.json.myNewField = cleanedText;\n\n  } else {\n    // If the 'text' field is missing or not text, add an error message\n    item.json.myNewField = \"Error: Input field 'text' not found or is not a string.\";\n  }\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -368,
+        432
+      ],
+      "id": "afc6f39b-5f6a-48dc-87cf-93d0830bd6ab",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6af5835b-92ab-47ea-8636-9640c8ff4731",
+              "name": "From ",
+              "value": "={{ $('Gmail Trigger1').item.json.headers.from }}",
+              "type": "string"
+            },
+            {
+              "id": "66284a3d-5848-4535-ab34-4e79cf8ef97a",
+              "name": "Subject",
+              "value": "={{ $('Gmail Trigger1').item.json.subject }}",
+              "type": "string"
+            },
+            {
+              "id": "52da4b5c-0ab3-4bef-8c29-fb5d868779e0",
+              "name": "Id",
+              "value": "={{ $('Gmail Trigger1').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "c95ef8c1-5949-4c3b-97f9-a455fae496c3",
+              "name": "threadId",
+              "value": "={{ $('Gmail Trigger1').item.json.threadId }}",
+              "type": "string"
+            },
+            {
+              "id": "fe740961-f75f-426c-a01d-6a533e27618c",
+              "name": "textAsHtml",
+              "value": "={{ $('Gmail Trigger1').item.json.textAsHtml }}",
+              "type": "string"
+            },
+            {
+              "id": "219577d8-d077-4804-9c1e-a79ed411e01c",
+              "name": "text",
+              "value": "={{ $('Gmail Trigger1').item.json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -528,
+        432
+      ],
+      "id": "5b5818a5-91c5-434f-a242-58a55254d969",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -896,
+        240
+      ],
+      "id": "79716772-fce1-43ad-bf8c-9f69ccf8f37a",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        112,
+        272
+      ],
+      "id": "30d7d935-bdff-4a8c-9429-b722d343edf8",
+      "name": "Merge"
     }
   ],
   "pinData": {
@@ -705,56 +892,6 @@
           "data": "Your scheduled event was canceled  \nWe sent an email to everyone with this information.\n\nReason for cancellation (optional):  \nda\n\nWhat:  \nAPPOINTMENT FOR THERAPY SESSION between Mukhtar Ubaid and UbaidNasir\n\nInvitee Time Zone:  \nAsia/Karachi\n\nWho:  \nMukhtar Ubaid - Organizer  \n[ubaidmukhtar237@gmail.com](mailto:ubaidmukhtar237@gmail.com)  \nUbaidNasir  \n[ubaidnasir1631@gmail.com](mailto:ubaidnasir1631@gmail.com)\n\nWhere:  \nBright Smile Dental Care, 12-B Gulshan Avenue, Block D, Lahore, Punjab, Pakistan 54000.\n\nDescription  \nAN APPOINTMENT FOR THE THERAPY SESSION IN MY DENTAL CLINIC.\n\nNeed to reschedule or cancel? <https://cal.com/booking/rWiqxYX9JUFNWCZrmEj4CQ?changes=true>"
         }
       }
-    ],
-    "Format Text": [
-      {
-        "json": {
-          "From ": "From: Hello <hello6tysm@gmail.com>",
-          "Subject": "Fwd: New Options to Manage Personalization on Google Play",
-          "Id": "19945645d3ab76b2",
-          "threadId": "19945645d3ab76b2",
-          "textAsHtml": "<p>---------- Forwarded message ---------<br/>From: Google Play &lt;<a href=\"mailto:googleplay-noreply@google.com\">googleplay-noreply@google.com</a>&gt;<br/>Date: Sat, Aug 17, 2024 at 9:17&#x202F;AM<br/>Subject: New Options to Manage Personalization on Google Play<br/>To: &lt;<a href=\"mailto:hello6tysm@gmail.com\">hello6tysm@gmail.com</a>&gt;</p><p>&lt;#m_739831932968130418_&gt;<br/>Hello Hello,<br/>In the coming weeks, Google Play will launch new personalization options<br/>that give you more seamless control of your personalization preferences and<br/>allow you to better manage your data in Play.<br/>Personalization provides a richer experience in the Play store, helping you<br/>discover exciting games, useful apps, relevant offers and much more, all of<br/>which is tailored to you. Learn more about personalizing your Google Play<br/>Store experience<br/>&lt;<a href=\"https://notifications.google.com/g/p/ANiao5qJzeoIRcVFpcnIa1_tbqr77lQT5wifi3jY_Oe1hl9GurUR-y00qEOpbbbUjZLov70lU6TJ4HYqzsH4LZRzfILs2NN8rYzQlXH8lu9cj1rxR2hPALPgA4cjdHUUZhCfD-nT1lD5cgjhxvb5uPMhJhCxt7FvFMim9dlOibBamB8ark4rSm-P4_9ng29yEOeTWU1Qyc-_IXKFq7HW-TstvYKx1Z8N1ZUD5zcDcEVTWf0nJNi6oqLJOXqJKmCgBAybJGLwhIDja2O6mw3oIPSAGYjfIwgpDaLll_167fmR-zeehubRtTFltRCT_QmrAfkD6gaZ7klz7d2MSw\">https://notifications.google.com/g/p/ANiao5qJzeoIRcVFpcnIa1_tbqr77lQT5wifi3jY_Oe1hl9GurUR-y00qEOpbbbUjZLov70lU6TJ4HYqzsH4LZRzfILs2NN8rYzQlXH8lu9cj1rxR2hPALPgA4cjdHUUZhCfD-nT1lD5cgjhxvb5uPMhJhCxt7FvFMim9dlOibBamB8ark4rSm-P4_9ng29yEOeTWU1Qyc-_IXKFq7HW-TstvYKx1Z8N1ZUD5zcDcEVTWf0nJNi6oqLJOXqJKmCgBAybJGLwhIDja2O6mw3oIPSAGYjfIwgpDaLll_167fmR-zeehubRtTFltRCT_QmrAfkD6gaZ7klz7d2MSw</a>&gt;<br/>Once available, these new features - alongside existing Play<br/>personalization controls - will be easily accessible by visiting<br/>Personalization in Play from the Google Play Store menu. This new<br/>destination will be a one-stop-shop for tailoring your personalization<br/>preferences in Play, giving you a more powerful way to:<br/>&bull; Manage all of your personalization options on Google Play and easily view<br/>activity and access personalization controls<br/>&bull; Choose which apps, books or other library items are used to personalize<br/>your Google Play experience. With one click you will be able to exclude use<br/>of Play data associated with that app for personalization in Play. Some<br/>examples of data that would be excluded for that app would include when you<br/>install or uninstall it, purchases that you make in it and your app<br/>activity. Learn more about new personalization options<br/>&lt;<a href=\"https://notifications.google.com/g/p/ANiao5rItDZLfeWO6Ih1zGfeo9sjUqoBP70K_r-GdcQznQ1pvcWAb-EqV_tTbnW0OdftkxtUas5TFGaOF0nEeWsWj12veV_yZw4z4Mv8_8sNtVuGDqwfgr_61y6_AxAw0EE2fQy2NQ0bS__NBFKk-w_lloXmva7c0WR0UcERENgA4J20owVScouIgOgnJWrCmmDYUndpnfb9GMqqk_spfMS1oTLVep5FP-3Z8RvrFJpQ--iHhz_OuZ59cjMwu6rYtJEwjNMULMFLm_a0WEeKcE4UAdi1Oh-2j1H-yrB8bIXtjpW0TJkGp_8\">https://notifications.google.com/g/p/ANiao5rItDZLfeWO6Ih1zGfeo9sjUqoBP70K_r-GdcQznQ1pvcWAb-EqV_tTbnW0OdftkxtUas5TFGaOF0nEeWsWj12veV_yZw4z4Mv8_8sNtVuGDqwfgr_61y6_AxAw0EE2fQy2NQ0bS__NBFKk-w_lloXmva7c0WR0UcERENgA4J20owVScouIgOgnJWrCmmDYUndpnfb9GMqqk_spfMS1oTLVep5FP-3Z8RvrFJpQ--iHhz_OuZ59cjMwu6rYtJEwjNMULMFLm_a0WEeKcE4UAdi1Oh-2j1H-yrB8bIXtjpW0TJkGp_8</a>&gt;<br/>With these enhanced controls you can ensure that you have a better Play<br/>experience that is personalized to you and continues to respect your<br/>privacy preferences.<br/>Should you have any questions please visit our Help Center<br/>&lt;<a href=\"https://notifications.google.com/g/p/ANiao5phxadn5CgxlV2InPIsZ9BvdUt0Ce1wb9JL53RXicORs8NJS-0tG397w4Lo8zTS0D8Euj7Wnc9wioteI0-RbLyViSP2dAz1maIpEZaV6BiYULMif-lhhyofR2tbENJyDp2_qe_shnwcDsA0Wd2OlgxG3783-SrarxL7bGqfqjVrSVI-ijKRfHwXMT_Ru7jOfs46NzuAYLRWaqPSsNkX9F67afBmBYphfbQw0o-PSA5ImmauEEfGnFUFrJLZxuRFv7dX\">https://notifications.google.com/g/p/ANiao5phxadn5CgxlV2InPIsZ9BvdUt0Ce1wb9JL53RXicORs8NJS-0tG397w4Lo8zTS0D8Euj7Wnc9wioteI0-RbLyViSP2dAz1maIpEZaV6BiYULMif-lhhyofR2tbENJyDp2_qe_shnwcDsA0Wd2OlgxG3783-SrarxL7bGqfqjVrSVI-ijKRfHwXMT_Ru7jOfs46NzuAYLRWaqPSsNkX9F67afBmBYphfbQw0o-PSA5ImmauEEfGnFUFrJLZxuRFv7dX</a>&gt;<br/>or get in touch<br/>&lt;<a href=\"https://notifications.google.com/g/p/ANiao5qhM2b4zIOjN3uJYw2qBJWQDlJ4IVSrnfOeMJ7ooFi_uCnHgoUVkd-0u7LmIYDvZzK8RvMgDt_raT6y0WuKafY5YGYCc_nydIV5EYlNKVlPNjcEb-nqIx5i64JG7hemRqoaLfxWJ35bqytHO3KSkGf7eNM8fZAZmP9ppv142tkeOoTJSOloec8LhzDdSKTrpJqSwZP6tOpADBVZ4E3O2D4z7omY9hN9xeG3dzUvc2cx7Hq2C0Y\">https://notifications.google.com/g/p/ANiao5qhM2b4zIOjN3uJYw2qBJWQDlJ4IVSrnfOeMJ7ooFi_uCnHgoUVkd-0u7LmIYDvZzK8RvMgDt_raT6y0WuKafY5YGYCc_nydIV5EYlNKVlPNjcEb-nqIx5i64JG7hemRqoaLfxWJ35bqytHO3KSkGf7eNM8fZAZmP9ppv142tkeOoTJSOloec8LhzDdSKTrpJqSwZP6tOpADBVZ4E3O2D4z7omY9hN9xeG3dzUvc2cx7Hq2C0Y</a>&gt;<br/>.<br/>Thank you for using Google Play!<br/>&copy; 2024 Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA<br/>&lt;#m_739831932968130418_&gt;<br/>You have received this mandatory email service announcement to update you<br/>about important changes to your Play product or account.<br/>Please do not reply to this email, as we are unable to respond from this<br/>email address. If you need support, please visit the Google Play Help Center<br/>&lt;<a href=\"https://notifications.google.com/g/p/ANiao5rIkI_DrMnDmYKaKgG6foaGYSADSK9V3D2Y3WIGMQuNPCDvqN3X3VdDouFFOFY7axD-em1JE022kDdCMA3322FfccfaMDWWm4kyWaQUUzB6Nb_1Npl7Z7w-9nCLj020yhD7S4O3QDPc4d_Mx2g-eqOBOYlut9u-i9cerqNZd7-1Gc3r-JPgVwLgK102g0IO50uf7XvPVux0jHtOVfEfDy8K_eIOh_z-Szuxpj5_Jv8H_PcLIlswkZmSZrsKvPdQf0dH9oW9q3jscFGsRcvY-HA\">https://notifications.google.com/g/p/ANiao5rIkI_DrMnDmYKaKgG6foaGYSADSK9V3D2Y3WIGMQuNPCDvqN3X3VdDouFFOFY7axD-em1JE022kDdCMA3322FfccfaMDWWm4kyWaQUUzB6Nb_1Npl7Z7w-9nCLj020yhD7S4O3QDPc4d_Mx2g-eqOBOYlut9u-i9cerqNZd7-1Gc3r-JPgVwLgK102g0IO50uf7XvPVux0jHtOVfEfDy8K_eIOh_z-Szuxpj5_Jv8H_PcLIlswkZmSZrsKvPdQf0dH9oW9q3jscFGsRcvY-HA</a>&gt;<br/>.</p>",
-          "text": "---------- Forwarded message ---------\nFrom: Google Play <googleplay-noreply@google.com>\nDate: Sat, Aug 17, 2024 at 9:17 AM\nSubject: New Options to Manage Personalization on Google Play\nTo: <hello6tysm@gmail.com>\n\n\n<#m_739831932968130418_>\nHello Hello,\nIn the coming weeks, Google Play will launch new personalization options\nthat give you more seamless control of your personalization preferences and\nallow you to better manage your data in Play.\nPersonalization provides a richer experience in the Play store, helping you\ndiscover exciting games, useful apps, relevant offers and much more, all of\nwhich is tailored to you. Learn more about personalizing your Google Play\nStore experience\n<https://notifications.google.com/g/p/ANiao5qJzeoIRcVFpcnIa1_tbqr77lQT5wifi3jY_Oe1hl9GurUR-y00qEOpbbbUjZLov70lU6TJ4HYqzsH4LZRzfILs2NN8rYzQlXH8lu9cj1rxR2hPALPgA4cjdHUUZhCfD-nT1lD5cgjhxvb5uPMhJhCxt7FvFMim9dlOibBamB8ark4rSm-P4_9ng29yEOeTWU1Qyc-_IXKFq7HW-TstvYKx1Z8N1ZUD5zcDcEVTWf0nJNi6oqLJOXqJKmCgBAybJGLwhIDja2O6mw3oIPSAGYjfIwgpDaLll_167fmR-zeehubRtTFltRCT_QmrAfkD6gaZ7klz7d2MSw>\nOnce available, these new features - alongside existing Play\npersonalization controls - will be easily accessible by visiting\nPersonalization in Play from the Google Play Store menu. This new\ndestination will be a one-stop-shop for tailoring your personalization\npreferences in Play, giving you a more powerful way to:\n• Manage all of your personalization options on Google Play and easily view\nactivity and access personalization controls\n• Choose which apps, books or other library items are used to personalize\nyour Google Play experience. With one click you will be able to exclude use\nof Play data associated with that app for personalization in Play. Some\nexamples of data that would be excluded for that app would include when you\ninstall or uninstall it, purchases that you make in it and your app\nactivity. Learn more about new personalization options\n<https://notifications.google.com/g/p/ANiao5rItDZLfeWO6Ih1zGfeo9sjUqoBP70K_r-GdcQznQ1pvcWAb-EqV_tTbnW0OdftkxtUas5TFGaOF0nEeWsWj12veV_yZw4z4Mv8_8sNtVuGDqwfgr_61y6_AxAw0EE2fQy2NQ0bS__NBFKk-w_lloXmva7c0WR0UcERENgA4J20owVScouIgOgnJWrCmmDYUndpnfb9GMqqk_spfMS1oTLVep5FP-3Z8RvrFJpQ--iHhz_OuZ59cjMwu6rYtJEwjNMULMFLm_a0WEeKcE4UAdi1Oh-2j1H-yrB8bIXtjpW0TJkGp_8>\nWith these enhanced controls you can ensure that you have a better Play\nexperience that is personalized to you and continues to respect your\nprivacy preferences.\nShould you have any questions please visit our Help Center\n<https://notifications.google.com/g/p/ANiao5phxadn5CgxlV2InPIsZ9BvdUt0Ce1wb9JL53RXicORs8NJS-0tG397w4Lo8zTS0D8Euj7Wnc9wioteI0-RbLyViSP2dAz1maIpEZaV6BiYULMif-lhhyofR2tbENJyDp2_qe_shnwcDsA0Wd2OlgxG3783-SrarxL7bGqfqjVrSVI-ijKRfHwXMT_Ru7jOfs46NzuAYLRWaqPSsNkX9F67afBmBYphfbQw0o-PSA5ImmauEEfGnFUFrJLZxuRFv7dX>\nor get in touch\n<https://notifications.google.com/g/p/ANiao5qhM2b4zIOjN3uJYw2qBJWQDlJ4IVSrnfOeMJ7ooFi_uCnHgoUVkd-0u7LmIYDvZzK8RvMgDt_raT6y0WuKafY5YGYCc_nydIV5EYlNKVlPNjcEb-nqIx5i64JG7hemRqoaLfxWJ35bqytHO3KSkGf7eNM8fZAZmP9ppv142tkeOoTJSOloec8LhzDdSKTrpJqSwZP6tOpADBVZ4E3O2D4z7omY9hN9xeG3dzUvc2cx7Hq2C0Y>\n.\nThank you for using Google Play!\n© 2024 Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA\n<#m_739831932968130418_>\nYou have received this mandatory email service announcement to update you\nabout important changes to your Play product or account.\nPlease do not reply to this email, as we are unable to respond from this\nemail address. If you need support, please visit the Google Play Help Center\n<https://notifications.google.com/g/p/ANiao5rIkI_DrMnDmYKaKgG6foaGYSADSK9V3D2Y3WIGMQuNPCDvqN3X3VdDouFFOFY7axD-em1JE022kDdCMA3322FfccfaMDWWm4kyWaQUUzB6Nb_1Npl7Z7w-9nCLj020yhD7S4O3QDPc4d_Mx2g-eqOBOYlut9u-i9cerqNZd7-1Gc3r-JPgVwLgK102g0IO50uf7XvPVux0jHtOVfEfDy8K_eIOh_z-Szuxpj5_Jv8H_PcLIlswkZmSZrsKvPdQf0dH9oW9q3jscFGsRcvY-HA>\n.\n",
-          "textAttachment": "Never Miss a Client Call Again – Boost Your Law Firm’s Revenue with AI Receptionist\nHi [Client’s Name],\nI wanted to introduce you to something that can help your law firm capture every\nopportunity and never miss a client again: an AI Voice Receptionist/Assistant Agent.\nHere’s how it can benefit your practice:\n1. 24/7 Call Handling – The AI receptionist answers every call, even after hours,\nweekends, or holidays. You’ll never lose a potential client because of a missed call.\n2. Lead Capture & Screening – It collects caller details, case type, urgency, and\nschedules appointments directly into your calendar.\n3. Instant Follow-Up – Clients get a professional, immediate response that builds trust\nand keeps them from calling another firm.\n4. Revenue Growth – More answered calls = more consultations booked = more cases\nwon. Even one extra client a month can easily cover the cost of the system.\n5. Confidential & Secure – All data is handled securely, giving your clients confidence\nthat their legal matters are in safe hands.\n6. Cost-Effective – No salaries, no missed calls, just consistent professional support\naround the clock.\nWhy it matters for lawyers:\nMany firms lose thousands every year because potential clients hang up when no one\nanswers. With an AI receptionist, you’re always available, ensuring every lead is\ncaptured and converted into revenue.\nWould you like me to give you a quick demo to show how it works for a law firm like\nyours?\nBest regards,\n[Your Name]",
-          "cleanedText": "Forwarded message From Google Play googleplaynoreplygoogle.com Date Sat, Aug 17, 2024 at 917AM Subject New Options to Manage Personalization on Google Play To hello6tysmgmail.com m739831932968130418 Hello Hello, In the coming weeks, Google Play will launch new personalization options that give you more seamless control of your personalization preferences and allow you to better manage your data in Play. Personalization provides a richer experience in the Play store, helping you discover exciting games, useful apps, relevant offers and much more, all of which is tailored to you. Learn more about personalizing your Google Play Store experience httpsnotifications.google.comgpANiao5qJzeoIRcVFpcnIa1tbqr77lQT5wifi3jYOe1hl9GurURy00qEOpbbbUjZLov70lU6TJ4HYqzsH4LZRzfILs2NN8rYzQlXH8lu9cj1rxR2hPALPgA4cjdHUUZhCfDnT1lD5cgjhxvb5uPMhJhCxt7FvFMim9dlOibBamB8ark4rSmP49ng29yEOeTWU1QycIXKFq7HWTstvYKx1Z8N1ZUD5zcDcEVTWf0nJNi6oqLJOXqJKmCgBAybJGLwhIDja2O6mw3oIPSAGYjfIwgpDaLll167fmRzeehubRtTFltRCTQmrAfkD6gaZ7klz7d2MSw Once available, these new features alongside existing Play personalization controls will be easily accessible by visiting Personalization in Play from the Google Play Store menu. This new destination will be a onestopshop for tailoring your personalization preferences in Play, giving you a more powerful way to Manage all of your personalization options on Google Play and easily view activity and access personalization controls Choose which apps, books or other library items are used to personalize your Google Play experience. With one click you will be able to exclude use of Play data associated with that app for personalization in Play. Some examples of data that would be excluded for that app would include when you install or uninstall it, purchases that you make in it and your app activity. Learn more about new personalization options httpsnotifications.google.comgpANiao5rItDZLfeWO6Ih1zGfeo9sjUqoBP70KrGdcQznQ1pvcWAbEqVtTbnW0OdftkxtUas5TFGaOF0nEeWsWj12veVyZw4z4Mv88sNtVuGDqwfgr61y6AxAw0EE2fQy2NQ0bSNBFKkwlloXmva7c0WR0UcERENgA4J20owVScouIgOgnJWrCmmDYUndpnfb9GMqqkspfMS1oTLVep5FP3Z8RvrFJpQiHhzOuZ59cjMwu6rYtJEwjNMULMFLma0WEeKcE4UAdi1Oh2j1HyrB8bIXtjpW0TJkGp8 With these enhanced controls you can ensure that you have a better Play experience that is personalized to you and continues to respect your privacy preferences. Should you have any questions please visit our Help Center httpsnotifications.google.comgpANiao5phxadn5CgxlV2InPIsZ9BvdUt0Ce1wb9JL53RXicORs8NJS0tG397w4Lo8zTS0D8Euj7Wnc9wioteI0RbLyViSP2dAz1maIpEZaV6BiYULMiflhhyofR2tbENJyDp2qeshnwcDsA0Wd2OlgxG3783SrarxL7bGqfqjVrSVIijKRfHwXMTRu7jOfs46NzuAYLRWaqPSsNkX9F67afBmBYphfbQw0oPSA5ImmauEEfGnFUFrJLZxuRFv7dX or get in touch httpsnotifications.google.comgpANiao5qhM2b4zIOjN3uJYw2qBJWQDlJ4IVSrnfOeMJ7ooFiuCnHgoUVkd0u7LmIYDvZzK8RvMgDtraT6y0WuKafY5YGYCcnydIV5EYlNKVlPNjcEbnqIx5i64JG7hemRqoaLfxWJ35bqytHO3KSkGf7eNM8fZAZmP9ppv142tkeOoTJSOloec8LhzDdSKTrpJqSwZP6tOpADBVZ4E3O2D4z7omY9hN9xeG3dzUvc2cx7Hq2C0Y . Thank you for using Google Play 2024 Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA m739831932968130418 You have received this mandatory email service announcement to update you about important changes to your Play product or account. Please do not reply to this email, as we are unable to respond from this email address. If you need support, please visit the Google Play Help Center httpsnotifications.google.comgpANiao5rIkIDrMnDmYKaKgG6foaGYSADSK9V3D2Y3WIGMQuNPCDvqN3X3VdDouFFOFY7axDem1JE022kDdCMA3322FfccfaMDWWm4kyWaQUUzB6Nb1Npl7Z7w9nCLj020yhD7S4O3QDPc4dMx2geqOBOYlut9ui9cerqNZd71Gc3rJPgVwLgK102g0IO50uf7XvPVux0jHtOVfEfDy8KeIOhzSzuxpj5Jv8HPcLIlswkZmSZrsKvPdQf0dH9oW9q3jscFGsRcvYHA .",
-          "cleanedTextAttachment": "Never Miss a Client Call Again Boost Your Law Firms Revenue with AI Receptionist Hi Clients Name, I wanted to introduce you to something that can help your law firm capture every opportunity and never miss a client again an AI Voice ReceptionistAssistant Agent. Heres how it can benefit your practice 1. 247 Call Handling The AI receptionist answers every call, even after hours, weekends, or holidays. Youll never lose a potential client because of a missed call. 2. Lead Capture Screening It collects caller details, case type, urgency, and schedules appointments directly into your calendar. 3. Instant FollowUp Clients get a professional, immediate response that builds trust and keeps them from calling another firm. 4. Revenue Growth More answered calls more consultations booked more cases won. Even one extra client a month can easily cover the cost of the system. 5. Confidential Secure All data is handled securely, giving your clients confidence that their legal matters are in safe hands. 6. CostEffective No salaries, no missed calls, just consistent professional support around the clock. Why it matters for lawyers Many firms lose thousands every year because potential clients hang up when no one answers. With an AI receptionist, youre always available, ensuring every lead is captured and converted into revenue. Would you like me to give you a quick demo to show how it works for a law firm like yours Best regards, Your Name"
-        }
-      }
-    ],
-    "Extract from File": [
-      {
-        "json": {
-          "numpages": 1,
-          "numrender": 1,
-          "info": {
-            "PDFFormatVersion": "1.3",
-            "Language": null,
-            "EncryptFilterName": null,
-            "IsLinearized": false,
-            "IsAcroFormPresent": false,
-            "IsXFAPresent": false,
-            "IsCollectionPresent": false,
-            "IsSignaturesPresent": false,
-            "CreationDate": "D:20250905191929Z"
-          },
-          "text": "Never Miss a Client Call Again – Boost Your Law Firm’s Revenue with AI Receptionist\nHi [Client’s Name],\nI wanted to introduce you to something that can help your law firm capture every\nopportunity and never miss a client again: an AI Voice Receptionist/Assistant Agent.\nHere’s how it can benefit your practice:\n1. 24/7 Call Handling – The AI receptionist answers every call, even after hours,\nweekends, or holidays. You’ll never lose a potential client because of a missed call.\n2. Lead Capture & Screening – It collects caller details, case type, urgency, and\nschedules appointments directly into your calendar.\n3. Instant Follow-Up – Clients get a professional, immediate response that builds trust\nand keeps them from calling another firm.\n4. Revenue Growth – More answered calls = more consultations booked = more cases\nwon. Even one extra client a month can easily cover the cost of the system.\n5. Confidential & Secure – All data is handled securely, giving your clients confidence\nthat their legal matters are in safe hands.\n6. Cost-Effective – No salaries, no missed calls, just consistent professional support\naround the clock.\nWhy it matters for lawyers:\nMany firms lose thousands every year because potential clients hang up when no one\nanswers. With an AI receptionist, you’re always available, ensuring every lead is\ncaptured and converted into revenue.\nWould you like me to give you a quick demo to show how it works for a law firm like\nyours?\nBest regards,\n[Your Name]",
-          "version": "5.3.31"
-        },
-        "binary": {}
-      }
-    ],
-    "Edit Fields1": [
-      {
-        "json": {
-          "From ": "From: Hello <hello6tysm@gmail.com>",
-          "Subject": "Fwd: New Options to Manage Personalization on Google Play",
-          "Id": "19945645d3ab76b2",
-          "threadId": "19945645d3ab76b2",
-          "textAsHtml": "<p>---------- Forwarded message ---------<br/>From: Google Play &lt;<a href=\"mailto:googleplay-noreply@google.com\">googleplay-noreply@google.com</a>&gt;<br/>Date: Sat, Aug 17, 2024 at 9:17&#x202F;AM<br/>Subject: New Options to Manage Personalization on Google Play<br/>To: &lt;<a href=\"mailto:hello6tysm@gmail.com\">hello6tysm@gmail.com</a>&gt;</p><p>&lt;#m_739831932968130418_&gt;<br/>Hello Hello,<br/>In the coming weeks, Google Play will launch new personalization options<br/>that give you more seamless control of your personalization preferences and<br/>allow you to better manage your data in Play.<br/>Personalization provides a richer experience in the Play store, helping you<br/>discover exciting games, useful apps, relevant offers and much more, all of<br/>which is tailored to you. Learn more about personalizing your Google Play<br/>Store experience<br/>&lt;<a href=\"https://notifications.google.com/g/p/ANiao5qJzeoIRcVFpcnIa1_tbqr77lQT5wifi3jY_Oe1hl9GurUR-y00qEOpbbbUjZLov70lU6TJ4HYqzsH4LZRzfILs2NN8rYzQlXH8lu9cj1rxR2hPALPgA4cjdHUUZhCfD-nT1lD5cgjhxvb5uPMhJhCxt7FvFMim9dlOibBamB8ark4rSm-P4_9ng29yEOeTWU1Qyc-_IXKFq7HW-TstvYKx1Z8N1ZUD5zcDcEVTWf0nJNi6oqLJOXqJKmCgBAybJGLwhIDja2O6mw3oIPSAGYjfIwgpDaLll_167fmR-zeehubRtTFltRCT_QmrAfkD6gaZ7klz7d2MSw\">https://notifications.google.com/g/p/ANiao5qJzeoIRcVFpcnIa1_tbqr77lQT5wifi3jY_Oe1hl9GurUR-y00qEOpbbbUjZLov70lU6TJ4HYqzsH4LZRzfILs2NN8rYzQlXH8lu9cj1rxR2hPALPgA4cjdHUUZhCfD-nT1lD5cgjhxvb5uPMhJhCxt7FvFMim9dlOibBamB8ark4rSm-P4_9ng29yEOeTWU1Qyc-_IXKFq7HW-TstvYKx1Z8N1ZUD5zcDcEVTWf0nJNi6oqLJOXqJKmCgBAybJGLwhIDja2O6mw3oIPSAGYjfIwgpDaLll_167fmR-zeehubRtTFltRCT_QmrAfkD6gaZ7klz7d2MSw</a>&gt;<br/>Once available, these new features - alongside existing Play<br/>personalization controls - will be easily accessible by visiting<br/>Personalization in Play from the Google Play Store menu. This new<br/>destination will be a one-stop-shop for tailoring your personalization<br/>preferences in Play, giving you a more powerful way to:<br/>&bull; Manage all of your personalization options on Google Play and easily view<br/>activity and access personalization controls<br/>&bull; Choose which apps, books or other library items are used to personalize<br/>your Google Play experience. With one click you will be able to exclude use<br/>of Play data associated with that app for personalization in Play. Some<br/>examples of data that would be excluded for that app would include when you<br/>install or uninstall it, purchases that you make in it and your app<br/>activity. Learn more about new personalization options<br/>&lt;<a href=\"https://notifications.google.com/g/p/ANiao5rItDZLfeWO6Ih1zGfeo9sjUqoBP70K_r-GdcQznQ1pvcWAb-EqV_tTbnW0OdftkxtUas5TFGaOF0nEeWsWj12veV_yZw4z4Mv8_8sNtVuGDqwfgr_61y6_AxAw0EE2fQy2NQ0bS__NBFKk-w_lloXmva7c0WR0UcERENgA4J20owVScouIgOgnJWrCmmDYUndpnfb9GMqqk_spfMS1oTLVep5FP-3Z8RvrFJpQ--iHhz_OuZ59cjMwu6rYtJEwjNMULMFLm_a0WEeKcE4UAdi1Oh-2j1H-yrB8bIXtjpW0TJkGp_8\">https://notifications.google.com/g/p/ANiao5rItDZLfeWO6Ih1zGfeo9sjUqoBP70K_r-GdcQznQ1pvcWAb-EqV_tTbnW0OdftkxtUas5TFGaOF0nEeWsWj12veV_yZw4z4Mv8_8sNtVuGDqwfgr_61y6_AxAw0EE2fQy2NQ0bS__NBFKk-w_lloXmva7c0WR0UcERENgA4J20owVScouIgOgnJWrCmmDYUndpnfb9GMqqk_spfMS1oTLVep5FP-3Z8RvrFJpQ--iHhz_OuZ59cjMwu6rYtJEwjNMULMFLm_a0WEeKcE4UAdi1Oh-2j1H-yrB8bIXtjpW0TJkGp_8</a>&gt;<br/>With these enhanced controls you can ensure that you have a better Play<br/>experience that is personalized to you and continues to respect your<br/>privacy preferences.<br/>Should you have any questions please visit our Help Center<br/>&lt;<a href=\"https://notifications.google.com/g/p/ANiao5phxadn5CgxlV2InPIsZ9BvdUt0Ce1wb9JL53RXicORs8NJS-0tG397w4Lo8zTS0D8Euj7Wnc9wioteI0-RbLyViSP2dAz1maIpEZaV6BiYULMif-lhhyofR2tbENJyDp2_qe_shnwcDsA0Wd2OlgxG3783-SrarxL7bGqfqjVrSVI-ijKRfHwXMT_Ru7jOfs46NzuAYLRWaqPSsNkX9F67afBmBYphfbQw0o-PSA5ImmauEEfGnFUFrJLZxuRFv7dX\">https://notifications.google.com/g/p/ANiao5phxadn5CgxlV2InPIsZ9BvdUt0Ce1wb9JL53RXicORs8NJS-0tG397w4Lo8zTS0D8Euj7Wnc9wioteI0-RbLyViSP2dAz1maIpEZaV6BiYULMif-lhhyofR2tbENJyDp2_qe_shnwcDsA0Wd2OlgxG3783-SrarxL7bGqfqjVrSVI-ijKRfHwXMT_Ru7jOfs46NzuAYLRWaqPSsNkX9F67afBmBYphfbQw0o-PSA5ImmauEEfGnFUFrJLZxuRFv7dX</a>&gt;<br/>or get in touch<br/>&lt;<a href=\"https://notifications.google.com/g/p/ANiao5qhM2b4zIOjN3uJYw2qBJWQDlJ4IVSrnfOeMJ7ooFi_uCnHgoUVkd-0u7LmIYDvZzK8RvMgDt_raT6y0WuKafY5YGYCc_nydIV5EYlNKVlPNjcEb-nqIx5i64JG7hemRqoaLfxWJ35bqytHO3KSkGf7eNM8fZAZmP9ppv142tkeOoTJSOloec8LhzDdSKTrpJqSwZP6tOpADBVZ4E3O2D4z7omY9hN9xeG3dzUvc2cx7Hq2C0Y\">https://notifications.google.com/g/p/ANiao5qhM2b4zIOjN3uJYw2qBJWQDlJ4IVSrnfOeMJ7ooFi_uCnHgoUVkd-0u7LmIYDvZzK8RvMgDt_raT6y0WuKafY5YGYCc_nydIV5EYlNKVlPNjcEb-nqIx5i64JG7hemRqoaLfxWJ35bqytHO3KSkGf7eNM8fZAZmP9ppv142tkeOoTJSOloec8LhzDdSKTrpJqSwZP6tOpADBVZ4E3O2D4z7omY9hN9xeG3dzUvc2cx7Hq2C0Y</a>&gt;<br/>.<br/>Thank you for using Google Play!<br/>&copy; 2024 Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA<br/>&lt;#m_739831932968130418_&gt;<br/>You have received this mandatory email service announcement to update you<br/>about important changes to your Play product or account.<br/>Please do not reply to this email, as we are unable to respond from this<br/>email address. If you need support, please visit the Google Play Help Center<br/>&lt;<a href=\"https://notifications.google.com/g/p/ANiao5rIkI_DrMnDmYKaKgG6foaGYSADSK9V3D2Y3WIGMQuNPCDvqN3X3VdDouFFOFY7axD-em1JE022kDdCMA3322FfccfaMDWWm4kyWaQUUzB6Nb_1Npl7Z7w-9nCLj020yhD7S4O3QDPc4d_Mx2g-eqOBOYlut9u-i9cerqNZd7-1Gc3r-JPgVwLgK102g0IO50uf7XvPVux0jHtOVfEfDy8K_eIOh_z-Szuxpj5_Jv8H_PcLIlswkZmSZrsKvPdQf0dH9oW9q3jscFGsRcvY-HA\">https://notifications.google.com/g/p/ANiao5rIkI_DrMnDmYKaKgG6foaGYSADSK9V3D2Y3WIGMQuNPCDvqN3X3VdDouFFOFY7axD-em1JE022kDdCMA3322FfccfaMDWWm4kyWaQUUzB6Nb_1Npl7Z7w-9nCLj020yhD7S4O3QDPc4d_Mx2g-eqOBOYlut9u-i9cerqNZd7-1Gc3r-JPgVwLgK102g0IO50uf7XvPVux0jHtOVfEfDy8K_eIOh_z-Szuxpj5_Jv8H_PcLIlswkZmSZrsKvPdQf0dH9oW9q3jscFGsRcvY-HA</a>&gt;<br/>.</p>",
-          "text": "---------- Forwarded message ---------\nFrom: Google Play <googleplay-noreply@google.com>\nDate: Sat, Aug 17, 2024 at 9:17 AM\nSubject: New Options to Manage Personalization on Google Play\nTo: <hello6tysm@gmail.com>\n\n\n<#m_739831932968130418_>\nHello Hello,\nIn the coming weeks, Google Play will launch new personalization options\nthat give you more seamless control of your personalization preferences and\nallow you to better manage your data in Play.\nPersonalization provides a richer experience in the Play store, helping you\ndiscover exciting games, useful apps, relevant offers and much more, all of\nwhich is tailored to you. Learn more about personalizing your Google Play\nStore experience\n<https://notifications.google.com/g/p/ANiao5qJzeoIRcVFpcnIa1_tbqr77lQT5wifi3jY_Oe1hl9GurUR-y00qEOpbbbUjZLov70lU6TJ4HYqzsH4LZRzfILs2NN8rYzQlXH8lu9cj1rxR2hPALPgA4cjdHUUZhCfD-nT1lD5cgjhxvb5uPMhJhCxt7FvFMim9dlOibBamB8ark4rSm-P4_9ng29yEOeTWU1Qyc-_IXKFq7HW-TstvYKx1Z8N1ZUD5zcDcEVTWf0nJNi6oqLJOXqJKmCgBAybJGLwhIDja2O6mw3oIPSAGYjfIwgpDaLll_167fmR-zeehubRtTFltRCT_QmrAfkD6gaZ7klz7d2MSw>\nOnce available, these new features - alongside existing Play\npersonalization controls - will be easily accessible by visiting\nPersonalization in Play from the Google Play Store menu. This new\ndestination will be a one-stop-shop for tailoring your personalization\npreferences in Play, giving you a more powerful way to:\n• Manage all of your personalization options on Google Play and easily view\nactivity and access personalization controls\n• Choose which apps, books or other library items are used to personalize\nyour Google Play experience. With one click you will be able to exclude use\nof Play data associated with that app for personalization in Play. Some\nexamples of data that would be excluded for that app would include when you\ninstall or uninstall it, purchases that you make in it and your app\nactivity. Learn more about new personalization options\n<https://notifications.google.com/g/p/ANiao5rItDZLfeWO6Ih1zGfeo9sjUqoBP70K_r-GdcQznQ1pvcWAb-EqV_tTbnW0OdftkxtUas5TFGaOF0nEeWsWj12veV_yZw4z4Mv8_8sNtVuGDqwfgr_61y6_AxAw0EE2fQy2NQ0bS__NBFKk-w_lloXmva7c0WR0UcERENgA4J20owVScouIgOgnJWrCmmDYUndpnfb9GMqqk_spfMS1oTLVep5FP-3Z8RvrFJpQ--iHhz_OuZ59cjMwu6rYtJEwjNMULMFLm_a0WEeKcE4UAdi1Oh-2j1H-yrB8bIXtjpW0TJkGp_8>\nWith these enhanced controls you can ensure that you have a better Play\nexperience that is personalized to you and continues to respect your\nprivacy preferences.\nShould you have any questions please visit our Help Center\n<https://notifications.google.com/g/p/ANiao5phxadn5CgxlV2InPIsZ9BvdUt0Ce1wb9JL53RXicORs8NJS-0tG397w4Lo8zTS0D8Euj7Wnc9wioteI0-RbLyViSP2dAz1maIpEZaV6BiYULMif-lhhyofR2tbENJyDp2_qe_shnwcDsA0Wd2OlgxG3783-SrarxL7bGqfqjVrSVI-ijKRfHwXMT_Ru7jOfs46NzuAYLRWaqPSsNkX9F67afBmBYphfbQw0o-PSA5ImmauEEfGnFUFrJLZxuRFv7dX>\nor get in touch\n<https://notifications.google.com/g/p/ANiao5qhM2b4zIOjN3uJYw2qBJWQDlJ4IVSrnfOeMJ7ooFi_uCnHgoUVkd-0u7LmIYDvZzK8RvMgDt_raT6y0WuKafY5YGYCc_nydIV5EYlNKVlPNjcEb-nqIx5i64JG7hemRqoaLfxWJ35bqytHO3KSkGf7eNM8fZAZmP9ppv142tkeOoTJSOloec8LhzDdSKTrpJqSwZP6tOpADBVZ4E3O2D4z7omY9hN9xeG3dzUvc2cx7Hq2C0Y>\n.\nThank you for using Google Play!\n© 2024 Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA\n<#m_739831932968130418_>\nYou have received this mandatory email service announcement to update you\nabout important changes to your Play product or account.\nPlease do not reply to this email, as we are unable to respond from this\nemail address. If you need support, please visit the Google Play Help Center\n<https://notifications.google.com/g/p/ANiao5rIkI_DrMnDmYKaKgG6foaGYSADSK9V3D2Y3WIGMQuNPCDvqN3X3VdDouFFOFY7axD-em1JE022kDdCMA3322FfccfaMDWWm4kyWaQUUzB6Nb_1Npl7Z7w-9nCLj020yhD7S4O3QDPc4d_Mx2g-eqOBOYlut9u-i9cerqNZd7-1Gc3r-JPgVwLgK102g0IO50uf7XvPVux0jHtOVfEfDy8K_eIOh_z-Szuxpj5_Jv8H_PcLIlswkZmSZrsKvPdQf0dH9oW9q3jscFGsRcvY-HA>\n.\n",
-          "textAttachment": "Never Miss a Client Call Again – Boost Your Law Firm’s Revenue with AI Receptionist\nHi [Client’s Name],\nI wanted to introduce you to something that can help your law firm capture every\nopportunity and never miss a client again: an AI Voice Receptionist/Assistant Agent.\nHere’s how it can benefit your practice:\n1. 24/7 Call Handling – The AI receptionist answers every call, even after hours,\nweekends, or holidays. You’ll never lose a potential client because of a missed call.\n2. Lead Capture & Screening – It collects caller details, case type, urgency, and\nschedules appointments directly into your calendar.\n3. Instant Follow-Up – Clients get a professional, immediate response that builds trust\nand keeps them from calling another firm.\n4. Revenue Growth – More answered calls = more consultations booked = more cases\nwon. Even one extra client a month can easily cover the cost of the system.\n5. Confidential & Secure – All data is handled securely, giving your clients confidence\nthat their legal matters are in safe hands.\n6. Cost-Effective – No salaries, no missed calls, just consistent professional support\naround the clock.\nWhy it matters for lawyers:\nMany firms lose thousands every year because potential clients hang up when no one\nanswers. With an AI receptionist, you’re always available, ensuring every lead is\ncaptured and converted into revenue.\nWould you like me to give you a quick demo to show how it works for a law firm like\nyours?\nBest regards,\n[Your Name]"
-        }
-      }
     ]
   },
   "settings": {
@@ -778,6 +915,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-09-13T23:59:28.000Z",
-  "versionId": "e1599d68-32f7-462e-8819-7b93e7b70c48"
+  "updatedAt": "2025-09-14T00:26:59.000Z",
+  "versionId": "b164c7bd-9346-4c7f-b43e-1edcd63c38f5"
 }
