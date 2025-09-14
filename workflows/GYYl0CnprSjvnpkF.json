@@ -331,24 +331,56 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserAutofixing",
       "typeVersion": 1,
       "position": [
-        704,
-        1520
+        640,
+        1488
       ],
       "id": "7f494de0-8c04-422f-a769-dc36f3079341",
       "name": "Auto-fixing Output Parser"
     },
     {
       "parameters": {
-        "jsonSchemaExample": "{\n  \"description\": \"Notification regarding an issue processing a subscription payment for Cursor.ir\",\n  \"type\": \"Monthly Recurring\",\n  \"invoiceDate\": \"\",\n  \"paymentDate\": \"\",\n  \"invoiceNumber\": \"\",\n  \"purchaseOrderNumber\": \"\",\n  \"supplierName\": \"Cursor Team\",\n  \"supplierVatId\": \"\",\n  \"lineItems\": [],\n  \"priceWithVat\": \"\",\n  \"priceWithoutVat\": \"\",\n  \"totalPrice\": \"\",\n  \"currency\": \"\",\n  \"specialInstructions\": \"Address the payment issue by visiting the Billing Invoices section in the dashboard\",\n  \"contactInformation\": \"Reply to the email or reach out at hi@cursor.com\",\n  \"associatedAccount\": \"google ubaidmukhtar237@gmail.com\"\n}"
+        "schemaType": "manual",
+        "inputSchema": "={\n  \"type\": \"object\",\n  \"properties\": {\n    \"description\": {\n      \"type\": \"string\",\n      \"description\": \"Notification regarding an issue processing a subscription payment.\"\n    },\n    \"type\": {\n      \"type\": \"string\",\n      \"enum\": [\"Monthly Recurring\", \"One-Time\"],\n      \"description\": \"Type of subscription.\"\n    },\n    \"invoice_date\": {\n      \"type\": \"string\",\n      \"format\": \"date\",\n      \"description\": \"Date the invoice was received.\"\n    },\n    \"payment_date\": {\n      \"type\": \"string\",\n      \"format\": \"date\",\n      \"description\": \"Date the payment is due to come out.\"\n    },\n    \"invoice_number\": {\n      \"type\": \"string\",\n      \"description\": \"Unique identifier for the invoice.\"\n    },\n    \"purchase_order_number\": {\n      \"type\": \"string\",\n      \"description\": \"Purchase order number associated with the transaction.\"\n    },\n    \"supplier_name\": {\n      \"type\": \"string\",\n      \"description\": \"Name of the supplier.\"\n    },\n    \"supplier_vat_identification_number\": {\n      \"type\": \"string\",\n      \"description\": \"VAT identification number of the supplier.\"\n    },\n    \"line_items\": {\n      \"type\": \"array\",\n      \"description\": \"Details of the goods or services rendered.\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"description\": {\n            \"type\": \"string\",\n            \"description\": \"Description of the good or service.\"\n          },\n          \"price_with_vat\": {\n            \"type\": \"number\",\n            \"description\": \"Price of the item including VAT (without currency).\"\n          },\n          \"price_without_vat\": {\n            \"type\": \"number\",\n            \"description\": \"Price of the item excluding VAT (without currency).\"\n          }\n        },\n        \"required\": [\"description\", \"price_without_vat\"]\n      }\n    },\n    \"total_price_without_vat\": {\n      \"type\": \"number\",\n      \"description\": \"Total price of the transaction excluding VAT.\"\n    },\n    \"currency\": {\n      \"type\": \"string\",\n      \"enum\": [\"USD\", \"Euro\", \"GBP\"],\n      \"description\": \"Currency of the transaction.\"\n    },\n    \"additional_information\": {\n      \"type\": \"string\",\n      \"description\": \"Any additional important information not covered above.\"\n    },\n    \"account_associated\": {\n      \"type\": \"string\",\n      \"format\": \"email\",\n      \"description\": \"Email address of the account associated with the notification.\"\n    },\n    \"action_required\": {\n      \"type\": \"string\",\n      \"description\": \"Information about the action required by the user.\"\n    },\n    \"action_link\": {\n      \"type\": \"string\",\n      \"format\": \"url\",\n      \"description\": \"A URL to take the required action.\"\n    },\n    \"contact_for_support\": {\n      \"type\": \"string\",\n      \"format\": \"email\",\n      \"description\": \"Email address for support.\"\n    }\n  },\n  \"required\": [\n    \"description\",\n    \"type\",\n    \"invoice_date\",\n    \"payment_date\",\n    \"invoice_number\",\n    \"supplier_name\",\n    \"total_price_without_vat\",\n    \"currency\",\n    \"account_associated\",\n    \"action_required\",\n    \"action_link\",\n    \"contact_for_support\"\n  ]\n}"
       },
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        464,
-        1568
+        608,
+        1600
       ],
       "id": "30e97264-9c23-4b9a-822c-e68cebe00d9f",
       "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "content": "Extract Key Info",
+        "height": 576,
+        "width": 352,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        544,
+        1152
+      ],
+      "typeVersion": 1,
+      "id": "f289d304-35cb-4eac-b13b-f7e475d98b2a",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "OutPut Data",
+        "height": 224,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        928,
+        1200
+      ],
+      "typeVersion": 1,
+      "id": "3bb5d518-aabd-4bce-8c9e-f0f84ff04d4a",
+      "name": "Sticky Note2"
     }
   ],
   "pinData": {
@@ -421,30 +453,6 @@
           "messageId": "<91a702a2-dea6-4c42-81e2-0ecd3721de14@mtasv.net>"
         }
       }
-    ],
-    "Basic LLM Chain": [
-      {
-        "json": {
-          "output": {
-            "description": "Payment issue notification for Cursor subscription",
-            "type": "Monthly Recurring",
-            "invoiceDate": "",
-            "paymentDate": "",
-            "invoiceNumber": "",
-            "purchaseOrderNumber": "",
-            "supplierName": "Cursor",
-            "supplierVatId": "",
-            "lineItems": [],
-            "priceWithVat": "",
-            "priceWithoutVat": "",
-            "totalPrice": "",
-            "currency": "",
-            "specialInstructions": "To address the issue, visit the Billing Invoices section in your dashboard: httpstrack.pstmrk.it3scursor.com2Fdashboard3Ftab3DbillingI76jQgfAAQAQ91a702a2dea64c4281e20ecd3721de141Zeh3iPxi2x",
-            "contactInformation": "hicursor.com",
-            "associatedAccount": "ubaidmukhtar237gmail.com"
-          }
-        }
-      }
     ]
   },
   "settings": {
@@ -468,6 +476,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-09-14T07:24:31.000Z",
-  "versionId": "a4ee2d27-b5af-4294-809b-ceaa17b2a13d"
+  "updatedAt": "2025-09-14T07:57:22.000Z",
+  "versionId": "501843a5-4027-455d-9641-9806f8e634d4"
 }
