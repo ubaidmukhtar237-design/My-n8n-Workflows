@@ -53,6 +53,11 @@
             "node": "Basic LLM Chain",
             "type": "ai_languageModel",
             "index": 0
+          },
+          {
+            "node": "Auto-fixing Output Parser",
+            "type": "ai_languageModel",
+            "index": 0
           }
         ]
       ]
@@ -63,6 +68,28 @@
           {
             "node": "Create a record1",
             "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Auto-fixing Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Auto-fixing Output Parser",
+            "type": "ai_outputParser",
             "index": 0
           }
         ]
@@ -242,7 +269,8 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "={{ $json.myNewField }}",
+        "text": "=<invoice>\n{{ $json.myNewField }}\n</invoice>\n",
+        "hasOutputParser": true,
         "messages": {
           "messageValues": [
             {
@@ -263,8 +291,8 @@
     },
     {
       "parameters": {
-        "content": "Basic LLM Chain\n",
-        "height": 368,
+        "content": "Basic LLM Chain->For Parsing Bank Details in this Workflow coming from the Email.\n",
+        "height": 576,
         "width": 1568,
         "color": 7
       },
@@ -295,6 +323,32 @@
           "name": "Google Gemini(PaLM) Api account"
         }
       }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserAutofixing",
+      "typeVersion": 1,
+      "position": [
+        704,
+        1520
+      ],
+      "id": "7f494de0-8c04-422f-a769-dc36f3079341",
+      "name": "Auto-fixing Output Parser"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"description\": \"Notification regarding an issue processing a subscription payment for Cursor.ir\",\n  \"type\": \"Monthly Recurring\",\n  \"invoiceDate\": \"\",\n  \"paymentDate\": \"\",\n  \"invoiceNumber\": \"\",\n  \"purchaseOrderNumber\": \"\",\n  \"supplierName\": \"Cursor Team\",\n  \"supplierVatId\": \"\",\n  \"lineItems\": [],\n  \"priceWithVat\": \"\",\n  \"priceWithoutVat\": \"\",\n  \"totalPrice\": \"\",\n  \"currency\": \"\",\n  \"specialInstructions\": \"Address the payment issue by visiting the Billing Invoices section in the dashboard\",\n  \"contactInformation\": \"Reply to the email or reach out at hi@cursor.com\",\n  \"associatedAccount\": \"google ubaidmukhtar237@gmail.com\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        464,
+        1568
+      ],
+      "id": "30e97264-9c23-4b9a-822c-e68cebe00d9f",
+      "name": "Structured Output Parser"
     }
   ],
   "pinData": {
@@ -371,7 +425,24 @@
     "Basic LLM Chain": [
       {
         "json": {
-          "text": "```json\n{\n  \"Description\": \"Notification regarding an issue processing a subscription payment for Cursor.\",\n  \"Type\": \"Monthly Recurring\",\n  \"Invoice date\": \"\",\n  \"Payment date\": \"\",\n  \"Invoice number\": \"\",\n  \"Purchase order number\": \"\",\n  \"Supplier name\": \"Cursor\",\n  \"Supplier VAT identification number\": \"\",\n  \"Line items\": [],\n  \"Price with and without VAT\": null,\n  \"Total price\": null,\n  \"Currency\": \"\",\n  \"Additional information\": {\n    \"Payment terms\": \"Immediate action required to resolve payment issue.\",\n    \"Payment methods accepted\": \"Please visit dashboard billing section to update payment information.\",\n    \"Bank account details if provided\": \"\",\n    \"Discount terms or early payment incentives\": \"\",\n    \"Late payment penalties or interest rates\": \"\",\n    \"Tax exemption references\": \"\",\n    \"Contract or framework agreement references\": \"\",\n    \"Delivery terms\": \"\",\n    \"Special instructions\": \"Visit the Billing & Invoices section in your dashboard to address the payment issue: httpstrack.pstmrk.it3scursor.com2Fdashboard3Ftab3DbillingI76jQgfAAQAQ91a702a2dea64c4281e20ecd3721de141Zeh3iPxi2x\",\n    \"Contact information for billing inquiries\": \"hicursor.com\",\n    \"Return/refund policies\": \"\",\n    \"Warranty information if applicable\": \"\",\n    \"Certificate of origin if present\": \"\",\n    \"Insurance requirements\": \"\",\n    \"Customs information for international shipments\": \"\",\n    \"Account Registered Email\": \"ubaidmukhtar237gmail.com\"\n  }\n}\n```"
+          "output": {
+            "description": "Payment issue notification for Cursor subscription",
+            "type": "Monthly Recurring",
+            "invoiceDate": "",
+            "paymentDate": "",
+            "invoiceNumber": "",
+            "purchaseOrderNumber": "",
+            "supplierName": "Cursor",
+            "supplierVatId": "",
+            "lineItems": [],
+            "priceWithVat": "",
+            "priceWithoutVat": "",
+            "totalPrice": "",
+            "currency": "",
+            "specialInstructions": "To address the issue, visit the Billing Invoices section in your dashboard: httpstrack.pstmrk.it3scursor.com2Fdashboard3Ftab3DbillingI76jQgfAAQAQ91a702a2dea64c4281e20ecd3721de141Zeh3iPxi2x",
+            "contactInformation": "hicursor.com",
+            "associatedAccount": "ubaidmukhtar237gmail.com"
+          }
         }
       }
     ]
@@ -397,6 +468,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-09-14T06:57:49.000Z",
-  "versionId": "8e0849d3-f394-472a-a2d1-2fbc2c8c804c"
+  "updatedAt": "2025-09-14T07:24:31.000Z",
+  "versionId": "a4ee2d27-b5af-4294-809b-ceaa17b2a13d"
 }
