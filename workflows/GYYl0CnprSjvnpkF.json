@@ -1,0 +1,93 @@
+{
+  "active": false,
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-14T01:44:37.795Z",
+  "id": "GYYl0CnprSjvnpkF",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Part 3:llm and Ai agent nodes",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {},
+        "options": {
+          "downloadAttachments": true
+        }
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -720,
+        -144
+      ],
+      "id": "e0e9c214-0457-42af-9374-62a6280fa53b",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "s2WwkLntcEWdzNj9",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -528,
+        -144
+      ],
+      "id": "20fb15bc-884b-49e6-aa56-7b91e3860457",
+      "name": "Extract from File"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-14T01:44:37.798Z",
+      "updatedAt": "2025-09-14T01:44:37.798Z",
+      "role": "workflow:owner",
+      "workflowId": "GYYl0CnprSjvnpkF",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": {
+    "node:Gmail Trigger": {
+      "Gmail Trigger": {
+        "lastTimeChecked": 1757814928
+      }
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-09-14T01:59:20.000Z",
+  "versionId": "b9150a57-b272-4af3-9736-b6e79500272f"
+}
