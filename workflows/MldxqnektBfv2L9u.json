@@ -14,7 +14,46 @@
     },
     "Get voice message": {
       "main": [
-        []
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Transcribe a recording",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe a recording": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     }
   },
@@ -42,7 +81,7 @@
       "type": "n8n-nodes-base.slackTrigger",
       "typeVersion": 1,
       "position": [
-        -400,
+        -544,
         -32
       ],
       "id": "39901e75-6fe2-4284-bed3-4b0d533c233b",
@@ -57,18 +96,70 @@
     },
     {
       "parameters": {
+        "resource": "file",
+        "operation": "get",
+        "fileId": "={{ $json.files[0].id }}"
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        -352,
+        -32
+      ],
+      "id": "ba397386-8fa8-4c67-80ed-353f8717b97e",
+      "name": "Get voice message",
+      "webhookId": "6307259c-f960-484e-b9b6-45486c8d6bf8",
+      "credentials": {
+        "slackApi": {
+          "id": "EHkrBNjWKBi9posn",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url_private_download }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -144,
+        -32
+      ],
+      "id": "5448bb51-f399-49dc-9e88-8983eb66db7c",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "Q9YmkkxIHevgeNML",
+          "name": "Slack API"
+        }
+      }
+    },
+    {
+      "parameters": {
         "resource": "audio",
         "modelId": {
           "__rl": true,
+          "value": "models/gemini-2.5-flash",
           "mode": "list",
-          "value": ""
+          "cachedResultName": "models/gemini-2.5-flash"
         },
+        "audioUrls": "={{ $json.url_private_download }}",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        48,
+        96,
         -32
       ],
       "id": "be27f2e4-2dcb-409b-9130-b0d7631200fb",
@@ -82,19 +173,37 @@
     },
     {
       "parameters": {
-        "resource": "file",
-        "operation": "get",
-        "fileId": "="
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  const messyText = item.json.text;\n\n  // Check if the 'text' field exists and is a string\n  if (typeof messyText === 'string') {\n    // 1. Replace all newline characters with a single space\n    let cleanedText = messyText.replace(/(\\r\\n|\\n|\\r)/gm, \" \");\n\n    // 2. Remove any character that is NOT a letter, number, space, comma, or full stop\n    cleanedText = cleanedText.replace(/[^a-zA-Z0-9 ,.]/g, \"\");\n    \n    // 3. Tidy up by replacing multiple spaces with a single space and trimming ends\n    cleanedText = cleanedText.replace(/\\s+/g, ' ').trim();\n\n    // Add the cleaned text to the new field\n    item.json.myNewField = cleanedText;\n\n  } else {\n    // If the 'text' field is missing or not text, add an error message\n    item.json.myNewField = \"Error: Input field 'text' not found or is not a string.\";\n  }\n}\n\nreturn $input.all();\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        304,
+        -32
+      ],
+      "id": "a40a54c9-d6f4-4399-aebb-56b6b47d6626",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C09DE5VGC2H",
+          "mode": "list",
+          "cachedResultName": "cloud"
+        },
+        "otherOptions": {}
       },
       "type": "n8n-nodes-base.slack",
       "typeVersion": 2.3,
       "position": [
-        -176,
+        512,
         -32
       ],
-      "id": "ba397386-8fa8-4c67-80ed-353f8717b97e",
-      "name": "Get voice message",
-      "webhookId": "6307259c-f960-484e-b9b6-45486c8d6bf8",
+      "id": "aada1981-7182-4434-a75d-c3d4261a94fe",
+      "name": "Send a message",
+      "webhookId": "28fe2d06-9a4e-4ea0-9546-75c385ca05b9",
       "credentials": {
         "slackApi": {
           "id": "EHkrBNjWKBi9posn",
@@ -107,21 +216,21 @@
     "Slack Trigger": [
       {
         "json": {
-          "text": "",
+          "text": "Hi",
           "files": [
             {
-              "id": "F09F0H8HERH",
-              "created": 1757819959,
-              "timestamp": 1757819959,
-              "name": "audio_message.m4a",
-              "title": "audio_message.m4a",
-              "mimetype": "audio/mp4",
-              "filetype": "m4a",
-              "pretty_type": "MPEG 4 Audio",
+              "id": "F09F4ABM9P0",
+              "created": 1757821933,
+              "timestamp": 1757821933,
+              "name": "car racing audio mp3.mp3",
+              "title": "car racing audio mp3.mp3",
+              "mimetype": "audio/mpeg",
+              "filetype": "mp3",
+              "pretty_type": "MP3",
               "user": "U09CUBMALD6",
               "user_team": "T09CUBMAFCY",
               "editable": false,
-              "size": 145891,
+              "size": 240552,
               "mode": "hosted",
               "is_external": false,
               "external_type": "",
@@ -129,119 +238,118 @@
               "public_url_shared": false,
               "display_as_bot": false,
               "username": "",
-              "subtype": "slack_audio",
               "transcription": {
                 "status": "processing"
               },
-              "url_private": "https://files.slack.com/files-tmb/T09CUBMAFCY-F09F0H8HERH-43d92df2b0/audio_message_audio.mp4",
-              "url_private_download": "https://files.slack.com/files-tmb/T09CUBMAFCY-F09F0H8HERH-43d92df2b0/download/audio_message_audio.mp4",
-              "duration_ms": 8960,
-              "aac": "https://files.slack.com/files-tmb/T09CUBMAFCY-F09F0H8HERH-43d92df2b0/audio_message_audio.mp4",
+              "url_private": "https://files.slack.com/files-tmb/T09CUBMAFCY-F09F4ABM9P0-ba1ae8480b/car_racing_audio_mp3_audio.mp4",
+              "url_private_download": "https://files.slack.com/files-pri/T09CUBMAFCY-F09F4ABM9P0/download/car_racing_audio_mp3.mp3",
+              "duration_ms": 30040,
+              "aac": "https://files.slack.com/files-tmb/T09CUBMAFCY-F09F4ABM9P0-ba1ae8480b/car_racing_audio_mp3_audio.mp4",
               "audio_wave_samples": [
-                40,
-                32,
-                14,
-                17,
-                39,
-                46,
-                47,
-                45,
-                76,
-                35,
-                45,
-                19,
-                8,
-                18,
-                14,
-                10,
-                3,
-                6,
-                10,
-                10,
-                11,
-                24,
-                26,
-                25,
-                21,
-                24,
-                14,
-                10,
-                19,
-                47,
-                24,
-                7,
-                11,
+                97,
+                98,
+                97,
+                98,
+                99,
+                98,
+                98,
+                99,
+                99,
                 100,
+                98,
+                98,
+                98,
+                98,
+                98,
+                100,
+                97,
+                93,
+                93,
+                93,
+                93,
                 94,
-                75,
-                51,
-                83,
-                67,
-                19,
-                24,
-                28,
-                58,
-                69,
-                36,
-                51,
-                79,
-                83,
-                26,
-                28,
-                32,
-                35,
-                33,
-                35,
-                32,
-                35,
-                34,
-                33,
-                21,
-                22,
-                5,
-                4,
-                33,
-                35,
-                10,
-                3,
-                71,
-                90,
-                55,
-                72,
-                81,
-                36,
-                37,
-                36,
-                33,
-                72,
-                72,
-                47,
-                43,
-                49,
-                35,
-                37,
-                39,
-                30,
-                34,
-                34,
-                33,
-                37,
-                35,
-                35,
-                35,
-                42,
-                44,
-                10,
-                5,
-                12,
-                33,
-                11,
-                6,
-                10
+                93,
+                93,
+                93,
+                93,
+                93,
+                94,
+                93,
+                94,
+                94,
+                93,
+                93,
+                96,
+                99,
+                98,
+                98,
+                98,
+                98,
+                98,
+                99,
+                99,
+                97,
+                98,
+                99,
+                99,
+                98,
+                99,
+                99,
+                99,
+                93,
+                93,
+                94,
+                93,
+                94,
+                95,
+                94,
+                94,
+                93,
+                93,
+                95,
+                93,
+                94,
+                93,
+                94,
+                93,
+                93,
+                99,
+                98,
+                100,
+                99,
+                98,
+                97,
+                99,
+                98,
+                98,
+                98,
+                99,
+                99,
+                98,
+                100,
+                98,
+                99,
+                95,
+                94,
+                93,
+                94,
+                94,
+                94,
+                93,
+                93,
+                94,
+                93,
+                93,
+                92,
+                94,
+                94,
+                94,
+                93,
+                93
               ],
               "media_display_type": "audio",
-              "permalink": "https://n8n-1-group.slack.com/files/U09CUBMALD6/F09F0H8HERH/audio_message.m4a",
-              "permalink_public": "https://slack-files.com/T09CUBMAFCY-F09F0H8HERH-37b995ec70",
+              "permalink": "https://n8n-1-group.slack.com/files/U09CUBMALD6/F09F4ABM9P0/car_racing_audio_mp3.mp3",
+              "permalink_public": "https://slack-files.com/T09CUBMAFCY-F09F4ABM9P0-9e00f53fba",
               "skipped_shares": true,
               "has_rich_preview": false,
               "file_access": "visible"
@@ -250,12 +358,29 @@
           "upload": false,
           "user": "U09CUBMALD6",
           "display_as_bot": false,
+          "blocks": [
+            {
+              "type": "rich_text",
+              "block_id": "bnCY8",
+              "elements": [
+                {
+                  "type": "rich_text_section",
+                  "elements": [
+                    {
+                      "type": "text",
+                      "text": "Hi"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
           "type": "message",
-          "ts": "1757819963.274069",
-          "client_msg_id": "a4e01103-4fe0-4383-a9eb-2196fc493c72",
+          "ts": "1757821938.622819",
+          "client_msg_id": "098d415d-1c07-4f09-b432-2ca66c6f90d8",
           "channel": "C09DE5VGC2H",
           "subtype": "file_share",
-          "event_ts": "1757819963.274069",
+          "event_ts": "1757821938.622819",
           "channel_type": "channel"
         }
       }
@@ -276,6 +401,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-14T03:20:41.000Z",
-  "versionId": "07bf3b18-98e2-40ac-a32c-0cadd872c6e5"
+  "updatedAt": "2025-09-14T04:01:18.000Z",
+  "versionId": "d65c0359-fa23-42fe-8951-381ccf28a89f"
 }
