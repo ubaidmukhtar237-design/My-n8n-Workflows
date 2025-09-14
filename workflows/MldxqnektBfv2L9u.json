@@ -1,6 +1,23 @@
 {
   "active": false,
-  "connections": {},
+  "connections": {
+    "Slack Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get voice message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get voice message": {
+      "main": [
+        []
+      ]
+    }
+  },
   "createdAt": "2025-09-14T02:38:59.183Z",
   "id": "MldxqnektBfv2L9u",
   "isArchived": false,
@@ -25,7 +42,7 @@
       "type": "n8n-nodes-base.slackTrigger",
       "typeVersion": 1,
       "position": [
-        -320,
+        -400,
         -32
       ],
       "id": "39901e75-6fe2-4284-bed3-4b0d533c233b",
@@ -37,9 +54,213 @@
           "name": "Slack account"
         }
       }
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        48,
+        -32
+      ],
+      "id": "be27f2e4-2dcb-409b-9130-b0d7631200fb",
+      "name": "Transcribe a recording",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "vjhsYdKrmtQkm6Tt",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "get",
+        "fileId": "="
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        -176,
+        -32
+      ],
+      "id": "ba397386-8fa8-4c67-80ed-353f8717b97e",
+      "name": "Get voice message",
+      "webhookId": "6307259c-f960-484e-b9b6-45486c8d6bf8",
+      "credentials": {
+        "slackApi": {
+          "id": "EHkrBNjWKBi9posn",
+          "name": "Slack account"
+        }
+      }
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "Slack Trigger": [
+      {
+        "json": {
+          "text": "",
+          "files": [
+            {
+              "id": "F09F0H8HERH",
+              "created": 1757819959,
+              "timestamp": 1757819959,
+              "name": "audio_message.m4a",
+              "title": "audio_message.m4a",
+              "mimetype": "audio/mp4",
+              "filetype": "m4a",
+              "pretty_type": "MPEG 4 Audio",
+              "user": "U09CUBMALD6",
+              "user_team": "T09CUBMAFCY",
+              "editable": false,
+              "size": 145891,
+              "mode": "hosted",
+              "is_external": false,
+              "external_type": "",
+              "is_public": true,
+              "public_url_shared": false,
+              "display_as_bot": false,
+              "username": "",
+              "subtype": "slack_audio",
+              "transcription": {
+                "status": "processing"
+              },
+              "url_private": "https://files.slack.com/files-tmb/T09CUBMAFCY-F09F0H8HERH-43d92df2b0/audio_message_audio.mp4",
+              "url_private_download": "https://files.slack.com/files-tmb/T09CUBMAFCY-F09F0H8HERH-43d92df2b0/download/audio_message_audio.mp4",
+              "duration_ms": 8960,
+              "aac": "https://files.slack.com/files-tmb/T09CUBMAFCY-F09F0H8HERH-43d92df2b0/audio_message_audio.mp4",
+              "audio_wave_samples": [
+                40,
+                32,
+                14,
+                17,
+                39,
+                46,
+                47,
+                45,
+                76,
+                35,
+                45,
+                19,
+                8,
+                18,
+                14,
+                10,
+                3,
+                6,
+                10,
+                10,
+                11,
+                24,
+                26,
+                25,
+                21,
+                24,
+                14,
+                10,
+                19,
+                47,
+                24,
+                7,
+                11,
+                100,
+                94,
+                75,
+                51,
+                83,
+                67,
+                19,
+                24,
+                28,
+                58,
+                69,
+                36,
+                51,
+                79,
+                83,
+                26,
+                28,
+                32,
+                35,
+                33,
+                35,
+                32,
+                35,
+                34,
+                33,
+                21,
+                22,
+                5,
+                4,
+                33,
+                35,
+                10,
+                3,
+                71,
+                90,
+                55,
+                72,
+                81,
+                36,
+                37,
+                36,
+                33,
+                72,
+                72,
+                47,
+                43,
+                49,
+                35,
+                37,
+                39,
+                30,
+                34,
+                34,
+                33,
+                37,
+                35,
+                35,
+                35,
+                42,
+                44,
+                10,
+                5,
+                12,
+                33,
+                11,
+                6,
+                10
+              ],
+              "media_display_type": "audio",
+              "permalink": "https://n8n-1-group.slack.com/files/U09CUBMALD6/F09F0H8HERH/audio_message.m4a",
+              "permalink_public": "https://slack-files.com/T09CUBMAFCY-F09F0H8HERH-37b995ec70",
+              "skipped_shares": true,
+              "has_rich_preview": false,
+              "file_access": "visible"
+            }
+          ],
+          "upload": false,
+          "user": "U09CUBMALD6",
+          "display_as_bot": false,
+          "type": "message",
+          "ts": "1757819963.274069",
+          "client_msg_id": "a4e01103-4fe0-4383-a9eb-2196fc493c72",
+          "channel": "C09DE5VGC2H",
+          "subtype": "file_share",
+          "event_ts": "1757819963.274069",
+          "channel_type": "channel"
+        }
+      }
+    ]
+  },
   "settings": {
     "executionOrder": "v1"
   },
@@ -55,6 +276,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-14T02:46:40.000Z",
-  "versionId": "5a584afd-5ec1-446d-a6c6-77064d6340e3"
+  "updatedAt": "2025-09-14T03:20:41.000Z",
+  "versionId": "07bf3b18-98e2-40ac-a32c-0cadd872c6e5"
 }
