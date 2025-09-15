@@ -12,40 +12,7 @@
         ]
       ]
     },
-    "Simple Memory": {
-      "ai_memory": [
-        [
-          {
-            "node": "Calendar Agent",
-            "type": "ai_memory",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Cancel": {
-      "ai_tool": [
-        [
-          {
-            "node": "Calendar Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "ReSchedule": {
-      "ai_tool": [
-        [
-          {
-            "node": "Calendar Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "blank": {
+    "Create Event": {
       "ai_tool": [
         [
           {
@@ -67,12 +34,45 @@
         ]
       ]
     },
-    "Create Event": {
+    "Delete Event": {
       "ai_tool": [
         [
           {
             "node": "Calendar Agent",
             "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "checkAvailability": {
+      "ai_tool": [
+        [
+          {
+            "node": "Calendar Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Event": {
+      "ai_tool": [
+        [
+          {
+            "node": "Calendar Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Calendar Agent",
+            "type": "ai_memory",
             "index": 0
           }
         ]
@@ -95,7 +95,7 @@
       "typeVersion": 1.3,
       "position": [
         -464,
-        -64
+        -96
       ],
       "id": "4a68fbbe-a460-4db2-893d-0f283331044b",
       "name": "When chat message received",
@@ -110,94 +110,36 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        16,
-        -64
+        8,
+        -96
       ],
       "id": "4967ff5b-7317-4bc7-99f5-21cb0eb5cd2d",
       "name": "Calendar Agent"
     },
     {
       "parameters": {
-        "sessionIdType": "customKey",
-        "sessionKey": "b8195fc27f4645d1b967c9ef701f5154"
-      },
-      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
-      "typeVersion": 1.3,
-      "position": [
-        -112,
-        160
-      ],
-      "id": "0e926eda-bf40-43d5-b6e8-cfdd7f2273e4",
-      "name": "Simple Memory"
-    },
-    {
-      "parameters": {
         "calendar": {
           "__rl": true,
           "value": "ubaidmukhtar237@gmail.com",
           "mode": "list",
           "cachedResultName": "ubaidmukhtar237@gmail.com"
         },
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.googleCalendarTool",
-      "typeVersion": 1.3,
-      "position": [
-        144,
-        160
-      ],
-      "id": "339e8e21-4c99-41d5-8cc1-1a46880a46ca",
-      "name": "Cancel",
-      "credentials": {
-        "googleCalendarOAuth2Api": {
-          "id": "cXzASFAyNaVtWAiR",
-          "name": "Google Calendar account"
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', `the start of the meeting`, 'string') }}",
+        "end": "={{ $fromAI('endTime', 'the end of the meeting') }}",
+        "additionalFields": {
+          "attendees": [
+            "={{ $fromAI(\"attendeeEmail\", 'emails of any other people mentioned if they exist(' | ')') }}"
+          ]
         }
-      }
-    },
-    {
-      "parameters": {
-        "calendar": {
-          "__rl": true,
-          "value": "ubaidmukhtar237@gmail.com",
-          "mode": "list",
-          "cachedResultName": "ubaidmukhtar237@gmail.com"
-        },
-        "additionalFields": {}
       },
       "type": "n8n-nodes-base.googleCalendarTool",
       "typeVersion": 1.3,
       "position": [
-        272,
-        160
+        16,
+        128
       ],
-      "id": "d3dd8ddb-923f-486b-b91e-3cf4bcad21f2",
-      "name": "ReSchedule",
-      "credentials": {
-        "googleCalendarOAuth2Api": {
-          "id": "cXzASFAyNaVtWAiR",
-          "name": "Google Calendar account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "calendar": {
-          "__rl": true,
-          "value": "ubaidmukhtar237@gmail.com",
-          "mode": "list",
-          "cachedResultName": "ubaidmukhtar237@gmail.com"
-        },
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.googleCalendarTool",
-      "typeVersion": 1.3,
-      "position": [
-        400,
-        160
-      ],
-      "id": "aefa823b-3b3f-4dcb-a858-c5e15d23c02f",
-      "name": "blank",
+      "id": "ef5ee3bd-46d7-4aa2-964d-480f8ae34ac2",
+      "name": "Create Event",
       "credentials": {
         "googleCalendarOAuth2Api": {
           "id": "cXzASFAyNaVtWAiR",
@@ -219,10 +161,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleVertex",
       "typeVersion": 1,
       "position": [
-        -256,
-        160
+        -240,
+        128
       ],
-      "id": "3ab6787a-0ec0-40ea-9aff-1a35c431e776",
+      "id": "cc87ffa1-4618-4493-823d-b71d93a99515",
       "name": "Google Vertex Chat Model",
       "credentials": {
         "googleApi": {
@@ -233,34 +175,103 @@
     },
     {
       "parameters": {
+        "operation": "delete",
         "calendar": {
           "__rl": true,
           "value": "ubaidmukhtar237@gmail.com",
           "mode": "list",
           "cachedResultName": "ubaidmukhtar237@gmail.com"
         },
-        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', `the start of the meeting`, 'string') }}",
-        "end": "={{ $fromAI('End', 'the end of the meeting') }}",
-        "additionalFields": {
-          "attendees": [
-            "={{ $fromAI(\"attendeeEmail\", 'emails of any other people mentioned if they exist(' | ')') }}"
-          ]
-        }
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+        "options": {}
       },
       "type": "n8n-nodes-base.googleCalendarTool",
       "typeVersion": 1.3,
       "position": [
-        16,
-        160
+        144,
+        128
       ],
-      "id": "ef5ee3bd-46d7-4aa2-964d-480f8ae34ac2",
-      "name": "Create Event",
+      "id": "339e8e21-4c99-41d5-8cc1-1a46880a46ca",
+      "name": "Delete Event",
       "credentials": {
         "googleCalendarOAuth2Api": {
           "id": "cXzASFAyNaVtWAiR",
           "name": "Google Calendar account"
         }
       }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "ubaidmukhtar237@gmail.com",
+          "mode": "list",
+          "cachedResultName": "ubaidmukhtar237@gmail.com"
+        },
+        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}",
+        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', ``, 'string') }}",
+        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        352,
+        128
+      ],
+      "id": "aefa823b-3b3f-4dcb-a858-c5e15d23c02f",
+      "name": "checkAvailability",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "cXzASFAyNaVtWAiR",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "calendar": {
+          "__rl": true,
+          "value": "ubaidmukhtar237@gmail.com",
+          "mode": "list",
+          "cachedResultName": "ubaidmukhtar237@gmail.com"
+        },
+        "eventId": "={{ $fromAI('descriptionEvent', 'the description of the event') }}",
+        "updateFields": {
+          "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+          "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        240,
+        128
+      ],
+      "id": "d3dd8ddb-923f-486b-b91e-3cf4bcad21f2",
+      "name": "Update Event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "cXzASFAyNaVtWAiR",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "39c0f7e6cda742a5b36bcf3b71b0b8f8"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -112,
+        128
+      ],
+      "id": "11c95ee1-bdd5-4def-9d00-1d65a1ffd8dd",
+      "name": "Simple Memory"
     }
   ],
   "pinData": {},
@@ -279,6 +290,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-15T22:59:09.000Z",
-  "versionId": "df82f84e-c06d-4c64-9b42-b80b77759b41"
+  "updatedAt": "2025-09-15T23:10:09.000Z",
+  "versionId": "21fdef8a-5d6d-4f54-89ed-832e71c6de3c"
 }
