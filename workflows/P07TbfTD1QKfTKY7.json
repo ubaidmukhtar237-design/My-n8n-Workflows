@@ -23,21 +23,8 @@
     }
   ],
   "staticData": null,
-  "tags": [
-    {
-      "createdAt": "2025-09-14T06:05:05.064Z",
-      "updatedAt": "2025-09-14T06:05:05.064Z",
-      "id": "gUDRrXNZQi1mzCzv",
-      "name": "OpenAI"
-    },
-    {
-      "createdAt": "2025-09-14T06:05:05.060Z",
-      "updatedAt": "2025-09-14T06:05:05.060Z",
-      "id": "uKRRnnTvt0JjAdYx",
-      "name": "Google Drive"
-    }
-  ],
+  "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-14T06:09:20.000Z",
-  "versionId": "e7af785e-55b3-44d7-91b4-c541f1281160"
+  "updatedAt": "2025-09-15T01:29:55.000Z",
+  "versionId": "3f3dfe1f-7ae7-491d-957e-06f5f1819aa2"
 }
