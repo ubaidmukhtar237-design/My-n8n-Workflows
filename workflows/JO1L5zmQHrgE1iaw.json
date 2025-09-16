@@ -1,17 +1,6 @@
 {
   "active": false,
   "connections": {
-    "When chat message received": {
-      "main": [
-        [
-          {
-            "node": "Calendar Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Create Event": {
       "ai_tool": [
         [
@@ -45,17 +34,6 @@
         ]
       ]
     },
-    "checkAvailability": {
-      "ai_tool": [
-        [
-          {
-            "node": "Calendar Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Update Event": {
       "ai_tool": [
         [
@@ -67,7 +45,40 @@
         ]
       ]
     },
-    "Simple Memory": {
+    "Get Event": {
+      "ai_tool": [
+        [
+          {
+            "node": "Calendar Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "checkAvailability": {
+      "ai_tool": [
+        [
+          {
+            "node": "Calendar Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Calendar Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MemoryN8N": {
       "ai_memory": [
         [
           {
@@ -89,20 +100,6 @@
   "nodes": [
     {
       "parameters": {
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
-      "typeVersion": 1.3,
-      "position": [
-        -464,
-        -96
-      ],
-      "id": "4a68fbbe-a460-4db2-893d-0f283331044b",
-      "name": "When chat message received",
-      "webhookId": "4d8e7292-d019-4b0a-b1ac-cc8ad56daf64"
-    },
-    {
-      "parameters": {
         "promptType": "define",
         "text": "={{ $('When chat message received').item.json.chatInput }}",
         "options": {}
@@ -110,7 +107,7 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        8,
+        16,
         -96
       ],
       "id": "4967ff5b-7317-4bc7-99f5-21cb0eb5cd2d",
@@ -202,35 +199,6 @@
     },
     {
       "parameters": {
-        "operation": "getAll",
-        "calendar": {
-          "__rl": true,
-          "value": "ubaidmukhtar237@gmail.com",
-          "mode": "list",
-          "cachedResultName": "ubaidmukhtar237@gmail.com"
-        },
-        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}",
-        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', ``, 'string') }}",
-        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', ``, 'string') }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleCalendarTool",
-      "typeVersion": 1.3,
-      "position": [
-        352,
-        128
-      ],
-      "id": "aefa823b-3b3f-4dcb-a858-c5e15d23c02f",
-      "name": "checkAvailability",
-      "credentials": {
-        "googleCalendarOAuth2Api": {
-          "id": "cXzASFAyNaVtWAiR",
-          "name": "Google Calendar account"
-        }
-      }
-    },
-    {
-      "parameters": {
         "operation": "update",
         "calendar": {
           "__rl": true,
@@ -261,17 +229,88 @@
     },
     {
       "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "ubaidmukhtar237@gmail.com",
+          "mode": "list",
+          "cachedResultName": "ubaidmukhtar237@gmail.com"
+        },
+        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}",
+        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', ``, 'string') }}",
+        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        352,
+        128
+      ],
+      "id": "aefa823b-3b3f-4dcb-a858-c5e15d23c02f",
+      "name": "Get Event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "cXzASFAyNaVtWAiR",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "calendar",
+        "calendar": {
+          "__rl": true,
+          "value": "ubaidmukhtar237@gmail.com",
+          "mode": "list",
+          "cachedResultName": "ubaidmukhtar237@gmail.com"
+        },
+        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start_Time', ``, 'string') }}",
+        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End_Time', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        480,
+        128
+      ],
+      "id": "7f2a7c80-35fb-4e04-ba53-a57d2d222fff",
+      "name": "checkAvailability",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "cXzASFAyNaVtWAiR",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -256,
+        -96
+      ],
+      "id": "3cfba29a-4287-42f5-86b1-37526fea655d",
+      "name": "When chat message received",
+      "webhookId": "97e633a8-a644-4f53-aa40-96a0e0f2109e"
+    },
+    {
+      "parameters": {
         "sessionIdType": "customKey",
-        "sessionKey": "39c0f7e6cda742a5b36bcf3b71b0b8f8"
+        "sessionKey": "70cc6b93804d42f7bb67a89cccf4e6d8"
       },
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.3,
       "position": [
-        -112,
+        -96,
         128
       ],
-      "id": "11c95ee1-bdd5-4def-9d00-1d65a1ffd8dd",
-      "name": "Simple Memory"
+      "id": "9aad927b-2670-497c-b0b6-acff174765ac",
+      "name": "MemoryN8N"
     }
   ],
   "pinData": {},
@@ -290,6 +329,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-15T23:10:09.000Z",
-  "versionId": "21fdef8a-5d6d-4f54-89ed-832e71c6de3c"
+  "updatedAt": "2025-09-15T23:48:45.000Z",
+  "versionId": "3b6d6e54-ad33-462c-a7fb-509b5fff548f"
 }
