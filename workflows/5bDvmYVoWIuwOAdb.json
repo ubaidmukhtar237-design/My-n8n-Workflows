@@ -19,7 +19,6 @@
       "parameters": {
         "eventsUi": {
           "eventValues": [
-            {},
             {}
           ]
         },
@@ -28,8 +27,8 @@
       "type": "n8n-nodes-base.hubspotTrigger",
       "typeVersion": 1,
       "position": [
-        -1312,
-        -144
+        -1440,
+        -288
       ],
       "id": "021b3d3f-04a9-41a6-b41a-fb95159707b9",
       "name": "HubSpot Trigger",
@@ -51,8 +50,8 @@
       "type": "n8n-nodes-base.hubspot",
       "typeVersion": 2.2,
       "position": [
-        -1040,
-        -144
+        -1184,
+        -288
       ],
       "id": "69d26dc3-3711-4875-aee2-aefb06d5bae7",
       "name": "Create or update a contact",
@@ -62,26 +61,27 @@
           "name": "HubSpot account"
         }
       }
-    },
-    {
-      "parameters": {
-        "httpMethod": "POST",
-        "path": "06885c16-d7d4-4255-9527-205799822b08",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2.1,
-      "position": [
-        -1168,
-        -384
-      ],
-      "id": "dd78bd82-8121-4cdc-a269-a2971f5f7410",
-      "name": "Webhook",
-      "webhookId": "06885c16-d7d4-4255-9527-205799822b08",
-      "disabled": true
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "HubSpot Trigger": [
+      {
+        "json": {
+          "eventId": 3155289374,
+          "subscriptionId": 4290291,
+          "portalId": 243774524,
+          "appId": 19978584,
+          "occurredAt": 1758021356684,
+          "subscriptionType": "contact.creation",
+          "attemptNumber": 0,
+          "changeFlag": "CREATED",
+          "changeSource": "CRM_UI",
+          "sourceId": "userId:82994902",
+          "contactId": 247187843832
+        }
+      }
+    ]
+  },
   "settings": {
     "executionOrder": "v1"
   },
@@ -97,6 +97,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-16T10:24:12.000Z",
-  "versionId": "94f98a11-5bb9-4b99-b4f7-c695b8cfe04b"
+  "updatedAt": "2025-09-16T11:16:57.000Z",
+  "versionId": "4390099f-c2b4-41db-ac76-aad4cc53e8e2"
 }
