@@ -3,7 +3,7 @@
   "connections": {},
   "createdAt": "2025-09-11T12:22:22.949Z",
   "id": "IThhe0HPDbd92wx9",
-  "isArchived": false,
+  "isArchived": true,
   "meta": null,
   "name": "n8n + 11Labs:https://youtu.be/O86apIsR8YU?si=PF1lZnukMJganuCz",
   "nodes": [],
@@ -23,6 +23,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-11T12:22:22.000Z",
-  "versionId": "08f9c6e6-9bf7-4839-b191-bb0c21a13811"
+  "updatedAt": "2025-09-16T06:07:49.000Z",
+  "versionId": "5dddd2e8-3a04-43fc-990d-1fb1d2931936"
 }
