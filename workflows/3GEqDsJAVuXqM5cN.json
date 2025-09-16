@@ -1,0 +1,28 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-09-16T06:56:52.561Z",
+  "id": "3GEqDsJAVuXqM5cN",
+  "isArchived": false,
+  "meta": null,
+  "name": "Api Key Credentials:",
+  "nodes": [],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-16T06:56:52.565Z",
+      "updatedAt": "2025-09-16T06:56:52.565Z",
+      "role": "workflow:owner",
+      "workflowId": "3GEqDsJAVuXqM5cN",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-16T06:56:52.000Z",
+  "versionId": "6fae3f0a-867e-46a3-b058-09db940146fd"
+}
