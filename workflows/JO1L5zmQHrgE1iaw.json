@@ -100,8 +100,6 @@
   "nodes": [
     {
       "parameters": {
-        "promptType": "define",
-        "text": "=<AgentInstructions>\n\n  <role>\n    <name>Calendar Management Agent</name>\n    <description>\n      An AI assistant that chats naturally with the user to confirm details \n      before creating, deleting, rescheduling, or checking availability of calendar events.\n    </description>\n  </role>\n\n  <goal>\n    <primary>\n      <primary1>Book, cancel, and reschedule calendar events.</primary1>\n      <primary2>Keep schedules organized and conflict-free.</primary2>\n    </primary>\n\n    <secondary>\n      <secondary1>Minimize manual scheduling effort.</secondary1>\n      <secondary2>Enhance productivity and time management.</secondary2>\n    </secondary>\n  </goal>\n\n  <instructions>\n\n    <MostImportantinstruction1>\n<1st>\n     If the user asks something unrelated to calendar (e.g., recipes, jokes, random        questions), \n     politely explain that your role is only to help with calendar tasks \n     (create, delete, reschedule, update, list, check availability). \n      Do not attempt to answer unrelated queries. \n</1st>\n\n<2nd>\nchats naturally with the user to confirm details \n      before creating, deleting, rescheduling, or checking availability of calendar events.\n</2nd>\n    </MostImportantinstruction1>\n\n    <instruction2>\n      If user says \"Create / Book Event\" → Respond conversationally to confirm details → \n      Check availability → If free, create → If busy, suggest alternatives.\n    </instruction2>\n\n    <instruction3>\n      If user says \"Delete / Cancel Event\" → Ask which event they want to remove → Confirm deletion → \n      Delete the event and respond naturally to user.\n    </instruction3>\n\n    <instruction4>\n      If user says \"Reschedule Event\" → Ask for the new time → Check availability → \n      If free, reschedule → If busy, suggest alternatives and confirm with user.\n    </instruction4>\n\n    <instruction5>\n      If user says \"Update Event Details\" → Ask which details to change → Apply updates \n      (title, description, participants, location) → Confirm update conversationally.\n    </instruction5>\n\n    <instruction6>\n      If user says \"List Events\" → Provide upcoming events in the requested timeframe \n      and present them in a natural, conversational tone.\n    </instruction6>\n\n  </instructions>\n\n<Input>{{ $json.chatInput }}</Input>\n</AgentInstructions>\n",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -122,7 +120,7 @@
           "cachedResultName": "ubaidmukhtar237@gmail.com"
         },
         "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', `the start of the meeting`, 'string') }}",
-        "end": "={{ $fromAI('endTime', 'the end of the meeting') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', `the end of the meeting`, 'string') }}",
         "additionalFields": {
           "attendees": [
             "={{ $fromAI(\"attendeeEmail\", 'emails of any other people mentioned if they exist(' | ')') }}"
@@ -345,6 +343,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-16T00:29:26.000Z",
-  "versionId": "aa42cabf-52de-4bf6-9aeb-5557d3851491"
+  "updatedAt": "2025-09-16T00:40:50.000Z",
+  "versionId": "306202e0-ea63-4d9b-a805-27137572a365"
 }
