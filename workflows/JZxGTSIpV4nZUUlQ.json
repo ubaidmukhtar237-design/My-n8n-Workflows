@@ -1,0 +1,28 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-09-16T06:09:57.623Z",
+  "id": "JZxGTSIpV4nZUUlQ",
+  "isArchived": false,
+  "meta": null,
+  "name": "YT Video Link Is https://youtu.be/DNxIPz6Spew?si=v1dIJk6sVy0L-Pqp",
+  "nodes": [],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-16T06:09:57.627Z",
+      "updatedAt": "2025-09-16T06:09:57.627Z",
+      "role": "workflow:owner",
+      "workflowId": "JZxGTSIpV4nZUUlQ",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-16T06:09:57.000Z",
+  "versionId": "4fef494c-1bf5-40f7-8b53-3db4df88bbc3"
+}
