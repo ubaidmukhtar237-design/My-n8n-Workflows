@@ -3,7 +3,24 @@
   "connections": {
     "HubSpot Trigger": {
       "main": [
-        []
+        [
+          {
+            "node": "Get a contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a contact": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     }
   },
@@ -27,8 +44,8 @@
       "type": "n8n-nodes-base.hubspotTrigger",
       "typeVersion": 1,
       "position": [
-        -1440,
-        -288
+        -1824,
+        -304
       ],
       "id": "021b3d3f-04a9-41a6-b41a-fb95159707b9",
       "name": "HubSpot Trigger",
@@ -43,24 +60,62 @@
     {
       "parameters": {
         "authentication": "oAuth2",
-        "email": "ubaidmukhtar237@gmail.com",
-        "additionalFields": {},
-        "options": {}
+        "operation": "get",
+        "contactId": {
+          "__rl": true,
+          "value": "={{ $json.contactId }}",
+          "mode": "id"
+        },
+        "additionalFields": {}
       },
       "type": "n8n-nodes-base.hubspot",
       "typeVersion": 2.2,
       "position": [
-        -1184,
-        -288
+        -1616,
+        -304
       ],
       "id": "69d26dc3-3711-4875-aee2-aefb06d5bae7",
-      "name": "Create or update a contact",
+      "name": "Get a contact",
       "credentials": {
         "hubspotOAuth2Api": {
-          "id": "ZDOq6c5XUhhn4I2l",
+          "id": "F3cWwdJSEEGYNnP9",
           "name": "HubSpot account"
         }
       }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5b5628cb-4181-4ab8-9ded-6416e652792d",
+              "leftValue": "={{ $json.properties.hs_lead_status.value }}",
+              "rightValue": "NEW",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1408,
+        -304
+      ],
+      "id": "0351e407-3b1d-4e9c-be4e-50f2f6fd087c",
+      "name": "If"
     }
   ],
   "pinData": {
@@ -97,6 +152,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-16T11:16:57.000Z",
-  "versionId": "4390099f-c2b4-41db-ac76-aad4cc53e8e2"
+  "updatedAt": "2025-09-16T22:47:59.000Z",
+  "versionId": "8bf63514-8456-4b73-8e23-4a0211cc256f"
 }
