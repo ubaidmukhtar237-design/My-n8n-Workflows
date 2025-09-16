@@ -22,6 +22,35 @@
           }
         ]
       ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Create or update a contact",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create or update a contact1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-09-16T07:51:02.184Z",
@@ -30,7 +59,7 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "name": "https://youtu.be/_1eJ3uqsbq0?si=VL2-JtZPqlov7tLC",
+  "name": "Made with using vapi workflow:https://youtu.be/_1eJ3uqsbq0?si=VL2-JtZPqlov7tLC",
   "nodes": [
     {
       "parameters": {
@@ -116,6 +145,76 @@
       ],
       "id": "0351e407-3b1d-4e9c-be4e-50f2f6fd087c",
       "name": "If"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://api.vapi.ai/call",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n\n\n\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1136,
+        -336
+      ],
+      "id": "8938c158-3db5-46f6-bb84-e10f54f200f7",
+      "name": "HTTP Request",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "additionalFields": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2.2,
+      "position": [
+        -864,
+        -528
+      ],
+      "id": "7fa41a19-d28c-4278-92af-c07245cc2b40",
+      "name": "Create or update a contact",
+      "credentials": {
+        "hubspotOAuth2Api": {
+          "id": "F3cWwdJSEEGYNnP9",
+          "name": "HubSpot account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "additionalFields": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2.2,
+      "position": [
+        -864,
+        -272
+      ],
+      "id": "82c7dd5d-483d-4c14-9ff8-48086c2a8b3a",
+      "name": "Create or update a contact1",
+      "credentials": {
+        "hubspotOAuth2Api": {
+          "id": "F3cWwdJSEEGYNnP9",
+          "name": "HubSpot account"
+        }
+      }
     }
   ],
   "pinData": {
@@ -152,6 +251,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-16T22:47:59.000Z",
-  "versionId": "8bf63514-8456-4b73-8e23-4a0211cc256f"
+  "updatedAt": "2025-09-16T23:25:57.000Z",
+  "versionId": "6521a2f9-a423-47e4-93da-23e1bd8e1e47"
 }
