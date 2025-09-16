@@ -1,0 +1,28 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-09-16T07:51:02.184Z",
+  "id": "5bDvmYVoWIuwOAdb",
+  "isArchived": false,
+  "meta": null,
+  "name": "https://youtu.be/_1eJ3uqsbq0?si=VL2-JtZPqlov7tLC",
+  "nodes": [],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-16T07:51:02.186Z",
+      "updatedAt": "2025-09-16T07:51:02.186Z",
+      "role": "workflow:owner",
+      "workflowId": "5bDvmYVoWIuwOAdb",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-16T07:51:02.000Z",
+  "versionId": "49de18bf-e4b3-4c55-a312-b8bee8164eb3"
+}
