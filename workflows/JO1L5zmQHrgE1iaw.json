@@ -56,7 +56,7 @@
         ]
       ]
     },
-    "checkAvailability": {
+    "checkAvail": {
       "ai_tool": [
         [
           {
@@ -78,7 +78,7 @@
         ]
       ]
     },
-    "MemoryN8N": {
+    "Simple Memory": {
       "ai_memory": [
         [
           {
@@ -101,13 +101,13 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "={{ $('When chat message received').item.json.chatInput }}",
+        "text": "=<AgentInstructions>\n\n  <role>\n    <name>Calendar Management Agent</name>\n    <description>\n      An AI assistant that chats naturally with the user to confirm details \n      before creating, deleting, rescheduling, or checking availability of calendar events.\n    </description>\n  </role>\n\n  <goal>\n    <primary>\n      <primary1>Book, cancel, and reschedule calendar events.</primary1>\n      <primary2>Keep schedules organized and conflict-free.</primary2>\n    </primary>\n\n    <secondary>\n      <secondary1>Minimize manual scheduling effort.</secondary1>\n      <secondary2>Enhance productivity and time management.</secondary2>\n    </secondary>\n  </goal>\n\n  <instructions>\n\n    <MostImportantinstruction1>\n<1st>\n     If the user asks something unrelated to calendar (e.g., recipes, jokes, random        questions), \n     politely explain that your role is only to help with calendar tasks \n     (create, delete, reschedule, update, list, check availability). \n      Do not attempt to answer unrelated queries. \n</1st>\n\n<2nd>\nchats naturally with the user to confirm details \n      before creating, deleting, rescheduling, or checking availability of calendar events.\n</2nd>\n    </MostImportantinstruction1>\n\n    <instruction2>\n      If user says \"Create / Book Event\" → Respond conversationally to confirm details → \n      Check availability → If free, create → If busy, suggest alternatives.\n    </instruction2>\n\n    <instruction3>\n      If user says \"Delete / Cancel Event\" → Ask which event they want to remove → Confirm deletion → \n      Delete the event and respond naturally to user.\n    </instruction3>\n\n    <instruction4>\n      If user says \"Reschedule Event\" → Ask for the new time → Check availability → \n      If free, reschedule → If busy, suggest alternatives and confirm with user.\n    </instruction4>\n\n    <instruction5>\n      If user says \"Update Event Details\" → Ask which details to change → Apply updates \n      (title, description, participants, location) → Confirm update conversationally.\n    </instruction5>\n\n    <instruction6>\n      If user says \"List Events\" → Provide upcoming events in the requested timeframe \n      and present them in a natural, conversational tone.\n    </instruction6>\n\n  </instructions>\n\n<Input>{{ $json.chatInput }}</Input>\n</AgentInstructions>\n",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        16,
+        352,
         -96
       ],
       "id": "4967ff5b-7317-4bc7-99f5-21cb0eb5cd2d",
@@ -132,7 +132,7 @@
       "type": "n8n-nodes-base.googleCalendarTool",
       "typeVersion": 1.3,
       "position": [
-        16,
+        224,
         128
       ],
       "id": "ef5ee3bd-46d7-4aa2-964d-480f8ae34ac2",
@@ -158,7 +158,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleVertex",
       "typeVersion": 1,
       "position": [
-        -240,
+        -32,
         128
       ],
       "id": "cc87ffa1-4618-4493-823d-b71d93a99515",
@@ -185,7 +185,7 @@
       "type": "n8n-nodes-base.googleCalendarTool",
       "typeVersion": 1.3,
       "position": [
-        144,
+        352,
         128
       ],
       "id": "339e8e21-4c99-41d5-8cc1-1a46880a46ca",
@@ -215,7 +215,7 @@
       "type": "n8n-nodes-base.googleCalendarTool",
       "typeVersion": 1.3,
       "position": [
-        240,
+        480,
         128
       ],
       "id": "d3dd8ddb-923f-486b-b91e-3cf4bcad21f2",
@@ -244,7 +244,7 @@
       "type": "n8n-nodes-base.googleCalendarTool",
       "typeVersion": 1.3,
       "position": [
-        352,
+        608,
         128
       ],
       "id": "aefa823b-3b3f-4dcb-a858-c5e15d23c02f",
@@ -255,6 +255,22 @@
           "name": "Google Calendar account"
         }
       }
+    },
+    {
+      "parameters": {
+        "content": "## ",
+        "height": 448,
+        "width": 1456,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -352,
+        -144
+      ],
+      "typeVersion": 1,
+      "id": "969ec5e2-4bf3-4982-8148-c7be5c5449d9",
+      "name": "Sticky Note"
     },
     {
       "parameters": {
@@ -272,11 +288,11 @@
       "type": "n8n-nodes-base.googleCalendarTool",
       "typeVersion": 1.3,
       "position": [
-        480,
+        736,
         128
       ],
       "id": "7f2a7c80-35fb-4e04-ba53-a57d2d222fff",
-      "name": "checkAvailability",
+      "name": "checkAvail",
       "credentials": {
         "googleCalendarOAuth2Api": {
           "id": "cXzASFAyNaVtWAiR",
@@ -291,26 +307,26 @@
       "type": "@n8n/n8n-nodes-langchain.chatTrigger",
       "typeVersion": 1.3,
       "position": [
-        -256,
+        -16,
         -96
       ],
-      "id": "3cfba29a-4287-42f5-86b1-37526fea655d",
+      "id": "46b35ac1-518b-4bae-ac5d-fff858469824",
       "name": "When chat message received",
-      "webhookId": "97e633a8-a644-4f53-aa40-96a0e0f2109e"
+      "webhookId": "93fecd87-04b2-4194-aedc-386822a8dfce"
     },
     {
       "parameters": {
         "sessionIdType": "customKey",
-        "sessionKey": "70cc6b93804d42f7bb67a89cccf4e6d8"
+        "sessionKey": "1"
       },
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.3,
       "position": [
-        -96,
+        112,
         128
       ],
-      "id": "9aad927b-2670-497c-b0b6-acff174765ac",
-      "name": "MemoryN8N"
+      "id": "ce0e98cf-9590-4bda-95fe-edc722d5b8f3",
+      "name": "Simple Memory"
     }
   ],
   "pinData": {},
@@ -329,6 +345,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-15T23:48:45.000Z",
-  "versionId": "3b6d6e54-ad33-462c-a7fb-509b5fff548f"
+  "updatedAt": "2025-09-16T00:29:26.000Z",
+  "versionId": "aa42cabf-52de-4bf6-9aeb-5557d3851491"
 }
