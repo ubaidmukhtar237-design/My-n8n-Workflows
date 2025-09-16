@@ -1,12 +1,67 @@
 {
   "active": false,
-  "connections": {},
+  "connections": {
+    "HubSpot Trigger": {
+      "main": [
+        [
+          {
+            "node": "Create or update a contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "createdAt": "2025-09-16T07:51:02.184Z",
   "id": "5bDvmYVoWIuwOAdb",
   "isArchived": false,
   "meta": null,
   "name": "https://youtu.be/_1eJ3uqsbq0?si=VL2-JtZPqlov7tLC",
-  "nodes": [],
+  "nodes": [
+    {
+      "parameters": {
+        "eventsUi": {
+          "eventValues": [
+            {},
+            {}
+          ]
+        },
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.hubspotTrigger",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        16
+      ],
+      "id": "021b3d3f-04a9-41a6-b41a-fb95159707b9",
+      "name": "HubSpot Trigger",
+      "webhookId": "189a762b-b3ff-4f26-9475-a748ffefd231"
+    },
+    {
+      "parameters": {
+        "authentication": "appToken",
+        "email": "ubaidmukhtar237@gmail.com",
+        "additionalFields": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2.2,
+      "position": [
+        -112,
+        16
+      ],
+      "id": "69d26dc3-3711-4875-aee2-aefb06d5bae7",
+      "name": "Create or update a contact",
+      "credentials": {
+        "hubspotAppToken": {
+          "id": "gAK2nbcBkDHcva0p",
+          "name": "HubSpot App Token account"
+        }
+      }
+    }
+  ],
   "pinData": {},
   "settings": {
     "executionOrder": "v1"
@@ -23,6 +78,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-16T07:51:02.000Z",
-  "versionId": "49de18bf-e4b3-4c55-a312-b8bee8164eb3"
+  "updatedAt": "2025-09-16T09:17:53.000Z",
+  "versionId": "dc525cc8-3340-49cf-a4c0-1eaf840dfdef"
 }
