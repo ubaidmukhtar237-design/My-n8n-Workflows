@@ -32,7 +32,7 @@
       "main": [
         [
           {
-            "node": "startTime",
+            "node": "startDate",
             "type": "main",
             "index": 0
           }
@@ -57,11 +57,22 @@
         ]
       ]
     },
-    "startTime": {
+    "startDate": {
       "main": [
         [
           {
-            "node": "HTTP Request",
+            "node": "addDay",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "addDay": {
+      "main": [
+        [
+          {
+            "node": "endDate",
             "type": "main",
             "index": 0
           }
@@ -121,8 +132,8 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.4,
       "position": [
-        944,
-        -160
+        1248,
+        -144
       ],
       "id": "a8c68ac7-3fab-40c0-b15a-f115d1c6502a",
       "name": "Respond to Webhook"
@@ -248,8 +259,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        736,
-        -160
+        1104,
+        -144
       ],
       "id": "5dce9f50-e910-4011-8ed0-d7b929c1692a",
       "name": "HTTP Request"
@@ -257,6 +268,9 @@
     {
       "parameters": {
         "operation": "formatDate",
+        "date": "={{ $('Webhook').item.json.body.message.toolCalls[0].function.arguments.requestedAppointment }}",
+        "format": "x",
+        "outputFieldName": "startDate",
         "options": {}
       },
       "type": "n8n-nodes-base.dateTime",
@@ -266,7 +280,39 @@
         -128
       ],
       "id": "73d4d2b7-3c43-4d7d-95d6-7cfa54f393a3",
-      "name": "startTime"
+      "name": "startDate"
+    },
+    {
+      "parameters": {
+        "operation": "addToDate",
+        "magnitude": "={{ $json.startDate }}",
+        "duration": 1,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        576,
+        -128
+      ],
+      "id": "a7b02927-f6a7-4289-8e76-cd06fc5fd12c",
+      "name": "addDay"
+    },
+    {
+      "parameters": {
+        "operation": "formatDate",
+        "date": "={{ $json.newDate }}",
+        "format": "x",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        784,
+        -128
+      ],
+      "id": "e196ce71-29c8-47cb-8bfa-89e1cbe666d8",
+      "name": "endDate"
     }
   ],
   "pinData": {
@@ -615,6 +661,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-17T15:26:12.000Z",
-  "versionId": "30cc1feb-46f4-4a68-b481-a8e2688d862d"
+  "updatedAt": "2025-09-17T15:50:27.000Z",
+  "versionId": "b9a2754d-209a-42e8-9f50-409f8e87c4df"
 }
