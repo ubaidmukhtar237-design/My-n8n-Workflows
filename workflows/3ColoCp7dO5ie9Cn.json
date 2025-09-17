@@ -21,7 +21,47 @@
       "main": [
         [
           {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "startTime",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
             "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "startTime": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
             "type": "main",
             "index": 0
           }
@@ -81,8 +121,8 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.4,
       "position": [
-        288,
-        -32
+        944,
+        -160
       ],
       "id": "a8c68ac7-3fab-40c0-b15a-f115d1c6502a",
       "name": "Respond to Webhook"
@@ -94,13 +134,13 @@
             {
               "id": "df67bd86-658d-4c83-ae03-9eb8d771338b",
               "name": "locationId",
-              "value": "",
+              "value": "CBlQxnPxtaqmEtUc4WO9",
               "type": "string"
             },
             {
               "id": "ae5a6596-759e-47d5-9ed0-e6a100125b5f",
               "name": "calendarId",
-              "value": "",
+              "value": "PN8wcIttEfG44TKMykRG",
               "type": "string"
             },
             {
@@ -121,6 +161,112 @@
       ],
       "id": "96c15644-f926-461a-86e4-73aa76224606",
       "name": "Set Variables"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Webhook').item.json.body.message.toolCalls[0].function.name }}",
+                    "rightValue": "getOpenSlot123",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "6ba3e6fc-63ab-4567-b794-dd86bd277c99"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "getOpenSlot123"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d28cbbdb-c5ba-410a-bb26-ecc99f3ccd91",
+                    "leftValue": "={{ $('Webhook').item.json.body.message.toolCalls[0].function.name }}",
+                    "rightValue": "bookAppointment123",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "bookAppointment123"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        160,
+        -32
+      ],
+      "id": "6f29fb6f-a77d-4682-a32c-ea0a171aef71",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        944,
+        112
+      ],
+      "id": "2b5348bc-f531-4b5b-aa20-00aa77b036c0",
+      "name": "Respond to Webhook1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        736,
+        -160
+      ],
+      "id": "5dce9f50-e910-4011-8ed0-d7b929c1692a",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "formatDate",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        368,
+        -128
+      ],
+      "id": "73d4d2b7-3c43-4d7d-95d6-7cfa54f393a3",
+      "name": "startTime"
     }
   ],
   "pinData": {
@@ -469,6 +615,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-17T14:51:16.000Z",
-  "versionId": "80e662f8-de16-4483-b406-fb8691fc6a4f"
+  "updatedAt": "2025-09-17T15:26:12.000Z",
+  "versionId": "30cc1feb-46f4-4a68-b481-a8e2688d862d"
 }
