@@ -1,10 +1,18 @@
 {
   "active": false,
-  "connections": {},
+  "connections": {
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        []
+      ]
+    }
+  },
   "createdAt": "2025-09-16T06:20:07.770Z",
   "id": "3ColoCp7dO5ie9Cn",
   "isArchived": false,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "YT Link Is https://youtu.be/T5vZNTvkiVU?si=I4_Wt_Zhl0F_PTJM",
   "nodes": [
     {
@@ -15,12 +23,32 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        0,
-        0
+        -352,
+        -16
       ],
       "id": "34788566-37b9-4e89-aced-9cc475bc26af",
       "name": "Webhook",
       "webhookId": "9396803e-7d10-4409-afc7-b7079dd03e4c"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        144
+      ],
+      "id": "66638744-ea57-4afd-a6df-1210988224c1",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "vjhsYdKrmtQkm6Tt",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -39,6 +67,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-17T12:59:29.000Z",
-  "versionId": "6c6efe9f-5f13-49b2-ad3b-38a42a27d62c"
+  "updatedAt": "2025-09-17T13:04:22.000Z",
+  "versionId": "9f42b5bd-1819-4576-b1fe-e297bd0112eb"
 }
