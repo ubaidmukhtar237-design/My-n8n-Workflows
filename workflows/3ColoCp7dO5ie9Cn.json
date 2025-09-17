@@ -5,6 +5,28 @@
       "ai_languageModel": [
         []
       ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Set Variables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Variables": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-09-16T06:20:07.770Z",
@@ -17,14 +39,16 @@
   "nodes": [
     {
       "parameters": {
+        "httpMethod": "POST",
         "path": "9396803e-7d10-4409-afc7-b7079dd03e4c",
+        "responseMode": "responseNode",
         "options": {}
       },
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -352,
-        -16
+        -272,
+        -32
       ],
       "id": "34788566-37b9-4e89-aced-9cc475bc26af",
       "name": "Webhook",
@@ -49,9 +73,387 @@
           "name": "Google Gemini(PaLM) Api account"
         }
       }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        288,
+        -32
+      ],
+      "id": "a8c68ac7-3fab-40c0-b15a-f115d1c6502a",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "df67bd86-658d-4c83-ae03-9eb8d771338b",
+              "name": "locationId",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "ae5a6596-759e-47d5-9ed0-e6a100125b5f",
+              "name": "calendarId",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "73ee2eb4-cf1c-4321-96e8-d790acd5c372",
+              "name": "contactId",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -48,
+        -32
+      ],
+      "id": "96c15644-f926-461a-86e4-73aa76224606",
+      "name": "Set Variables"
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.srv997234.hstgr.cloud",
+            "user-agent": "axios/1.8.3",
+            "content-length": "14076",
+            "accept": "application/json, text/plain, */*",
+            "accept-encoding": "gzip, compress, deflate, br",
+            "baggage": "sentry-environment=production,sentry-public_key=fac6f282c765ce50b18c3fa0305f8a8b,sentry-trace_id=ac991a2a2afa4a49ad6adaf1746bfa42",
+            "content-type": "application/json",
+            "cookie": "callId=",
+            "sentry-trace": "ac991a2a2afa4a49ad6adaf1746bfa42-acb99c638b17dbbe",
+            "traceparent": "00-68e24f1f7bc3d17de4a24ae6a2e63e01-cbebac7496396e9f-01",
+            "x-chat-id": "164626f9-8216-4369-b07b-5838be5b063c",
+            "x-forwarded-for": "35.92.170.92",
+            "x-forwarded-host": "n8n.srv997234.hstgr.cloud",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "afc3eb9ce8b3",
+            "x-real-ip": "35.92.170.92",
+            "x-vapi-secret": ""
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "message": {
+              "timestamp": 1758120534202,
+              "type": "tool-calls",
+              "toolCalls": [
+                {
+                  "id": "call_BXkcWw320NEITgvTJWy9sSuc",
+                  "type": "function",
+                  "function": {
+                    "name": "getOpenSlot123",
+                    "arguments": {
+                      "name": "Ubaid Nasir",
+                      "requestedAppointment": "2025-09-17T08:00:00"
+                    }
+                  }
+                }
+              ],
+              "toolCallList": [
+                {
+                  "id": "call_BXkcWw320NEITgvTJWy9sSuc",
+                  "type": "function",
+                  "function": {
+                    "name": "getOpenSlot123",
+                    "arguments": {
+                      "name": "Ubaid Nasir",
+                      "requestedAppointment": "2025-09-17T08:00:00"
+                    }
+                  }
+                }
+              ],
+              "toolWithToolCallList": [
+                {
+                  "type": "function",
+                  "function": {
+                    "name": "getOpenSlot123",
+                    "parameters": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "callerTimezone",
+                        "requestedAppointment"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "default": "",
+                          "description": "name of the caller"
+                        },
+                        "callerTimezone": {
+                          "type": "string",
+                          "default": "",
+                          "description": "Give me the timezone of the caller in the IANA time zone database standard format.For example, if the caller is in PKT this value should be 'Asia/Karachi."
+                        },
+                        "requestedAppointment": {
+                          "type": "string",
+                          "default": "",
+                          "description": "### `requestedAppointment`\r\n\r\n**Description**  \r\nExtract the caller’s requested appointment **date and time**.  \r\nThe output **must**:  \r\n- Be a **string** in **ISO 8601 format** (`YYYY-MM-DDTHH:mm:ss±hh:mm`)  \r\n- Reflect the **caller’s local timezone offset**  \r\n\r\n---\r\n\r\n### Extraction Rules (in priority order)\r\n\r\n1. **Full Date + Time Provided**  \r\n   - If the caller specifies both a date and a time (e.g., “October 23 at 10 AM,” “tomorrow at 3 PM”), return that exact datetime.\r\n\r\n2. **Partial Information Provided**  \r\n   - **Only date/day given** (e.g., “tomorrow,” “Saturday,” “the 15th”) → set time to midnight (`T00:00:00`) on that day.  \r\n   - **Only time given** (e.g., “at 4 PM”) → use that time on the **next calendar day**.\r\n\r\n3. **No Date/Time Mentioned**  \r\n   - If the caller does not provide any scheduling detail (e.g., “I need to make an appointment”), default to **midnight of the next calendar day**.\r\n\r\n---\r\n\r\n### Important Notes\r\n\r\n- **Relative Dates:** Resolve relative expressions (“tomorrow,” “next Tuesday”) against the system’s current date.  \r\n- **Timezone:** Always output with the caller’s local timezone offset, not UTC.  \r\n- **Consistency:** Even defaults must return full ISO 8601 strings.\r\n\r\n---\r\n\r\n### Examples  \r\n(Assume **today = Friday, April 11, 2025**, caller in timezone `-04:00`)  \r\n\r\n| Caller Utterance                                | Output Value                           |\r\n|-------------------------------------------------|----------------------------------------|\r\n| “Can I book for tomorrow at 2 PM?”              | `2025-04-12T14:00:00-04:00`            |\r\n| “I’d like to come in on Saturday.”              | `2025-04-12T00:00:00-04:00`            |\r\n| “I need to schedule a visit.”                   | `2025-04-12T00:00:00-04:00`            |\r\n| “Is there anything available around 4 PM?”      | `2025-04-12T16:00:00-04:00`            |\r\n"
+                        }
+                      }
+                    },
+                    "description": "The tool is used to query the calendar for open/available slots"
+                  },
+                  "server": {
+                    "url": "https://n8n.srv997234.hstgr.cloud/webhook-test/9396803e-7d10-4409-afc7-b7079dd03e4c",
+                    "headers": {
+                      "X-Chat-Id": "164626f9-8216-4369-b07b-5838be5b063c"
+                    }
+                  },
+                  "messages": [
+                    {
+                      "type": "request-start",
+                      "contents": [],
+                      "conditions": [],
+                      "blocking": false
+                    }
+                  ],
+                  "toolCall": {
+                    "id": "call_BXkcWw320NEITgvTJWy9sSuc",
+                    "type": "function",
+                    "function": {
+                      "name": "getOpenSlot123",
+                      "arguments": {
+                        "name": "Ubaid Nasir",
+                        "requestedAppointment": "2025-09-17T08:00:00"
+                      }
+                    }
+                  }
+                }
+              ],
+              "artifact": {
+                "messages": [
+                  {
+                    "role": "system",
+                    "message": "[Identity]  \nYou are a specialized appointment booking assistant named Riley for Wellness Partners, a multi-specialty health clinic. Your primary goal is to efficiently schedule appointments by collecting necessary information to call the `getOpenSlot123` function.\n\n[Style]  \n- Use a friendly, organized, and efficient tone.  \n- Maintain a warm, professional demeanor throughout conversations and include conversational elements like \"Let me check that for you.\"  \n- Speak with a measured pace, using natural contractions, especially when confirming names or times.\n\n[Response Guidelines]  \n- Keep your responses concise and focused on collecting information for scheduling.  \n- Confirm key information explicitly using phonetic spelling for verification if needed (e.g., \"That's spelled R-I-L-E-Y\").  \n- Ask only one question at a time and wait for the user's response before proceeding.\n\n[Task & Goals]  \n1. Greet the caller with: \"Thank you for calling Wellness Partners. This is Riley, your sche...",
+                    "time": 1758120532329,
+                    "secondsFromStart": 0
+                  },
+                  {
+                    "role": "bot",
+                    "message": "Thank you for calling Wellness Partners. This is Riley, your scheduling assistant. How may I help you today?",
+                    "time": 1758120532329,
+                    "secondsFromStart": 0,
+                    "endTime": 1758120532329
+                  },
+                  {
+                    "role": "user",
+                    "message": "name:Ubaid Nasir,Date:9/17/2025,Time:8 am to 9 am.Book me an appointment",
+                    "time": 1758120532329,
+                    "secondsFromStart": 0,
+                    "endTime": 1758120532329
+                  },
+                  {
+                    "toolCalls": [
+                      {
+                        "id": "call_BXkcWw320NEITgvTJWy9sSuc",
+                        "type": "function",
+                        "function": {
+                          "name": "getOpenSlot123",
+                          "arguments": "{\n  \"name\": \"Ubaid Nasir\",\n  \"requestedAppointment\": \"2025-09-17T08:00:00\"\n}"
+                        }
+                      }
+                    ],
+                    "role": "tool_calls",
+                    "message": "",
+                    "time": 1758120534182,
+                    "secondsFromStart": 1.853
+                  }
+                ],
+                "messagesOpenAIFormatted": [
+                  {
+                    "role": "system",
+                    "content": "[Identity]  \nYou are a specialized appointment booking assistant named Riley for Wellness Partners, a multi-specialty health clinic. Your primary goal is to efficiently schedule appointments by collecting necessary information to call the `getOpenSlot123` function.\n\n[Style]  \n- Use a friendly, organized, and efficient tone.  \n- Maintain a warm, professional demeanor throughout conversations and include conversational elements like \"Let me check that for you.\"  \n- Speak with a measured pace, using natural contractions, especially when confirming names or times.\n\n[Response Guidelines]  \n- Keep your responses concise and focused on collecting information for scheduling.  \n- Confirm key information explicitly using phonetic spelling for verification if needed (e.g., \"That's spelled R-I-L-E-Y\").  \n- Ask only one question at a time and wait for the user's response before proceeding.\n\n[Task & Goals]  \n1. Greet the caller with: \"Thank you for calling Wellness Partners. This is Riley, your sche..."
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "Thank you for calling Wellness Partners. This is Riley, your scheduling assistant. How may I help you today?"
+                  },
+                  {
+                    "role": "user",
+                    "content": "name:Ubaid Nasir,Date:9/17/2025,Time:8 am to 9 am.Book me an appointment"
+                  },
+                  {
+                    "role": "assistant",
+                    "tool_calls": [
+                      {
+                        "id": "call_BXkcWw320NEITgvTJWy9sSuc",
+                        "type": "function",
+                        "function": {
+                          "name": "getOpenSlot123",
+                          "arguments": "{\n  \"name\": \"Ubaid Nasir\",\n  \"requestedAppointment\": \"2025-09-17T08:00:00\"\n}"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "role": "tool",
+                    "tool_call_id": "call_BXkcWw320NEITgvTJWy9sSuc",
+                    "content": "Tool Result Still Pending But Proceed Further If Possible."
+                  }
+                ]
+              },
+              "chat": {
+                "id": "164626f9-8216-4369-b07b-5838be5b063c",
+                "orgId": "c4f8cd04-306b-4920-abaa-23888922703a",
+                "createdAt": "2025-09-02T08:02:26.836Z",
+                "updatedAt": "2025-09-09T23:32:16.187Z"
+              },
+              "assistant": {
+                "id": "611ad5cc-2e14-45ec-a8d2-bb33018915d8",
+                "orgId": "c4f8cd04-306b-4920-abaa-23888922703a",
+                "name": " Appointment Booking with Voice AI",
+                "voice": {
+                  "voiceId": "Elliot",
+                  "provider": "vapi"
+                },
+                "createdAt": "2025-09-17T01:34:29.258Z",
+                "updatedAt": "2025-09-17T14:46:46.900Z",
+                "model": {
+                  "model": "gpt-4o",
+                  "toolIds": [
+                    "395529cc-96e3-44a7-94e6-d6214f1b09ed"
+                  ],
+                  "messages": [
+                    {
+                      "role": "system",
+                      "content": "[Identity]  \nYou are a specialized appointment booking assistant named Riley for Wellness Partners, a multi-specialty health clinic. Your primary goal is to efficiently schedule appointments by collecting necessary information to call the `getOpenSlot123` function.\n\n[Style]  \n- Use a friendly, organized, and efficient tone.  \n- Maintain a warm, professional demeanor throughout conversations and include conversational elements like \"Let me check that for you.\"  \n- Speak with a measured pace, using natural contractions, especially when confirming names or times.\n\n[Response Guidelines]  \n- Keep your responses concise and focused on collecting information for scheduling.  \n- Confirm key information explicitly using phonetic spelling for verification if needed (e.g., \"That's spelled R-I-L-E-Y\").  \n- Ask only one question at a time and wait for the user's response before proceeding.\n\n[Task & Goals]  \n1. Greet the caller with: \"Thank you for calling Wellness Partners. This is Riley, your scheduling assistant. May I have your name, please?\"  \n2. After obtaining the caller's name, ask for their preferred date and time: \"Could you please tell me your preferred date and time for your appointment?\"  \n3. The `callerTimezone` is handled automatically by the system; do not ask the user for this information.  \n4. As soon as you have values for `name` and `requestedAppointment`, immediately call the `getOpenSlot123` function.\n\n[Error Handling / Fallback]  \n- If the caller's input is unclear or incomplete, ask a clarifying question: \"I'm sorry, could you repeat that for me?\"  \n- If there is any issue while calling the `getOpenSlot123` function, inform the user politely: \"I apologize, I'm experiencing a brief technical issue. Let's try again in a moment.\"  \n- If unable to resolve issues promptly, suggest a callback: \"If you prefer, I can arrange for a callback once the issue is resolved.\"\n\n- Do not attempt to ask or verify the caller's timezone; proceed directly to asking the next required information."
+                    }
+                  ],
+                  "provider": "openai",
+                  "temperature": 0.5,
+                  "tools": [
+                    {
+                      "id": "395529cc-96e3-44a7-94e6-d6214f1b09ed",
+                      "createdAt": "2025-09-17T01:44:21.885Z",
+                      "updatedAt": "2025-09-17T14:40:53.594Z",
+                      "type": "function",
+                      "function": {
+                        "name": "getOpenSlot123",
+                        "parameters": {
+                          "type": "object",
+                          "required": [
+                            "name",
+                            "callerTimezone",
+                            "requestedAppointment"
+                          ],
+                          "properties": {
+                            "name": {
+                              "type": "string",
+                              "default": "",
+                              "description": "name of the caller"
+                            },
+                            "callerTimezone": {
+                              "type": "string",
+                              "default": "",
+                              "description": "Give me the timezone of the caller in the IANA time zone database standard format.For example, if the caller is in PKT this value should be 'Asia/Karachi."
+                            },
+                            "requestedAppointment": {
+                              "type": "string",
+                              "default": "",
+                              "description": "### `requestedAppointment`\r\n\r\n**Description**  \r\nExtract the caller’s requested appointment **date and time**.  \r\nThe output **must**:  \r\n- Be a **string** in **ISO 8601 format** (`YYYY-MM-DDTHH:mm:ss±hh:mm`)  \r\n- Reflect the **caller’s local timezone offset**  \r\n\r\n---\r\n\r\n### Extraction Rules (in priority order)\r\n\r\n1. **Full Date + Time Provided**  \r\n   - If the caller specifies both a date and a time (e.g., “October 23 at 10 AM,” “tomorrow at 3 PM”), return that exact datetime.\r\n\r\n2. **Partial Information Provided**  \r\n   - **Only date/day given** (e.g., “tomorrow,” “Saturday,” “the 15th”) → set time to midnight (`T00:00:00`) on that day.  \r\n   - **Only time given** (e.g., “at 4 PM”) → use that time on the **next calendar day**.\r\n\r\n3. **No Date/Time Mentioned**  \r\n   - If the caller does not provide any scheduling detail (e.g., “I need to make an appointment”), default to **midnight of the next calendar day**.\r\n\r\n---\r\n\r\n### Important Notes\r\n\r\n- **Relative Dates:** Resolve relative expressions (“tomorrow,” “next Tuesday”) against the system’s current date.  \r\n- **Timezone:** Always output with the caller’s local timezone offset, not UTC.  \r\n- **Consistency:** Even defaults must return full ISO 8601 strings.\r\n\r\n---\r\n\r\n### Examples  \r\n(Assume **today = Friday, April 11, 2025**, caller in timezone `-04:00`)  \r\n\r\n| Caller Utterance                                | Output Value                           |\r\n|-------------------------------------------------|----------------------------------------|\r\n| “Can I book for tomorrow at 2 PM?”              | `2025-04-12T14:00:00-04:00`            |\r\n| “I’d like to come in on Saturday.”              | `2025-04-12T00:00:00-04:00`            |\r\n| “I need to schedule a visit.”                   | `2025-04-12T00:00:00-04:00`            |\r\n| “Is there anything available around 4 PM?”      | `2025-04-12T16:00:00-04:00`            |\r\n"
+                            }
+                          }
+                        },
+                        "description": "The tool is used to query the calendar for open/available slots"
+                      },
+                      "messages": [
+                        {
+                          "type": "request-start",
+                          "blocking": false
+                        }
+                      ],
+                      "orgId": "c4f8cd04-306b-4920-abaa-23888922703a",
+                      "server": {
+                        "url": "https://n8n.srv997234.hstgr.cloud/webhook-test/9396803e-7d10-4409-afc7-b7079dd03e4c",
+                        "headers": {
+                          "X-Chat-Id": "164626f9-8216-4369-b07b-5838be5b063c"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "recordingEnabled": false,
+                "firstMessage": "Thank you for calling Wellness Partners. This is Riley, your scheduling assistant. How may I help you today?",
+                "voicemailMessage": "Hello, this is Riley from Wellness Partners. I'm calling about your appointment. Please call us back at your earliest convenience so we can confirm your scheduling details.",
+                "endCallMessage": "Perfect! Your appointment has been scheduled. You'll receive a confirmation email shortly. Have a great day!",
+                "transcriber": {
+                  "model": "nova-2",
+                  "language": "en",
+                  "numerals": false,
+                  "provider": "deepgram",
+                  "endpointing": 300,
+                  "confidenceThreshold": 0.4
+                },
+                "clientMessages": [
+                  "conversation-update",
+                  "function-call",
+                  "hang",
+                  "model-output",
+                  "speech-update",
+                  "status-update",
+                  "transfer-update",
+                  "transcript",
+                  "tool-calls",
+                  "user-interrupted",
+                  "voice-input",
+                  "workflow.node.started"
+                ],
+                "serverMessages": [
+                  "conversation-update",
+                  "end-of-call-report",
+                  "function-call",
+                  "hang",
+                  "speech-update",
+                  "status-update",
+                  "tool-calls",
+                  "transfer-destination-request",
+                  "handoff-destination-request",
+                  "user-interrupted"
+                ],
+                "hipaaEnabled": true,
+                "backgroundDenoisingEnabled": false,
+                "artifactPlan": {
+                  "videoRecordingEnabled": false
+                },
+                "startSpeakingPlan": {
+                  "waitSeconds": 0.4,
+                  "transcriptionEndpointingPlan": {
+                    "onNumberSeconds": 0.5,
+                    "onPunctuationSeconds": 0.1,
+                    "onNoPunctuationSeconds": 1.5
+                  }
+                },
+                "compliancePlan": {
+                  "pciEnabled": false,
+                  "hipaaEnabled": true
+                }
+              }
+            }
+          },
+          "webhookUrl": "https://n8n.srv997234.hstgr.cloud/webhook-test/9396803e-7d10-4409-afc7-b7079dd03e4c",
+          "executionMode": "test"
+        }
+      }
+    ]
+  },
   "settings": {
     "executionOrder": "v1"
   },
@@ -67,6 +469,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-17T13:04:22.000Z",
-  "versionId": "9f42b5bd-1819-4576-b1fe-e297bd0112eb"
+  "updatedAt": "2025-09-17T14:51:16.000Z",
+  "versionId": "80e662f8-de16-4483-b406-fb8691fc6a4f"
 }
