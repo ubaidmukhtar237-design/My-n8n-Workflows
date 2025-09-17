@@ -303,6 +303,7 @@
         "operation": "formatDate",
         "date": "={{ $json.newDate }}",
         "format": "x",
+        "outputFieldName": "endDate",
         "options": {}
       },
       "type": "n8n-nodes-base.dateTime",
@@ -661,6 +662,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-17T15:50:27.000Z",
-  "versionId": "b9a2754d-209a-42e8-9f50-409f8e87c4df"
+  "updatedAt": "2025-09-17T16:18:12.000Z",
+  "versionId": "3abd8f81-43fd-4261-a55a-f9df556727ee"
 }
