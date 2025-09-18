@@ -349,12 +349,12 @@
     },
     {
       "parameters": {
-        "jsCode": "// 1. Get the stringified JSON from the 'query' field of the input.\n//    The input comes from the node that ran just before this one.\nconst queryString = $input.item.json.query;\n\n// 2. Parse the string to get the initial JavaScript object, which looks like { parameters: {...} }.\nconst initialData = JSON.parse(queryString);\n\n// 3. Access the 'parameters' object that is nested inside.\nconst parametersObject = initialData.parameters;\n\n// 4. Create the final flat object by merging the 'parameters' object\n//    with the nested 'options' object inside it.\nconst finalObject = {\n  ...parametersObject,\n  ...parametersObject.options\n};\n\n// 5. Remove the now-redundant 'options' key from the final object.\ndelete finalObject.options;\n\n// 6. Return the final, flat object. This will be the output of the node.\nreturn finalObject;"
+        "jsCode": "// 1. Get the stringified JSON from the 'query' field of the input.\nconst queryString = $input.item.json.query;\n\n// 2. Parse the string to get the initial JavaScript object.\n//    This assumes the 'queryString' is VALID JSON.\nconst initialData = JSON.parse(queryString);\n\n// 3. Access the 'parameters' object that is nested inside.\nconst parametersObject = initialData.parameters;\n\n// 4. Create the final flat object by merging the 'parameters' object\n//    with the nested 'options' object inside it. This is the \"flattening\" step.\nconst finalObject = {\n  ...parametersObject,\n  ...parametersObject.options\n};\n\n// 5. Remove the now-redundant 'options' key from the final object.\ndelete finalObject.options;\n\n// 6. Return the final, flat object. This will be the output of the node.\nreturn finalObject;"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        160,
+        144,
         128
       ],
       "id": "bbe0e808-0060-4526-845e-79fde93594c5",
@@ -434,7 +434,7 @@
         "text": "={{ $('When chat message received').item.json.chatInput }}",
         "hasOutputParser": true,
         "options": {
-          "systemMessage": "",
+          "systemMessage": "=You are a precision-focused AI assistant whose only job is to prepare data for sending an email. You will do this by using the \"send_email_workflow\" tool.\n\n**Your Task in Detail:**\n\nWhen the user asks you to send an email, you must parse their request and construct a very specific, nested JSON object. This object will be stringified and passed as the 'query' parameter to the \"send_email_workflow\" tool.\n\n**Rules for Building the JSON Object:**\n\n1.  **The Top Level:** The JSON object must have a single top-level key called `\"parameters\"`.\n\n2.  **Inside `\"parameters\"`:** The `\"parameters\"` object must contain the following keys:\n    *   `\"sendTo\"`: Extract the recipient's email address from the user's message.\n    *   `\"subject\"`: Extract the email subject from the user's message.\n    *   `\"message\"`: Extract the main body/content of the email from the user's message.\n    *   `\"emailType\"`: This must ALWAYS be the hardcoded string `\"text\"`.\n    *   `\"options\"`: This must be a nested JSON object.\n\n3.  **Inside the nested `\"options\"` object:** This object must contain the following keys with these exact, hardcoded values:\n    *   `\"appendAttribution\"`: Must ALWAYS be `false` (the boolean, not the string).\n    *   `\"bccList\"`: Must ALWAYS be the string `\"=\"`.\n    *   `\"ccList\"`: Must ALWAYS be the string `\"=\"`.\n    *   `\"senderName\"`: Must ALWAYS be an empty string `\"\"`.\n\n**Crucial Example:**\n\nIf the user says: \"Hey, send an email to `noah.patel@email.com`. The subject is `Birthday Wishes` and the message should be `Happy birthday, hope you have a great day!`\"\n\nYou MUST call the \"send_email_workflow\" tool with the 'query' parameter structured EXACTLY like this:\n\n`{\"query\":\"{\\\"parameters\\\":{\\\"sendTo\\\":\\\"noah.patel@email.com\\\",\\\"subject\\\":\\\"Birthday Wishes\\\",\\\"emailType\\\":\\\"text\\\",\\\"message\\\":\\\"Happy birthday, hope you have a great day!\\\",\\\"options\\\":{\\\"appendAttribution\\\":false,\\\"bccList\\\":\\\"=\\\",\\\"ccList\\\":\\\"=\\\",\\\"senderName\\\":\\\"\\\"}}}\"`\n\n**Final Instructions:**\n\n*   If you do not have the `sendTo`, `subject`, or `message` information, you MUST ask the user for the missing details before calling the tool.\n*   Your final output to the tool MUST be ONLY the `{\"query\":\"...\"}` JSON structure. Do not add any conversational text, explanations, or markdown code blocks like ```json.",
           "returnIntermediateSteps": true
         }
       },
@@ -565,7 +565,15 @@
       "name": "Simple Memory"
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "query": "{\"parameters\":{\"sendTo\":\"\",\"subject\":\"\",\"emailType\":\"text\",\"message\":\"\",\"options\":{\"appendAttribution\":false,\"bccList\":\"\",\"ccList\":\"\",\"senderName\":\"\"}}}"
+        }
+      }
+    ]
+  },
   "settings": {
     "executionOrder": "v1"
   },
@@ -581,6 +589,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-18T07:57:52.000Z",
-  "versionId": "cb75425c-7231-4395-8e29-856b72167d8d"
+  "updatedAt": "2025-09-18T08:29:35.000Z",
+  "versionId": "b65beffa-60cd-4da3-b3bb-3829cf51eaf4"
 }
