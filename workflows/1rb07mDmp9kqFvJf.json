@@ -1,0 +1,28 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-09-18T05:25:54.275Z",
+  "id": "1rb07mDmp9kqFvJf",
+  "isArchived": false,
+  "meta": null,
+  "name": "Simple Email AI Agent:https://youtu.be/YFrej2oSldo?si=AdyrncSTvheefAIq",
+  "nodes": [],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-18T05:25:54.279Z",
+      "updatedAt": "2025-09-18T05:25:54.279Z",
+      "role": "workflow:owner",
+      "workflowId": "1rb07mDmp9kqFvJf",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-18T05:27:59.000Z",
+  "versionId": "2955682a-1010-4365-ad6c-1058a3f5c927"
+}
