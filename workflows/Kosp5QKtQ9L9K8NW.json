@@ -1,0 +1,28 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-09-18T15:58:11.560Z",
+  "id": "Kosp5QKtQ9L9K8NW",
+  "isArchived": false,
+  "meta": null,
+  "name": "Nick Saraev:https://youtu.be/OroDNJl-pyc?si=dvI-rIMtPC_4LbZQ",
+  "nodes": [],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-18T15:58:11.564Z",
+      "updatedAt": "2025-09-18T15:58:11.564Z",
+      "role": "workflow:owner",
+      "workflowId": "Kosp5QKtQ9L9K8NW",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-18T15:58:11.000Z",
+  "versionId": "4022c423-6732-4617-9422-34a8ee4782b5"
+}
