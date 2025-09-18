@@ -60,8 +60,85 @@
       "main": [
         [
           {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
             "node": "Send a message",
             "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Vertex Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call n8n Workflow": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
             "index": 0
           }
         ]
@@ -142,7 +219,7 @@
       "typeVersion": 1.1,
       "position": [
         -384,
-        128
+        96
       ],
       "id": "551b8847-b66b-4344-ad61-37e97f69fcf4",
       "name": "Default Data Loader"
@@ -155,8 +232,8 @@
       "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
       "typeVersion": 1,
       "position": [
-        -336,
-        256
+        -272,
+        224
       ],
       "id": "af71f0de-e360-4ea9-92c6-e683ce467019",
       "name": "Recursive Character Text Splitter"
@@ -174,7 +251,7 @@
       "typeVersion": 1,
       "position": [
         -640,
-        128
+        112
       ],
       "id": "642c86cc-3374-4a77-a88c-0937de62340f",
       "name": "Embeddings Google Vertex",
@@ -224,30 +301,30 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
       "position": [
-        144,
-        -64
+        80,
+        -16
       ],
       "id": "643f4dc0-6fe9-469a-ab0b-a36a6f86edae",
       "name": "When Executed by Another Workflow"
     },
     {
       "parameters": {
-        "sendTo": "a",
-        "subject": "a",
+        "sendTo": "={{ $json.sendTo }}",
+        "subject": "={{ $json.subject }}",
         "emailType": "text",
-        "message": "a",
+        "message": "={{ $json.message }}",
         "options": {
           "appendAttribution": false,
-          "bccList": "=",
-          "ccList": "=",
-          "senderName": ""
+          "bccList": "={{ $json.bccList }}",
+          "ccList": "={{ $json.ccList }}",
+          "senderName": "Ubaid Nasir"
         }
       },
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        320,
-        -64
+        512,
+        -16
       ],
       "id": "32d254f8-de09-43b2-8685-7925e0b646fc",
       "name": "Send a message",
@@ -256,6 +333,194 @@
         "gmailOAuth2": {
           "id": "s2WwkLntcEWdzNj9",
           "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1. Get the stringified JSON from the 'query' field of the input.\n//    The input comes from the node that ran just before this one.\nconst queryString = $input.item.json.query;\n\n// 2. Parse the string to get the initial JavaScript object, which looks like { parameters: {...} }.\nconst initialData = JSON.parse(queryString);\n\n// 3. Access the 'parameters' object that is nested inside.\nconst parametersObject = initialData.parameters;\n\n// 4. Create the final flat object by merging the 'parameters' object\n//    with the nested 'options' object inside it.\nconst finalObject = {\n  ...parametersObject,\n  ...parametersObject.options\n};\n\n// 5. Remove the now-redundant 'options' key from the final object.\ndelete finalObject.options;\n\n// 6. Return the final, flat object. This will be the output of the node.\nreturn finalObject;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        288,
+        -16
+      ],
+      "id": "bbe0e808-0060-4526-845e-79fde93594c5",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "content": "Parsing and formating the data.",
+        "height": 208,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        224,
+        -64
+      ],
+      "typeVersion": 1,
+      "id": "38c4a2e0-a467-49d3-ad87-6a0d1cda78a2",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7b337320-1dca-4947-a241-68d0cb65c6cf",
+              "name": "response",
+              "value": "set",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        720,
+        -16
+      ],
+      "id": "8bc860ff-282b-40ce-8ee9-e2f86ee9e1a2",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "content": "## Chat System to send email",
+        "height": 560,
+        "width": 1056,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1040,
+        432
+      ],
+      "typeVersion": 1,
+      "id": "5d5857bd-36e7-4f4b-960f-2bfb1354164f",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -976,
+        528
+      ],
+      "id": "7cc5d064-21bb-49d3-9e5b-21399501106d",
+      "name": "When chat message received",
+      "webhookId": "a784cc78-022f-4d80-b41e-7cc8b1a1709e"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('When chat message received').item.json.chatInput }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "",
+          "returnIntermediateSteps": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -768,
+        528
+      ],
+      "id": "af285880-e16c-4345-95df-e0bfa9843e89",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "projectId": {
+          "__rl": true,
+          "value": "modified-keep-470614-p0",
+          "mode": "list",
+          "cachedResultName": "My First Project"
+        },
+        "modelName": "gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleVertex",
+      "typeVersion": 1,
+      "position": [
+        -960,
+        704
+      ],
+      "id": "c915af0f-ec16-4b38-bcc9-f5149b98c359",
+      "name": "Google Vertex Chat Model",
+      "credentials": {
+        "googleApi": {
+          "id": "r6bDu2a9hxhItPLs",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -368,
+        704
+      ],
+      "id": "444e260b-3888-479c-8608-dfc306babcd8",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "description": "Call this tool when you need to send an email.",
+        "workflowId": {
+          "__rl": true,
+          "value": "1rb07mDmp9kqFvJf",
+          "mode": "list",
+          "cachedResultName": "Simple Email AI Agent:https://youtu.be/YFrej2oSldo?si=AdyrncSTvheefAIq"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {}
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        -480,
+        704
+      ],
+      "id": "cbf45537-a2ce-492f-b4c8-b02b9e94cbdc",
+      "name": "Call n8n Workflow",
+      "notesInFlow": false
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Call this to tool to retrieve information about contacts like email address.",
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.3,
+      "position": [
+        -416,
+        528
+      ],
+      "id": "b4197df9-5532-46ac-8ea3-957b0db67b76",
+      "name": "Supabase Vector Store1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "MCizEh7d46MX4OUR",
+          "name": "Supabase account"
         }
       }
     }
@@ -276,6 +541,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-18T06:58:54.000Z",
-  "versionId": "0cb24951-9efa-4417-9771-1a719fa0258c"
+  "updatedAt": "2025-09-18T07:30:05.000Z",
+  "versionId": "ac0bcc42-9cfd-46a2-8e68-bc0a1b7f966a"
 }
