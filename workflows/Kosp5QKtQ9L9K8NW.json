@@ -33,13 +33,97 @@
           }
         ]
       ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "To Parse Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-09-18T15:58:11.560Z",
   "id": "Kosp5QKtQ9L9K8NW",
   "isArchived": false,
   "meta": null,
-  "name": "Nick Saraev:https://youtu.be/OroDNJl-pyc?si=dvI-rIMtPC_4LbZQ",
+  "name": "1:Nick Saraev:https://youtu.be/OroDNJl-pyc?si=dvI-rIMtPC_4LbZQ",
   "nodes": [
     {
       "parameters": {},
@@ -80,7 +164,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -64,
+        -80,
         -16
       ],
       "id": "1e554ce7-2c04-4b50-89f7-b9369099fa86",
@@ -108,6 +192,195 @@
       ],
       "id": "43b0a8ca-7f8c-4817-8967-18357ded1633",
       "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2f665ca4-7dd7-4cac-beba-50497757d5c0",
+              "leftValue": "={{ $json.website }}",
+              "rightValue": "schema",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "03952594-ef80-4c70-ad77-c820c7e79530",
+              "leftValue": "={{ $json.website }}",
+              "rightValue": "google",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "9d666d38-d44f-4e05-b11a-8c111ff75f65",
+              "leftValue": "={{ $json.website }}",
+              "rightValue": "gg",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "bbe61e65-30c1-4b9d-b3d6-01e5e9b26f92",
+              "leftValue": "={{ $json.website }}",
+              "rightValue": "gstatic",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        96,
+        -16
+      ],
+      "id": "ea26c147-f0a5-4527-942c-2ecdbfd322b0",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        304,
+        -16
+      ],
+      "id": "63d1707a-17d5-4b65-ab5e-3ab9628191ff",
+      "name": "Remove Duplicates"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        768,
+        -16
+      ],
+      "id": "f08758b8-d6c8-4daa-a809-4477a9dbba77",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.website }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        976,
+        80
+      ],
+      "id": "5d19f43f-1b25-409e-9fc4-257ac847b2f7",
+      "name": "HTTP Request1",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "amount": 1
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1280,
+        64
+      ],
+      "id": "7761486c-ee08-4661-be32-4e4cfdae19a7",
+      "name": "Wait",
+      "webhookId": "781ab9b8-0363-4122-9cf8-62812c684457"
+    },
+    {
+      "parameters": {
+        "content": "## To scrape website links from google maps of plumber services in the USA.",
+        "height": 752,
+        "width": 2288,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -768,
+        -288
+      ],
+      "typeVersion": 1,
+      "id": "95628188-e026-463f-94fe-17997581a036",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "maxItems": 3
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        512,
+        -16
+      ],
+      "id": "9cf65c13-10fe-4075-8e45-db158c24db9e",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json.data\nconst regex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.(?!(png|jpg|jpeg|gif|webp|svg))[a-zA-Z]{2,}/g\nconst emails = input.match(regex)\nreturn {json: {emails:emails}}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1008,
+        -96
+      ],
+      "id": "bf80b37b-76a1-4e00-b271-5c93bc07dde2",
+      "name": "To Parse Email"
+    },
+    {
+      "parameters": {
+        "content": "To Parse Emails from the website links of plumber services.",
+        "height": 224,
+        "width": 224,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        944,
+        -176
+      ],
+      "typeVersion": 1,
+      "id": "8bb4bc3a-ad65-44eb-8005-0a6656de03b1",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "To parse url links.",
+        "height": 192,
+        "width": 160,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -112,
+        -64
+      ],
+      "typeVersion": 1,
+      "id": "73a835ac-f326-425e-8cdd-ca5da2aaef22",
+      "name": "Sticky Note2"
     }
   ],
   "pinData": {
@@ -137,6 +410,320 @@
           "statusMessage": "OK"
         }
       }
+    ],
+    "Remove Duplicates": [
+      {
+        "json": {
+          "website": "http://www.usaplumbingmb.com"
+        }
+      },
+      {
+        "json": {
+          "website": "http://www.callplumbersusa.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://callplumbersusa.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://www.usaplumbingandsewer.net"
+        }
+      },
+      {
+        "json": {
+          "website": "http://www.usplumbing.us"
+        }
+      },
+      {
+        "json": {
+          "website": "https://usplumbing.us"
+        }
+      },
+      {
+        "json": {
+          "website": "https://www.ezplumbingusa.com"
+        }
+      },
+      {
+        "json": {
+          "website": "http://www.usaplumbingservice.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://usaplumbingplus.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://www.usaplumbingandseptic.com"
+        }
+      },
+      {
+        "json": {
+          "website": "http://www.myusaplumbing.net"
+        }
+      },
+      {
+        "json": {
+          "website": "https://usaplumbingco.com"
+        }
+      },
+      {
+        "json": {
+          "website": "http://www.usaplumbingandseptic.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://www.usplumbingandrooter.com"
+        }
+      },
+      {
+        "json": {
+          "website": "http://www.codyandsons.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://codyandsons.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://book.servicetitan.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://usaunitedplumbing.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://www.callmattioni.com"
+        }
+      },
+      {
+        "json": {
+          "website": "http://www.usplumbingrepairs.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://plumbingbypaulllc.com"
+        }
+      }
+    ],
+    "Filter": [
+      {
+        "json": {
+          "website": "http://www.usaplumbingmb.com"
+        }
+      },
+      {
+        "json": {
+          "website": "http://www.callplumbersusa.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://callplumbersusa.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://callplumbersusa.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://www.usaplumbingandsewer.net"
+        }
+      },
+      {
+        "json": {
+          "website": "https://www.usaplumbingandsewer.net"
+        }
+      },
+      {
+        "json": {
+          "website": "https://www.usaplumbingandsewer.net"
+        }
+      },
+      {
+        "json": {
+          "website": "http://www.usplumbing.us"
+        }
+      },
+      {
+        "json": {
+          "website": "https://usplumbing.us"
+        }
+      },
+      {
+        "json": {
+          "website": "https://usplumbing.us"
+        }
+      },
+      {
+        "json": {
+          "website": "https://www.ezplumbingusa.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://www.ezplumbingusa.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://www.ezplumbingusa.com"
+        }
+      },
+      {
+        "json": {
+          "website": "http://www.usaplumbingservice.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://usaplumbingplus.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://usaplumbingplus.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://usaplumbingplus.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://www.usaplumbingandseptic.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://www.usaplumbingandseptic.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://www.usaplumbingandseptic.com"
+        }
+      },
+      {
+        "json": {
+          "website": "http://www.myusaplumbing.net"
+        }
+      },
+      {
+        "json": {
+          "website": "https://usaplumbingco.com"
+        }
+      },
+      {
+        "json": {
+          "website": "http://www.usaplumbingandseptic.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://www.usaplumbingandseptic.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://www.usaplumbingandseptic.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://www.usplumbingandrooter.com"
+        }
+      },
+      {
+        "json": {
+          "website": "http://www.codyandsons.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://codyandsons.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://codyandsons.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://book.servicetitan.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://book.servicetitan.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://usaunitedplumbing.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://www.callmattioni.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://www.callmattioni.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://www.callmattioni.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://book.servicetitan.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://book.servicetitan.com"
+        }
+      },
+      {
+        "json": {
+          "website": "http://www.usplumbingrepairs.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://plumbingbypaulllc.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://plumbingbypaulllc.com"
+        }
+      },
+      {
+        "json": {
+          "website": "https://plumbingbypaulllc.com"
+        }
+      }
     ]
   },
   "settings": {
@@ -154,6 +741,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-18T16:59:16.000Z",
-  "versionId": "05a0bc78-512e-4a2d-a4f7-b3f346d700d7"
+  "updatedAt": "2025-09-18T17:29:34.000Z",
+  "versionId": "632fcf90-b703-41d9-973d-944ea02a011c"
 }
