@@ -1,0 +1,184 @@
+{
+  "active": false,
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-18T11:16:31.765Z",
+  "id": "D6j8CZjX5gHNGJ0T",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "System 2",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -352,
+        -16
+      ],
+      "id": "d81c8f27-05e2-477e-8950-df76791e58c0",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Q_Du9X4riInNtvJ6JlgcXes56bpo5ezsV9MuijeGzUo",
+          "mode": "list",
+          "cachedResultName": "GoogleForm3",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Q_Du9X4riInNtvJ6JlgcXes56bpo5ezsV9MuijeGzUo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1Q_Du9X4riInNtvJ6JlgcXes56bpo5ezsV9MuijeGzUo/edit?gid=1030610596#gid=1030610596",
+          "mode": "url"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -144,
+        -16
+      ],
+      "id": "87024bae-d76c-473f-90f1-7c5f31410ff0",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JOHwDixlr7umKmYo",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Your objective is to write a personalized message to each of the leads. Output the leads' preferred method of contact and when is the best time to contact them. Then provide a script that is personalized based on their company, job title, and what they are looking to automate.\n\nIf the lead is \"Qualified\" then provide a message, otherwise output nothing.\n\nThese messages should be sent from \"InstaHive AI Agency\", the company is \"InstaHive AI\" and his email is \"ubaidmukhtar237@gmail.com\". The message shouldn't include any variables like [Your Name] or [Company Name], use the information I just provided to fill in those details.",
+              "role": "model"
+            },
+            {
+              "content": "=Here is the lead's information:\nName:{{ $json['Full Name'] }}\nJob Title:{{ $json['Job Title'] }}\nWhat they are looking to automate:{{ $json['What are of business you are looking to automate'] }}\nRating:{{ $json.Rating }}\n"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        64,
+        -16
+      ],
+      "id": "dbf74b81-0cd4-459d-a71d-ce66c625f8d0",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "vjhsYdKrmtQkm6Tt",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "01d8d50d-ae38-44dc-8bbc-3923c19145fc",
+              "name": "reply",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        416,
+        -16
+      ],
+      "id": "c0a2ec9b-1dad-4dca-b225-d1ceac741347",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "content": "## ",
+        "height": 304,
+        "width": 1296,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -432,
+        -64
+      ],
+      "typeVersion": 1,
+      "id": "6f5f6dc6-c495-4c09-b77d-25f6b9fc3f1a",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-18T11:16:31.768Z",
+      "updatedAt": "2025-09-18T11:16:31.768Z",
+      "role": "workflow:owner",
+      "workflowId": "D6j8CZjX5gHNGJ0T",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-18T11:30:05.000Z",
+  "versionId": "3160b81b-bc54-4466-bc48-149aa39cc8bb"
+}
