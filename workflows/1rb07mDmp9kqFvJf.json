@@ -55,6 +55,17 @@
           }
         ]
       ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-09-18T05:25:54.275Z",
@@ -144,8 +155,8 @@
       "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
       "typeVersion": 1,
       "position": [
-        -320,
-        304
+        -336,
+        256
       ],
       "id": "af71f0de-e360-4ea9-92c6-e683ce467019",
       "name": "Recursive Character Text Splitter"
@@ -173,6 +184,80 @@
           "name": "Google Service Account account"
         }
       }
+    },
+    {
+      "parameters": {
+        "content": "## Rag System to retrieve data of emails.",
+        "height": 560,
+        "width": 1056,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1040,
+        -176
+      ],
+      "typeVersion": 1,
+      "id": "22ec5f36-0bba-4e69-b790-52b8d4db4487",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Send Email System",
+        "height": 560,
+        "width": 1056,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        48,
+        -176
+      ],
+      "typeVersion": 1,
+      "id": "d922dd63-de14-423e-a4d4-44431f5ab299",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        144,
+        -64
+      ],
+      "id": "643f4dc0-6fe9-469a-ab0b-a36a6f86edae",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "sendTo": "a",
+        "subject": "a",
+        "emailType": "text",
+        "message": "a",
+        "options": {
+          "appendAttribution": false,
+          "bccList": "=",
+          "ccList": "=",
+          "senderName": ""
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        320,
+        -64
+      ],
+      "id": "32d254f8-de09-43b2-8685-7925e0b646fc",
+      "name": "Send a message",
+      "webhookId": "1e8d6280-5fdc-4e44-a66f-eb768f76dc01",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "s2WwkLntcEWdzNj9",
+          "name": "Gmail account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -191,6 +276,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-18T06:30:09.000Z",
-  "versionId": "0c8d8134-a2fc-4a1c-862f-801303506cbb"
+  "updatedAt": "2025-09-18T06:58:54.000Z",
+  "versionId": "0cb24951-9efa-4417-9771-1a719fa0258c"
 }
