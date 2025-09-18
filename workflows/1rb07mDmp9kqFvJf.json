@@ -111,17 +111,6 @@
         ]
       ]
     },
-    "Structured Output Parser": {
-      "ai_outputParser": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_outputParser",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Call n8n Workflow": {
       "ai_tool": [
         [
@@ -133,12 +122,34 @@
         ]
       ]
     },
-    "Supabase Vector Store1": {
+    "Embeddings Google Vertex1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Contacts_Data",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Contacts_Data": {
       "ai_tool": [
         [
           {
             "node": "AI Agent",
             "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
             "index": 0
           }
         ]
@@ -158,8 +169,8 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -976,
-        -80
+        -1168,
+        176
       ],
       "id": "037a21d6-b9d9-43c2-80e8-682924495e3f",
       "name": "When clicking ‘Execute workflow’"
@@ -172,8 +183,8 @@
       "type": "n8n-nodes-base.googleDocs",
       "typeVersion": 2,
       "position": [
-        -720,
-        -80
+        -944,
+        176
       ],
       "id": "c8ea05b6-7b17-4151-afaa-79c78fcefd16",
       "name": "Get a document",
@@ -198,8 +209,8 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
       "typeVersion": 1.3,
       "position": [
-        -512,
-        -80
+        -688,
+        -32
       ],
       "id": "12f338f8-16d6-4903-b565-d8cf05c4370a",
       "name": "Supabase Vector Store",
@@ -218,8 +229,8 @@
       "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
       "typeVersion": 1.1,
       "position": [
-        -384,
-        96
+        -592,
+        192
       ],
       "id": "551b8847-b66b-4344-ad61-37e97f69fcf4",
       "name": "Default Data Loader"
@@ -232,8 +243,8 @@
       "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
       "typeVersion": 1,
       "position": [
-        -272,
-        224
+        -512,
+        400
       ],
       "id": "af71f0de-e360-4ea9-92c6-e683ce467019",
       "name": "Recursive Character Text Splitter"
@@ -250,8 +261,8 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleVertex",
       "typeVersion": 1,
       "position": [
-        -640,
-        112
+        -720,
+        192
       ],
       "id": "642c86cc-3374-4a77-a88c-0937de62340f",
       "name": "Embeddings Google Vertex",
@@ -265,14 +276,14 @@
     {
       "parameters": {
         "content": "## Rag System to retrieve data of emails.",
-        "height": 560,
+        "height": 672,
         "width": 1056,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1040,
-        -176
+        -1280,
+        -80
       ],
       "typeVersion": 1,
       "id": "22ec5f36-0bba-4e69-b790-52b8d4db4487",
@@ -281,14 +292,14 @@
     {
       "parameters": {
         "content": "## Send Email System",
-        "height": 560,
+        "height": 672,
         "width": 1056,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        48,
-        -176
+        -176,
+        -80
       ],
       "typeVersion": 1,
       "id": "d922dd63-de14-423e-a4d4-44431f5ab299",
@@ -301,8 +312,8 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
       "position": [
-        80,
-        -16
+        -64,
+        128
       ],
       "id": "643f4dc0-6fe9-469a-ab0b-a36a6f86edae",
       "name": "When Executed by Another Workflow"
@@ -323,8 +334,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        512,
-        -16
+        384,
+        128
       ],
       "id": "32d254f8-de09-43b2-8685-7925e0b646fc",
       "name": "Send a message",
@@ -343,8 +354,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        288,
-        -16
+        160,
+        128
       ],
       "id": "bbe0e808-0060-4526-845e-79fde93594c5",
       "name": "Code in JavaScript"
@@ -357,8 +368,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        224,
-        -64
+        80,
+        80
       ],
       "typeVersion": 1,
       "id": "38c4a2e0-a467-49d3-ad87-6a0d1cda78a2",
@@ -381,8 +392,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        720,
-        -16
+        608,
+        128
       ],
       "id": "8bc860ff-282b-40ce-8ee9-e2f86ee9e1a2",
       "name": "Edit Fields"
@@ -390,14 +401,14 @@
     {
       "parameters": {
         "content": "## Chat System to send email",
-        "height": 560,
+        "height": 672,
         "width": 1056,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1040,
-        432
+        -1280,
+        624
       ],
       "typeVersion": 1,
       "id": "5d5857bd-36e7-4f4b-960f-2bfb1354164f",
@@ -410,8 +421,8 @@
       "type": "@n8n/n8n-nodes-langchain.chatTrigger",
       "typeVersion": 1.3,
       "position": [
-        -976,
-        528
+        -1152,
+        736
       ],
       "id": "7cc5d064-21bb-49d3-9e5b-21399501106d",
       "name": "When chat message received",
@@ -430,8 +441,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        -768,
-        528
+        -800,
+        672
       ],
       "id": "af285880-e16c-4345-95df-e0bfa9843e89",
       "name": "AI Agent"
@@ -450,8 +461,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleVertex",
       "typeVersion": 1,
       "position": [
-        -960,
-        704
+        -1008,
+        912
       ],
       "id": "c915af0f-ec16-4b38-bcc9-f5149b98c359",
       "name": "Google Vertex Chat Model",
@@ -461,17 +472,6 @@
           "name": "Google Service Account account"
         }
       }
-    },
-    {
-      "parameters": {},
-      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
-      "typeVersion": 1.3,
-      "position": [
-        -368,
-        704
-      ],
-      "id": "444e260b-3888-479c-8608-dfc306babcd8",
-      "name": "Structured Output Parser"
     },
     {
       "parameters": {
@@ -490,12 +490,36 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        -480,
-        704
+        -848,
+        896
       ],
       "id": "cbf45537-a2ce-492f-b4c8-b02b9e94cbdc",
       "name": "Call n8n Workflow",
       "notesInFlow": false
+    },
+    {
+      "parameters": {
+        "projectId": {
+          "__rl": true,
+          "value": "modified-keep-470614-p0",
+          "mode": "list",
+          "cachedResultName": "My First Project"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleVertex",
+      "typeVersion": 1,
+      "position": [
+        -624,
+        1088
+      ],
+      "id": "ce95613f-ef4f-4ec0-90b4-7f13c4631903",
+      "name": "Embeddings Google Vertex1",
+      "credentials": {
+        "googleApi": {
+          "id": "r6bDu2a9hxhItPLs",
+          "name": "Google Service Account account"
+        }
+      }
     },
     {
       "parameters": {
@@ -507,22 +531,38 @@
           "mode": "list",
           "cachedResultName": "documents"
         },
-        "options": {}
+        "options": {
+          "queryName": "match_documents"
+        }
       },
       "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
       "typeVersion": 1.3,
       "position": [
-        -416,
-        528
+        -704,
+        896
       ],
       "id": "b4197df9-5532-46ac-8ea3-957b0db67b76",
-      "name": "Supabase Vector Store1",
+      "name": "Contacts_Data",
       "credentials": {
         "supabaseApi": {
           "id": "MCizEh7d46MX4OUR",
           "name": "Supabase account"
         }
       }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.sessionId }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -768,
+        1056
+      ],
+      "id": "2c773826-30a3-49b4-acb2-8d66126d6808",
+      "name": "Simple Memory"
     }
   ],
   "pinData": {},
@@ -541,6 +581,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-18T07:30:05.000Z",
-  "versionId": "ac0bcc42-9cfd-46a2-8e68-bc0a1b7f966a"
+  "updatedAt": "2025-09-18T07:57:52.000Z",
+  "versionId": "cb75425c-7231-4395-8e29-856b72167d8d"
 }
