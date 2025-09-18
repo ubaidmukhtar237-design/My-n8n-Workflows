@@ -49,6 +49,28 @@
           }
         ]
       ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-09-18T11:16:31.765Z",
@@ -114,11 +136,11 @@
         "messages": {
           "values": [
             {
-              "content": "=Your objective is to write a personalized message to each of the leads. Output the leads' preferred method of contact and when is the best time to contact them. Then provide a script that is personalized based on their company, job title, and what they are looking to automate.\n\nIf the lead is \"Qualified\" then provide a message, otherwise output nothing.\n\nThese messages should be sent from \"InstaHive AI Agency\", the company is \"InstaHive AI\" and his email is \"ubaidmukhtar237@gmail.com\". The message shouldn't include any variables like [Your Name] or [Company Name], use the information I just provided to fill in those details.",
+              "content": "=Your objective is to write a personalized message to each of the leads. Output the leads' preferred method of contact and when is the best time to contact them. Then provide a script that is personalized based on their company, job title, and what they are looking to automate.\n\nIf the lead is \"Qualified\" then provide a message, otherwise output nothing.\n\nThese messages should be sent from \"InstaHive AI Agency\", the company is \"InstaHive AI\" and his email is \"ubaidmukhtar237@gmail.com\". The message shouldn't include any variables like [Your Name] or [Company Name], use the information I just provided to fill in those details.\n\n",
               "role": "model"
             },
             {
-              "content": "=Here is the lead's information:\nName:{{ $json['Full Name'] }}\nJob Title:{{ $json['Job Title'] }}\nWhat they are looking to automate:{{ $json['What are of business you are looking to automate'] }}\nRating:{{ $json.Rating }}\n"
+              "content": "=Here is the lead's information:\nName:{{ $json['Full Name'] }}\nJob Title:{{ $json['Job Title'] }}\nWhat they are looking to automate:{{ $json['What are of business you are looking to automate'] }}\nRating:{{ $json.Rating }}\nBest time to contact:{{ $json['Best time to contact?'] }}\nPreferred contact method(s):{{ $json['Preferred Contact Method(s)'] }}\n"
             }
           ]
         },
@@ -157,7 +179,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        400,
+        432,
         32
       ],
       "id": "c0a2ec9b-1dad-4dca-b225-d1ceac741347",
@@ -165,15 +187,15 @@
     },
     {
       "parameters": {
-        "content": "## ",
-        "height": 368,
-        "width": 1504,
+        "content": "## To update google sheets with drafted email with given details in the prompt.",
+        "height": 416,
+        "width": 1792,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
         -432,
-        -128
+        -176
       ],
       "typeVersion": 1,
       "id": "6f5f6dc6-c495-4c09-b77d-25f6b9fc3f1a",
@@ -188,14 +210,274 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        640,
+        688,
         -80
       ],
       "id": "7f340081-2881-4613-9726-d32e4e25f77d",
       "name": "Merge"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1Q_Du9X4riInNtvJ6JlgcXes56bpo5ezsV9MuijeGzUo",
+          "mode": "list",
+          "cachedResultName": "GoogleForm3",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Q_Du9X4riInNtvJ6JlgcXes56bpo5ezsV9MuijeGzUo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1Q_Du9X4riInNtvJ6JlgcXes56bpo5ezsV9MuijeGzUo/edit?gid=1030610596#gid=1030610596",
+          "mode": "url"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Timestamp": "={{ $json.Timestamp }}",
+            "Outreach": "={{ $('Message a model').item.json.content.parts[0].text }}"
+          },
+          "matchingColumns": [
+            "Timestamp"
+          ],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email Address",
+              "displayName": "Email Address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Full Name",
+              "displayName": "Full Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Company Name",
+              "displayName": "Company Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Business Industry",
+              "displayName": "Business Industry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Job Title",
+              "displayName": "Job Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Are you a decision maker for your company's",
+              "displayName": "Are you a decision maker for your company's",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Company Size",
+              "displayName": "Company Size",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "What are of business you are looking to automate",
+              "displayName": "What are of business you are looking to automate",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Preferred Contact Method(s)",
+              "displayName": "Preferred Contact Method(s)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Best time to contact?",
+              "displayName": "Best time to contact?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Anything we should know?",
+              "displayName": "Anything we should know?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Outreach",
+              "displayName": "Outreach",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Rating",
+              "displayName": "Rating",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Reasoning",
+              "displayName": "Reasoning",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        896,
+        -80
+      ],
+      "id": "a249a9d5-0628-4565-a514-7ae800c7f54c",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JOHwDixlr7umKmYo",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "16fef455-f6df-4775-9a2a-4ac68e1bc94f",
+              "name": "respone",
+              "value": "done",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1104,
+        -80
+      ],
+      "id": "593f3c37-683b-4b93-9ed3-1436c18539f3",
+      "name": "Edit Fields1"
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "Message a model": [
+      {
+        "json": {
+          "content": {
+            "parts": [
+              {
+                "text": "**Preferred Contact Method:** Video\n**Best Time to Contact:** Evening\n\n***\n\nHello Ubaid Nasir,\n\nMy name is Ubaid from InstaHive AI Agency. I'm reaching out because I saw you're interested in automating customer support and sales for your business.\n\nAs a business owner, I know how crucial it is to manage your time effectively while ensuring customers are happy and sales are growing. Juggling both can be a significant challenge.\n\nAt InstaHive AI, we specialize in creating custom AI solutions that handle these exact pain points. We can build intelligent AI assistants that provide instant, 24/7 customer support, answer common questions, and free up your team's time. For sales, we can develop systems to automatically qualify leads, handle initial outreach, and schedule meetings, ensuring you never miss an opportunity.\n\nSince your preferred method is a video call, I would be happy to connect for a brief chat in the evening to demonstrate how we can specifically implement this for your business and help you scale more efficiently.\n\nWhat evening next week works best for you?\n\nBest regards,\n\nUbaid Mukhtar\nInstaHive AI\nubaidmukhtar237@gmail.com"
+              }
+            ],
+            "role": "model"
+          },
+          "finishReason": "STOP",
+          "index": 0
+        }
+      },
+      {
+        "json": {
+          "content": {
+            "parts": [
+              {
+                "text": "**Contact Method:** Email, Phone Call\n**Best time to contact:** Afternoon\n\nHello Alex,\n\nMy name is Ubaid Mukhtar, and I'm with InstaHive AI.\n\nI noticed your role as Marketing Director at InnovateTech Solutions and your interest in automating customer support. It's a common challenge for growing tech companies to scale support without overwhelming the team, and that's precisely where we can help.\n\nAt InstaHive AI, we specialize in developing custom AI chatbots that handle up to 80% of routine customer inquiries, freeing up your team to focus on complex issues. This not only improves response times but also significantly enhances customer satisfaction. For InnovateTech Solutions, this could mean faster ticket resolution and a more streamlined support workflow.\n\nWould you be open to a brief call next week to discuss how AI-powered support could specifically benefit your team?\n\nBest regards,\n\nUbaid Mukhtar\nInstaHive AI\nubaidmukhtar237@gmail.com"
+              }
+            ],
+            "role": "model"
+          },
+          "finishReason": "STOP",
+          "index": 0
+        }
+      }
+    ]
+  },
   "settings": {
     "executionOrder": "v1"
   },
@@ -211,6 +493,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-18T12:42:08.000Z",
-  "versionId": "bdf65aed-12a4-48bd-a6b1-a4db845d550c"
+  "updatedAt": "2025-09-18T13:29:53.000Z",
+  "versionId": "5edf2260-50c2-4701-b42a-47c7bd9f11d4"
 }
