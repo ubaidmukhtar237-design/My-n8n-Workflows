@@ -1,12 +1,122 @@
 {
   "active": false,
-  "connections": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get a document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        []
+      ]
+    }
+  },
   "createdAt": "2025-09-18T05:25:54.275Z",
   "id": "1rb07mDmp9kqFvJf",
   "isArchived": false,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "Simple Email AI Agent:https://youtu.be/YFrej2oSldo?si=AdyrncSTvheefAIq",
-  "nodes": [],
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -976,
+        -80
+      ],
+      "id": "037a21d6-b9d9-43c2-80e8-682924495e3f",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "1Mrdrl6QREJYtGcnFBcaSJvx33aF9e94z",
+          "mode": "list",
+          "cachedResultName": "fake_students_500.docx",
+          "cachedResultUrl": "https://docs.google.com/document/d/1Mrdrl6QREJYtGcnFBcaSJvx33aF9e94z/edit?usp=drivesdk&ouid=115187104875262215388&rtpof=true&sd=true"
+        },
+        "options": {
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "text/plain"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -768,
+        -80
+      ],
+      "id": "d40f24a8-9c17-4e0f-ab48-661422bd78a5",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "zFazEadFPdDVMQtT",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -560,
+        -80
+      ],
+      "id": "bc69ff6e-b4f9-4be1-a68d-f23bc00bc48f",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "get",
+        "documentURL": "1AjI7TaH0Rk0YPh9ZsAt5702nP8yX4_UvyXOQeShPvAs"
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        -720,
+        96
+      ],
+      "id": "c8ea05b6-7b17-4151-afaa-79c78fcefd16",
+      "name": "Get a document",
+      "credentials": {
+        "googleApi": {
+          "id": "8Mdij8EM49DuVbZ1",
+          "name": "Google Service Account account"
+        }
+      }
+    }
+  ],
   "pinData": {},
   "settings": {
     "executionOrder": "v1"
@@ -23,6 +133,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-18T05:27:59.000Z",
-  "versionId": "2955682a-1010-4365-ad6c-1058a3f5c927"
+  "updatedAt": "2025-09-18T05:57:39.000Z",
+  "versionId": "8de630d6-0fdd-4262-91ba-6444f628ee8e"
 }
