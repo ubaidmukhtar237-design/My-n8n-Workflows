@@ -119,8 +119,8 @@
       "retryOnFail": false,
       "credentials": {
         "googlePalmApi": {
-          "id": "vjhsYdKrmtQkm6Tt",
-          "name": "Google Gemini(PaLM) Api account"
+          "id": "sPfpmF39mpaLYCjc",
+          "name": "Google Gemini(PaLM) Api account 2"
         }
       }
     },
@@ -180,6 +180,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-18T11:59:02.000Z",
-  "versionId": "d1c84bdc-4d3e-46a3-b90c-83cb80c47f25"
+  "updatedAt": "2025-09-18T12:27:49.000Z",
+  "versionId": "22b0e23d-ec77-4095-b711-2a72d2c17a3f"
 }
