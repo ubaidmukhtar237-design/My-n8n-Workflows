@@ -1,6 +1,18 @@
 {
   "active": false,
-  "connections": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "createdAt": "2025-09-19T11:18:22.021Z",
   "id": "0wEO94EbDLFqh9Bt",
   "isArchived": false,
@@ -14,11 +26,45 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
       "position": [
-        -336,
-        0
+        -752,
+        -16
       ],
       "id": "0980d0f2-02fc-4a22-85f4-c806a63289e2",
       "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "url": "https://api.cal.com/v1/booking-references",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "apiKey",
+              "value": "cal_live_e51c24e87b178ffec9e5ac8afa178ae7"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -224,
+        -16
+      ],
+      "id": "8993a91c-d572-476f-a545-57e17f2c068f",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -416,
+        -16
+      ],
+      "id": "6489592e-bf6b-422c-bcd1-5c99d1a1dd7d",
+      "name": "When clicking ‘Execute workflow’"
     }
   ],
   "pinData": {
@@ -45,6 +91,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-19T12:27:14.000Z",
-  "versionId": "5fc257ce-3f64-42f5-b17e-715676067051"
+  "updatedAt": "2025-09-19T21:05:03.000Z",
+  "versionId": "8e4be57a-135d-40ab-95c6-a0bdd1ed001e"
 }
