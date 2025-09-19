@@ -126,7 +126,7 @@
       "main": [
         [
           {
-            "node": "Code in JavaScript1",
+            "node": "If",
             "type": "main",
             "index": 0
           }
@@ -149,6 +149,24 @@
         [
           {
             "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code in JavaScript1",
             "type": "main",
             "index": 0
           }
@@ -611,7 +629,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -240,
+        -224,
         560
       ],
       "id": "ee2b00b1-9a63-48e9-b179-47b0411e221f",
@@ -632,8 +650,8 @@
       "type": "n8n-nodes-base.slack",
       "typeVersion": 2.3,
       "position": [
-        320,
-        560
+        336,
+        736
       ],
       "id": "5bc87a24-dbb0-4fec-9e3f-5573cbcd0708",
       "name": "Send a message1",
@@ -652,8 +670,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -48,
-        560
+        -560,
+        736
       ],
       "id": "c04c1daf-7efe-452a-a219-39e88069d825",
       "name": "Code in JavaScript1"
@@ -666,10 +684,55 @@
       "typeVersion": 2,
       "position": [
         144,
-        560
+        736
       ],
       "id": "1ce51bd6-32af-475f-acde-d659eba50c83",
       "name": "Code in JavaScript2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c086abf5-2d60-4078-81a7-f44c2a01af77",
+              "leftValue": "={{ $json['Alert Type'] }}",
+              "rightValue": "General Updates",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -48,
+        560
+      ],
+      "id": "1da8b9be-2f87-4019-ab9a-b8c4892b3c14",
+      "name": "If"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        160,
+        464
+      ],
+      "id": "4f0d94ff-020f-4482-a165-e30c01061d1f",
+      "name": "No Operation, do nothing"
     }
   ],
   "pinData": {
@@ -761,12 +824,15 @@
   "staticData": {
     "node:Gmail Trigger2": {
       "Gmail Trigger2": {
-        "lastTimeChecked": 1758263086
+        "lastTimeChecked": 1758269010,
+        "possibleDuplicates": [
+          "19960fff55e9dcc2"
+        ]
       }
     }
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-09-19T06:24:46.000Z",
-  "versionId": "dfc0f854-f5de-472b-86d8-95fa19d86628"
+  "updatedAt": "2025-09-19T08:17:38.000Z",
+  "versionId": "237aef4b-da9f-4dce-9d23-8b7c5b35c28e"
 }
