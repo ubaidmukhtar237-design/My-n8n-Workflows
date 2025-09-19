@@ -1,13 +1,150 @@
 {
   "active": false,
-  "connections": {},
+  "connections": {
+    "Gmail Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "createdAt": "2025-09-19T04:42:50.251Z",
   "id": "FPDMTLutIr6M8YQH",
   "isArchived": false,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "Inbox Management AI Agent:https://youtu.be/x1tam0Fhymc?si=9nFv5J7EogNsVZV-",
-  "nodes": [],
-  "pinData": {},
+  "nodes": [
+    {
+      "parameters": {
+        "inputText": "={{ $json.snippet }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "High Priorty",
+              "description": "Important messages that need quick attention, such as client inquiries, urgent updates, deadlines, or messages from key contacts."
+            },
+            {
+              "category": "Low Priorty",
+              "description": "“Non-urgent messages like newsletters, promotions, general updates, or casual conversations that can be reviewed later."
+            }
+          ]
+        },
+        "options": {
+          "systemPromptTemplate": "You are a text classification assistant. \nYour job is to read the input message and classify it into one of two categories: \n\n1. High Priority → Urgent, important, or time-sensitive messages. Examples: client inquiries, deadlines, urgent requests, key contacts, or issues requiring quick action.  \n2. Low Priority → Non-urgent, general, or less important messages. Examples: newsletters, promotions, marketing emails, casual conversations, or updates that don’t need immediate action.  \n\nReturn only the category name: “High Priority” or “Low Priority”.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1.1,
+      "position": [
+        -240,
+        0
+      ],
+      "id": "19982e90-b2bc-464b-81e5-ba07c3646648",
+      "name": "Text Classifier"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -496,
+        0
+      ],
+      "id": "70047f55-8ee1-4bed-82c0-b74eff0250fa",
+      "name": "Gmail Trigger1",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "s2WwkLntcEWdzNj9",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        176
+      ],
+      "id": "46fc615e-6d15-4e39-8407-d03322a3fc30",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "sPfpmF39mpaLYCjc",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Gmail Trigger1": [
+      {
+        "json": {
+          "id": "1996072586a74dd9",
+          "threadId": "1996072586a74dd9",
+          "snippet": "---------- Forwarded message --------- From: PUBG MOBILE &lt;noreply@mail.pubgmobile.com&gt; Date: Sat, Sep 6, 2025 at 12:05 PM Subject: Version 4.0 Coming Your Way: This Year&#39;s Spooktacular",
+          "payload": {
+            "mimeType": "multipart/alternative"
+          },
+          "sizeEstimate": 15185,
+          "historyId": "90608",
+          "internalDate": "1758259718000",
+          "labels": [
+            {
+              "id": "INBOX",
+              "name": "INBOX"
+            },
+            {
+              "id": "IMPORTANT",
+              "name": "IMPORTANT"
+            },
+            {
+              "id": "CATEGORY_PERSONAL",
+              "name": "CATEGORY_PERSONAL"
+            },
+            {
+              "id": "UNREAD",
+              "name": "UNREAD"
+            }
+          ],
+          "From": "BG BANK <ubaidnasir1631@gmail.com>",
+          "Subject": "Fwd: Version 4.0 Coming Your Way: This Year's Spooktacular Version",
+          "To": "ubaidmukhtar237@gmail.com"
+        }
+      }
+    ]
+  },
   "settings": {
     "executionOrder": "v1"
   },
@@ -23,6 +160,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-19T04:42:50.000Z",
-  "versionId": "3d046d40-ee49-4d18-b409-7441e27b5f96"
+  "updatedAt": "2025-09-19T05:29:18.000Z",
+  "versionId": "df2f7bba-f156-49bb-a8ae-ac033e2ee98d"
 }
