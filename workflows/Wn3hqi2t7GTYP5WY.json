@@ -1,0 +1,42 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-09-19T11:18:13.291Z",
+  "id": "Wn3hqi2t7GTYP5WY",
+  "isArchived": false,
+  "meta": null,
+  "name": "Cancel",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "ae6feb9d-58ae-401a-b0ea-5fce24e2e99b",
+      "name": "When Executed by Another Workflow"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-19T11:18:13.293Z",
+      "updatedAt": "2025-09-19T11:18:13.293Z",
+      "role": "workflow:owner",
+      "workflowId": "Wn3hqi2t7GTYP5WY",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-19T11:19:36.000Z",
+  "versionId": "a80b9e76-f72b-4699-880b-648efa463641"
+}
