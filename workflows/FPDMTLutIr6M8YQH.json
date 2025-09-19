@@ -22,6 +22,105 @@
           }
         ]
       ]
+    },
+    "Text Classifier": {
+      "main": [
+        [
+          {
+            "node": "Add label to message1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Add label to message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Text Classifier1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Vertex Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Text Classifier1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text Classifier1": {
+      "main": [
+        [
+          {
+            "node": "Payment Alerts",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Trial Alerts",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Trial Alerts1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trial Alerts1": {
+      "main": [
+        []
+      ]
+    },
+    "Gmail Trigger2": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-09-19T04:42:50.251Z",
@@ -58,7 +157,8 @@
         0
       ],
       "id": "19982e90-b2bc-464b-81e5-ba07c3646648",
-      "name": "Text Classifier"
+      "name": "Text Classifier",
+      "disabled": true
     },
     {
       "parameters": {
@@ -84,7 +184,8 @@
           "id": "s2WwkLntcEWdzNj9",
           "name": "Gmail account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -94,8 +195,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -352,
-        176
+        -256,
+        160
       ],
       "id": "46fc615e-6d15-4e39-8407-d03322a3fc30",
       "name": "Google Gemini Chat Model",
@@ -104,7 +205,384 @@
           "id": "sPfpmF39mpaLYCjc",
           "name": "Google Gemini(PaLM) Api account 2"
         }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger1').item.json.id }}",
+        "labelIds": [
+          "Label_3595868053230573733"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        112,
+        112
+      ],
+      "id": "860bd4e6-a5bf-4bed-9406-1c9674f249ae",
+      "name": "Add label to message",
+      "webhookId": "8b991735-659f-4e03-a4ce-eb59f7b8de6d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "s2WwkLntcEWdzNj9",
+          "name": "Gmail account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger1').item.json.id }}",
+        "labelIds": [
+          "Label_4901851840010764771"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        112,
+        -48
+      ],
+      "id": "f44f79bb-4c51-44af-8d63-5b2930cb137d",
+      "name": "Add label to message1",
+      "webhookId": "8b991735-659f-4e03-a4ce-eb59f7b8de6d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "s2WwkLntcEWdzNj9",
+          "name": "Gmail account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Nate Herk Workflow",
+        "height": 496,
+        "width": 1216,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -656,
+        -128
+      ],
+      "typeVersion": 1,
+      "id": "0cadeab0-1d1d-494a-b5bb-4e63e757995b",
+      "name": "Sticky Note",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## My own active workflow for my personal use using Text Classifier.",
+        "height": 688,
+        "width": 1392,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        592,
+        -320
+      ],
+      "typeVersion": 1,
+      "id": "20fcd9ab-e308-4c33-9f7f-487b3106d190",
+      "name": "Sticky Note1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        656,
+        -80
+      ],
+      "id": "1cc77882-7526-4b82-8d74-fe0ad588793b",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "s2WwkLntcEWdzNj9",
+          "name": "Gmail account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "inputText": "={{ $json.snippet }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "Payment Alerts",
+              "description": "Notifications related to billing, payments, or subscriptions — including upcoming or missed deadlines, payment confirmations, failed transactions, or required payment information."
+            },
+            {
+              "category": "Trial Alerts",
+              "description": "Messages about trial periods, such as trial activations, usage reminders, upcoming trial expirations, or instructions to upgrade before the trial ends."
+            },
+            {
+              "category": "Subscription Alerts",
+              "description": "Notifications about active paid services, including subscription renewals, upcoming charges, plan changes, usage limits, or billing confirmations from providers like Google Cloud and other platforms."
+            },
+            {
+              "category": "General Updates",
+              "description": "All other messages not related to trials, subscriptions, or payments — such as product updates, announcements, newsletters, promotions, or general communications."
+            }
+          ]
+        },
+        "options": {
+          "systemPromptTemplate": "You are a text classification assistant.  \nRead the input message and classify it into exactly one of the following categories:  \n\n1. **Trial Updates** → Messages about trial periods, including activations, reminders, expirations, or upgrade instructions.  \n2. **Subscription Alerts** → Notifications about active paid services, renewals, upcoming charges, usage limits, or billing confirmations.  \n3. **Payment Alerts** → Billing-related notices, including upcoming/missed payment deadlines, failed transactions, payment confirmations, or required payment information.  \n4. **General Updates** → All other messages not related to trials, subscriptions, or payments (e.g., product updates, announcements, newsletters, promotions, general communication).  \n\nReturn only the category name as plain text:  \n- Trial Updates  \n- Subscription Alerts  \n- Payment Alerts  \n- General Updates\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1.1,
+      "position": [
+        976,
+        -96
+      ],
+      "id": "c89debd0-97e1-406d-bbdf-d2889c031214",
+      "name": "Text Classifier1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "projectId": {
+          "__rl": true,
+          "value": "modified-keep-470614-p0",
+          "mode": "list",
+          "cachedResultName": "My First Project"
+        },
+        "modelName": "gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleVertex",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        128
+      ],
+      "id": "b53710d6-065c-491c-9804-12bb2ac2e939",
+      "name": "Google Vertex Chat Model",
+      "credentials": {
+        "googleApi": {
+          "id": "r6bDu2a9hxhItPLs",
+          "name": "Google Service Account account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C09DE5VGC2H",
+          "mode": "list",
+          "cachedResultName": "cloud"
+        },
+        "text": "={{ $json.snippet }}",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        1424,
+        -288
+      ],
+      "id": "5b610dcc-703e-45ed-b3c3-eb18594dee37",
+      "name": "Payment Alerts",
+      "webhookId": "78e0c51c-1ba3-4d50-9005-12ee01f63381",
+      "credentials": {
+        "slackApi": {
+          "id": "EHkrBNjWKBi9posn",
+          "name": "Slack account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C09DE5VGC2H",
+          "mode": "list",
+          "cachedResultName": "cloud"
+        },
+        "text": "={{ $('Gmail Trigger').item.json.snippet }}",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        1424,
+        -128
+      ],
+      "id": "29f7c696-3a24-4034-b85f-edf5fe067f8a",
+      "name": "Trial Alerts",
+      "webhookId": "78e0c51c-1ba3-4d50-9005-12ee01f63381",
+      "credentials": {
+        "slackApi": {
+          "id": "EHkrBNjWKBi9posn",
+          "name": "Slack account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C09DE5VGC2H",
+          "mode": "list",
+          "cachedResultName": "cloud"
+        },
+        "text": "={{ $('Gmail Trigger').item.json.snippet }}",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        1424,
+        32
+      ],
+      "id": "af2ccc61-ea90-401f-92cf-da85ab3991c4",
+      "name": "Trial Alerts1",
+      "webhookId": "78e0c51c-1ba3-4d50-9005-12ee01f63381",
+      "credentials": {
+        "slackApi": {
+          "id": "EHkrBNjWKBi9posn",
+          "name": "Slack account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C09DE5VGC2H",
+          "mode": "list",
+          "cachedResultName": "cloud"
+        },
+        "text": "={{ $('Gmail Trigger').item.json.snippet }}",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        1424,
+        192
+      ],
+      "id": "cc860c80-ebcc-4ad8-a58f-63b39226ddec",
+      "name": "Send a message",
+      "webhookId": "cab51e7a-8f78-4e8e-9300-c35989ab7c50",
+      "credentials": {
+        "slackApi": {
+          "id": "EHkrBNjWKBi9posn",
+          "name": "Slack account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## My Workflow for my own use case without the cost of AI llm model.",
+        "height": 496,
+        "width": 1216,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -656,
+        400
+      ],
+      "typeVersion": 1,
+      "id": "68f2da0f-ffb8-46c5-a272-4c73eb0e7df0",
+      "name": "Sticky Note3",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -608,
+        560
+      ],
+      "id": "fd00ff0f-e793-4812-a6d9-8f55ed579675",
+      "name": "Gmail Trigger2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "s2WwkLntcEWdzNj9",
+          "name": "Gmail account"
+        }
       }
+    },
+    {
+      "parameters": {
+        "jsCode": "// n8n Code Node (JavaScript)\n// Input: Gmail email snippet in items[0].json.snippet\n// Output: category in items[0].json.category\n\nconst text = (items[0].json.snippet || \"\").toLowerCase();\n\nlet category = \"General Updates\";\n\n// Trial Updates\nif (\n  text.includes(\"trial\") ||\n  text.includes(\"free trial\") ||\n  text.includes(\"trial ending\") ||\n  text.includes(\"trial expire\") ||\n  text.includes(\"upgrade trial\")\n) {\n  category = \"Trial Updates\";\n}\n\n// Subscription Alerts\nelse if (\n  text.includes(\"subscription\") ||\n  text.includes(\"renewal\") ||\n  text.includes(\"plan change\") ||\n  text.includes(\"usage limit\") ||\n  text.includes(\"renew\") ||\n  text.includes(\"auto-renew\")\n) {\n  category = \"Subscription Alerts\";\n}\n\n// Payment Alerts\nelse if (\n  text.includes(\"payment\") ||\n  text.includes(\"invoice\") ||\n  text.includes(\"billing\") ||\n  text.includes(\"transaction\") ||\n  text.includes(\"card declined\") ||\n  text.includes(\"payment failed\") ||\n  text.includes(\"charge\") ||\n  text.includes(\"receipt\")\n) {\n  category = \"Payment Alerts\";\n}\n\n// Default: General Updates\nelse {\n  category = \"General Updates\";\n}\n\nreturn [{ json: { ...items[0].json, category } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -400,
+        560
+      ],
+      "id": "8d9fb1cd-7af9-42a9-9ce2-07bc3eaec059",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "439b9365-ffb6-49e6-ae9a-fb2c7061ca7e",
+              "name": "Message",
+              "value": "={{ $json.snippet }}",
+              "type": "string"
+            },
+            {
+              "id": "f40315d4-0389-452e-a961-8b5dfbffd3f8",
+              "name": "Alert Type",
+              "value": "={{ $json.category }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -192,
+        560
+      ],
+      "id": "ee2b00b1-9a63-48e9-b179-47b0411e221f",
+      "name": "Edit Fields"
     }
   ],
   "pinData": {
@@ -143,6 +621,42 @@
           "To": "ubaidmukhtar237@gmail.com"
         }
       }
+    ],
+    "Gmail Trigger": [
+      {
+        "json": {
+          "id": "199608092a9790eb",
+          "threadId": "199587f0fd4a4442",
+          "snippet": "---------- Forwarded message --------- From: Mukhtar Ubaid &lt;ubaidmukhtar237@gmail.com&gt; Date: Fri, Sep 19, 2025 at 10:43 AM Subject: Fwd: $20.00 payment to Cursor was unsuccessful again To: &lt;",
+          "payload": {
+            "mimeType": "multipart/alternative"
+          },
+          "sizeEstimate": 28306,
+          "historyId": "90908",
+          "internalDate": "1758260650000",
+          "labels": [
+            {
+              "id": "INBOX",
+              "name": "INBOX"
+            },
+            {
+              "id": "IMPORTANT",
+              "name": "IMPORTANT"
+            },
+            {
+              "id": "CATEGORY_PERSONAL",
+              "name": "CATEGORY_PERSONAL"
+            },
+            {
+              "id": "UNREAD",
+              "name": "UNREAD"
+            }
+          ],
+          "From": "BG BANK <ubaidnasir1631@gmail.com>",
+          "Subject": "Fwd: $20.00 payment to Cursor was unsuccessful again",
+          "To": "ubaidmukhtar237@gmail.com"
+        }
+      }
     ]
   },
   "settings": {
@@ -160,6 +674,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-19T05:29:18.000Z",
-  "versionId": "df2f7bba-f156-49bb-a8ae-ac033e2ee98d"
+  "updatedAt": "2025-09-19T05:58:32.000Z",
+  "versionId": "367e231f-ea63-4b00-a91b-0d1c0942dd95"
 }
