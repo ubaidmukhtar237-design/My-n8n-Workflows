@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "Gmail Trigger1": {
       "main": [
@@ -116,6 +116,39 @@
         [
           {
             "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript2": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
             "type": "main",
             "index": 0
           }
@@ -578,11 +611,65 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -192,
+        -240,
         560
       ],
       "id": "ee2b00b1-9a63-48e9-b179-47b0411e221f",
       "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C09DE5VGC2H",
+          "mode": "list",
+          "cachedResultName": "cloud"
+        },
+        "text": "={{ $json.formattedSlackMessage }}",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        320,
+        560
+      ],
+      "id": "5bc87a24-dbb0-4fec-9e3f-5573cbcd0708",
+      "name": "Send a message1",
+      "webhookId": "de4cbb3e-7207-4489-9ab8-76c72b4ba61f",
+      "credentials": {
+        "slackApi": {
+          "id": "EHkrBNjWKBi9posn",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// This code will run for each item passed to the node.\nconst item = items[0];\n\n// The raw text from the input\nconst snippet = item.json.Message;\n\n// Helper function to safely extract a single piece of data.\nfunction extract(regex, text) {\n  if (typeof text !== 'string') {\n    return null;\n  }\n  const match = regex.exec(text);\n  return match ? match[1].trim() : null;\n}\n\n// --- REGEX DEFINITIONS ---\n// CORRECTED: This regex now handles both < > and &lt; &gt;\nconst fromRegex = /From: (.*?) (?:<|&lt;)(.*?)(?:>|&gt;)/;\nconst dateRegex = /Date: (.*?)(?= Subject:)/;\nconst subjectRegex = /Subject: (.*)(?= To:)/;\nconst amountRegex = /\\$(\\d+\\.\\d{2})/;\nconst recipientRegex = /payment to (.*?) was/;\nconst statusRegex = /was (unsuccessful|successful)/;\n\n// --- DATA EXTRACTION ---\nconst fromMatch = snippet.match(fromRegex);\nconst senderName = fromMatch ? fromMatch[1].trim() : null;\nconst senderEmail = fromMatch ? fromMatch[2].trim() : null;\nconst amount = extract(amountRegex, snippet);\n\n// --- BUILD THE OUTPUT OBJECT ---\nconst formattedOutput = {\n  alertType: \"Payment Alert\",\n  sender: {\n    name: senderName,\n    email: senderEmail\n  },\n  details: {\n    date: extract(dateRegex, snippet),\n    subject: extract(subjectRegex, snippet),\n    amount: amount ? parseFloat(amount) : null,\n    recipient: extract(recipientRegex, snippet),\n    status: extract(statusRegex, snippet)\n  },\n  originalMessage: snippet\n};\n\n// Return the new object with the data nested under the 'query' field\nreturn [{\n  json: {\n    query: formattedOutput\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -48,
+        560
+      ],
+      "id": "c04c1daf-7efe-452a-a219-39e88069d825",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// This code READS the structured 'query' object from the previous node.\nconst item = items[0].json.query;\n\n// --- Safely get sender details with \"Not Provided\" as a fallback ---\nconst senderName = item.sender?.name || 'Not Provided';\nconst senderEmail = item.sender?.email || 'Not Provided';\n\n// --- Safely get payment details with \"Not Provided\" as a fallback ---\nconst status = item.details?.status || 'Not Provided';\nconst amount = item.details?.amount || 0; // Use 0 for amount to prevent errors\nconst recipient = item.details?.recipient || 'Not Provided';\nconst date = item.details?.date || 'Not Provided';\nconst subject = item.details?.subject || 'Not Provided';\n\n// --- Create a title and emoji based on the status ---\nlet title = '';\nlet emoji = '';\n\nif (status.toLowerCase() === 'unsuccessful') {\n  title = 'Payment Failed';\n  emoji = '🔴';\n} else if (status.toLowerCase() === 'successful') {\n  title = 'Payment Successful';\n  emoji = '✅';\n} else {\n  title = 'Payment Alert';\n  emoji = '⚠️';\n}\n\n// --- Build the formatted message, now including the Sender ---\nconst formattedMessage = `\n${emoji} *${title}*\n> A payment of *$${amount.toFixed(2)}* to *${recipient}* was reported as *${status}*.\n\n*Details:*\n• *Sender:* ${senderName}\n• *Email:* ${senderEmail}\n• *Date:* ${date}\n• *Subject:* ${subject}\n`;\n\n// --- Output the new formatted message ---\nreturn [{\n  json: {\n    // We pass along the original data and add our new formatted message\n    ...item,\n    formattedSlackMessage: formattedMessage.trim()\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        144,
+        560
+      ],
+      "id": "1ce51bd6-32af-475f-acde-d659eba50c83",
+      "name": "Code in JavaScript2"
     }
   ],
   "pinData": {
@@ -671,9 +758,15 @@
       "projectId": "HHLWOKEAArOwm3kN"
     }
   ],
-  "staticData": null,
+  "staticData": {
+    "node:Gmail Trigger2": {
+      "Gmail Trigger2": {
+        "lastTimeChecked": 1758263086
+      }
+    }
+  },
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2025-09-19T05:58:32.000Z",
-  "versionId": "367e231f-ea63-4b00-a91b-0d1c0942dd95"
+  "triggerCount": 1,
+  "updatedAt": "2025-09-19T06:24:46.000Z",
+  "versionId": "dfc0f854-f5de-472b-86d8-95fa19d86628"
 }
