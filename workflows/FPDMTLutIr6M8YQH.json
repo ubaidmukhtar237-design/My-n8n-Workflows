@@ -1,0 +1,28 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-09-19T04:42:50.251Z",
+  "id": "FPDMTLutIr6M8YQH",
+  "isArchived": false,
+  "meta": null,
+  "name": "Inbox Management AI Agent:https://youtu.be/x1tam0Fhymc?si=9nFv5J7EogNsVZV-",
+  "nodes": [],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-19T04:42:50.254Z",
+      "updatedAt": "2025-09-19T04:42:50.254Z",
+      "role": "workflow:owner",
+      "workflowId": "FPDMTLutIr6M8YQH",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-19T04:42:50.000Z",
+  "versionId": "3d046d40-ee49-4d18-b409-7441e27b5f96"
+}
