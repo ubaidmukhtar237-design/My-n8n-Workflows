@@ -21,7 +21,15 @@
       "name": "When Executed by Another Workflow"
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "query": "{\"booking_id\":\"appt_12345abc\"}"
+        }
+      }
+    ]
+  },
   "settings": {
     "executionOrder": "v1"
   },
@@ -37,6 +45,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-19T11:19:36.000Z",
-  "versionId": "a80b9e76-f72b-4699-880b-648efa463641"
+  "updatedAt": "2025-09-19T12:26:18.000Z",
+  "versionId": "2499618d-0d4f-4cc2-9af1-4a63f239dbab"
 }
