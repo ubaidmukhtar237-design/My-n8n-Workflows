@@ -1,0 +1,42 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-09-19T11:18:22.021Z",
+  "id": "0wEO94EbDLFqh9Bt",
+  "isArchived": false,
+  "meta": null,
+  "name": "Reschedule",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -336,
+        0
+      ],
+      "id": "0980d0f2-02fc-4a22-85f4-c806a63289e2",
+      "name": "When Executed by Another Workflow"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-19T11:18:22.023Z",
+      "updatedAt": "2025-09-19T11:18:22.023Z",
+      "role": "workflow:owner",
+      "workflowId": "0wEO94EbDLFqh9Bt",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-19T11:18:57.000Z",
+  "versionId": "14305b38-b06f-4c3f-a7fe-02f359390c26"
+}
