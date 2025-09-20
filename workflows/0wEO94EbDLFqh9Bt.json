@@ -93,7 +93,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -944,
+        -576,
         16
       ],
       "id": "e3f622df-6019-4997-b5c6-7958371f6d13",
@@ -107,7 +107,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// This is a ROBUST \"Brute Force\" Data Extractor.\n// It is designed to work even when the AI sends horribly formatted, double-wrapped strings.\n// It DOES NOT use JSON.parse() because the input is not valid JSON.\n// It uses Regular Expressions to find and extract the values we need.\n\nconst item = items[0];\n\ntry {\n  // 1. Get the raw, broken string from the 'query' property.\n  const rawString = item.json.query;\n  if (!rawString) throw new Error(\"Input 'query' is missing.\");\n\n  // 2. Helper Function to Extract a Value\n  // This function builds a specific \"search pattern\" to find the text between quotes for a given key.\n  function extractValue(key, str) {\n    // This regex looks for a pattern like: \\\"key\\\":\\\"value\\\"\n    // It is designed to match the AI's broken output, including all the extra escape characters.\n    const regex = new RegExp(`\\\\\\\\\\\\\"${key}\\\\\\\\\\\\\\\":\\\\\\\\\\\\\"(.*?)\\\\\\\\\\\\\"`);\n    const match = str.match(regex);\n    // If a match is found, return the captured value. Otherwise, return null.\n    return match ? match[1] : null;\n  }\n\n  // 3. Use the helper function to extract each piece of data from the broken string.\n  item.json.booking_id = extractValue(\"booking_id\", rawString);\n  \n  // --- THE FIX IS HERE ---\n  // We will check for both 'new_isoDateTime' AND 'isoDateTime' to be safe.\n  item.json.new_isoDateTime = extractValue(\"new_isoDateTime\", rawString) || extractValue(\"isoDateTime\", rawString);\n  // --- END OF FIX ---\n  \n  item.json.email = extractValue(\"email\", rawString);\n  item.json.reason = extractValue(\"reason\", rawString);\n\n} catch (error) {\n  item.json.error = `Failed to extract data from query string: ${error.message}`;\n}\n\n// Return the item with all the new, clean fields.\nreturn [item];"
+        "jsCode": "// This code is now simplified to handle a SINGLE stringified JSON object\n// and is now FLEXIBLE enough to handle inconsistent key names from the AI.\n\nconst item = items[0];\n\n// 1. Get the string from the 'query' property.\nconst queryString = item.json.query;\n\n// Safety check\nif (!queryString) {\n  item.json.error = \"The 'query' property is missing or empty.\";\n  return [item];\n}\n\ntry {\n  // 2. Parse the string back into a usable JavaScript object.\n  const data = JSON.parse(queryString);\n\n  // 3. Create the new, separate fields in the output.\n  item.json.booking_id = data.booking_id || null;\n  \n  // --- THE FIX IS HERE ---\n  // This line now checks for 'new_isoDateTime' first, and if that doesn't exist,\n  // it checks for the old name 'isoDateTime' as a fallback.\n  item.json.new_isoDateTime = data.new_isoDateTime || data.isoDateTime || null;\n  // --- END OF FIX ---\n  \n  item.json.email = data.email || null;\n  item.json.reason = data.reason || null;\n\n} catch (error) {\n  item.json.error = `Failed to parse query string: ${error.message}`;\n}\n\n// Return the item with all the new, clean fields.\nreturn [item];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -153,11 +153,119 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -1232,
+        -848,
         16
       ],
       "id": "c5dfc20c-cd18-4e1d-918a-cc0814ba6ce0",
       "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.booking_id }}",
+                    "rightValue": "null",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "7a21756f-59b8-4eac-ae33-189790f3fde2"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "63297cd6-0162-41b5-aa80-1f6a07743ef2",
+                    "leftValue": "={{ $json.new_isoDateTime }}",
+                    "rightValue": "null",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f034fa2d-008c-422f-b81c-51e40b191abd",
+                    "leftValue": "={{ $json.email }}",
+                    "rightValue": "null",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "a65a4f85-78d0-4fbb-9bfc-08bc3846b1de",
+                    "leftValue": "={{ $json.reason }}",
+                    "rightValue": "null",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -1216,
+        208
+      ],
+      "id": "d42de888-9dd1-4a7a-ad8d-97bf32bdf97e",
+      "name": "Switch"
     }
   ],
   "pinData": {
@@ -184,6 +292,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-20T12:21:09.000Z",
-  "versionId": "4d70cee3-314a-4fc6-9b3a-79203f8bb0a6"
+  "updatedAt": "2025-09-20T12:47:59.000Z",
+  "versionId": "d83e5ed1-907b-4751-9714-f08a6ee7b7c5"
 }
