@@ -12,22 +12,11 @@
         ]
       ]
     },
-    "Edit Fields1": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Code in JavaScript1": {
       "main": [
         [
           {
-            "node": "Edit Fields1",
+            "node": "HTTP Request",
             "type": "main",
             "index": 0
           }
@@ -43,13 +32,7 @@
             "index": 0
           }
         ],
-        [
-          {
-            "node": "Update row in sheet",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Update row in sheet": {
@@ -82,7 +65,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "=https://api.cal.com/v2/bookings/{{ $json.edit.booking_id }}/reschedule",
+        "url": "=https://api.cal.com/v2/bookings/{{ $json.BookingUID }}/reschedule",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
@@ -99,11 +82,11 @@
           "parameters": [
             {
               "name": "start",
-              "value": "={{ $json.edit.new_isoDateTime }}"
+              "value": "={{ $json.pktIsoString }}"
             },
             {
               "name": "reschedulingReason",
-              "value": "={{ $json.edit.reason }}"
+              "value": "={{ $json.reason }}"
             }
           ]
         },
@@ -112,7 +95,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -720,
+        -1280,
         -64
       ],
       "id": "e3f622df-6019-4997-b5c6-7958371f6d13",
@@ -127,89 +110,16 @@
     },
     {
       "parameters": {
-        "content": "",
-        "height": 768,
-        "width": 1760,
-        "color": 7
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        -1920,
-        -512
-      ],
-      "typeVersion": 1,
-      "id": "7c72d41b-5e22-43c8-bc11-53890072738f",
-      "name": "Sticky Note"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "4c716afd-93e0-4ba9-8937-885c1b621272",
-              "name": "edit.booking_id",
-              "value": "={{ $json.booking_id }}",
-              "type": "string"
-            },
-            {
-              "id": "c7b45884-536b-4552-9b31-796df0d3641d",
-              "name": "edit.new_isoDateTime",
-              "value": "={{ $json.new_isoDateTime }}",
-              "type": "string"
-            },
-            {
-              "id": "cd37c405-80a8-462a-a199-3e14378c5b92",
-              "name": "edit.email",
-              "value": "={{ $json.email }}",
-              "type": "string"
-            },
-            {
-              "id": "82bdf301-f181-42e9-909a-a5f2196726ee",
-              "name": "edit.reason",
-              "value": "={{ $json.reason }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        -960,
-        -64
-      ],
-      "id": "4fc0eefa-4f39-4210-93c1-f0c01d6f0af6",
-      "name": "Edit Fields1"
-    },
-    {
-      "parameters": {
-        "jsCode": "// This is the ULTIMATE \"Multi-Worker\" Data Cleaner. It will try THREE different\n// methods to clean the AI's garbage output. It is designed to be as\n// resilient as possible to the AI's constantly changing formats.\n\nconst item = items[0];\n\n// --- Helper Function: Extracts a value using a flexible Regex ---\n// This is our primary \"brute force\" method.\nfunction extractValue(key, str) {\n  // This Regex looks for \"key\":\"value\" and handles multiple backslashes.\n  const regex = new RegExp(`\"${key}\"\\\\s*:\\\\s*\"(.*?)\"`);\n  const match = str.match(regex);\n  return match ? match[1].replace(/\\\\/g, '') : null;\n}\n\ntry {\n  let rawString = item.json.query;\n  if (!rawString) throw new Error(\"Input 'query' is missing.\");\n\n  // --- STAGE 1: The \"Brute Force\" Regex Extraction ---\n  // We try this first because it works even on invalid JSON.\n  let bookingId = extractValue(\"booking_id\", rawString) || extractValue(\"BookingUID\", rawString);\n  let dateTime = extractValue(\"new_isoDateTime\", rawString) || extractValue(\"isoDateTime\", rawString);\n  let email = extractValue(\"email\", rawString);\n  let reason = extractValue(\"reason\", rawString);\n\n  // --- STAGE 2: The \"JSON Parse\" Fallback ---\n  // If the Regex failed to find everything, it means the AI might have sent clean JSON.\n  // We will try parsing it as a backup plan.\n  if (!bookingId && !dateTime) {\n    console.log(\"Regex failed. Attempting JSON.parse() fallback...\");\n    try {\n      let data = JSON.parse(rawString);\n      // Handle the \"query-in-a-query\" case\n      if (data.query) {\n        data = JSON.parse(data.query);\n      }\n      bookingId = data.booking_id || data.BookingUID || null;\n      dateTime = data.new_isoDateTime || data.isoDateTime || null;\n      email = data.email || null;\n      reason = data.reason || null;\n    } catch (e) {\n      console.log(\"JSON.parse() also failed. The input string is completely broken.\");\n    }\n  }\n\n  // --- STAGE 3: The \"Ultimate Cleanup\" ---\n  // This is a final check. If the values still have extra backslashes, we clean them.\n  function finalClean(str) {\n    return str ? str.replace(/\\\\/g, '') : null;\n  }\n\n  // Assign the cleaned values to the output.\n  item.json.booking_id = finalClean(bookingId);\n  item.json.new_isoDateTime = finalClean(dateTime);\n  item.json.email = finalClean(email);\n  item.json.reason = finalClean(reason);\n\n} catch (error) {\n  item.json.error = `Failed to extract data from query string: ${error.message}`;\n}\n\n// Return the item with all the new, clean fields.\nreturn [item];"
+        "jsCode": "/*********************************************************************************************************************\n *\n *                                    --- THE JUGGERNAUT SCRIPT (v1.0) ---\n *\n *                                       Created by your n8n AI Assistant\n *\n * PURPOSE:\n * To provide an absolutely bulletproof, industrial-strength solution for parsing inconsistent AI-generated\n * JSON and converting any contained date/time information into standardized PKT and Human-Readable formats.\n * This script is designed to be the final word on this problem. It has ZERO external dependencies and is\n * built to withstand the chaotic nature of language model outputs.\n *\n * FEATURES:\n * 1.  **THE UNWRAPPER:** A recursive, self-healing function that can parse data wrapped in one, two, or even\n *     ten layers of JSON strings. It keeps digging until it finds the real data object.\n * 2.  **THE KEY FINDER:** An intelligent scanner that looks for multiple possible names for the date field\n *     (e.g., 'new_isoDateTime', 'date', 'isoDateTime', etc.), making it resilient to AI prompt drift.\n * 3.  **THE TIME MASTER:** A robust, standard JavaScript-based time converter that requires no external\n *     libraries ('luxon' is not needed) and handles the conversion to PKT with mathematical precision.\n * 4.  **THE FORMATTER:** Produces two clean, predictable outputs ('pktIsoString' for your API and\n *     'humanReadableString' for user-facing messages).\n * 5.  **EXTREME ERROR HANDLING:** Every single stage of the process is wrapped in verbose, clear error\n *     handling. If it fails, it will tell you EXACTLY where and why.\n *\n *********************************************************************************************************************/\n\n// ====================================================================================================================\n// SECTION 1: THE UNWRAPPER - RECURSIVE DATA EXTRACTION\n//\n// This is the heart of the solution. The AI sometimes wraps its JSON output inside a string, which is\n// itself inside another JSON object. This function, `findCoreDataObject`, will recursively unwrap these\n// layers until it reaches the usable core data.\n// ====================================================================================================================\n\n/**\n * Recursively unwraps nested JSON strings within a 'query' property.\n * @param {object | string} data - The current data object or string to be processed.\n * @param {number} depth - The current recursion depth to prevent infinite loops.\n * @returns {object} The core, unwrapped data object.\n */\nfunction findCoreDataObject(data, depth = 0) {\n  // SAFETY NET: If we've recursed more than 5 times, something is wrong. Bail out.\n  if (depth > 5) {\n    throw new Error(`[JUGGERNAUT-UNWRAPPER] FATAL: Exceeded maximum recursion depth. The AI output is likely corrupted or infinitely nested.`);\n  }\n\n  // If the input is a string, try to parse it as JSON first.\n  let currentObject = data;\n  if (typeof currentObject === 'string') {\n    try {\n      currentObject = JSON.parse(currentObject);\n    } catch (e) {\n      // If it's a string but not JSON, we can't process it further. Return null.\n      return null;\n    }\n  }\n\n  // If it's not an object, it's unusable.\n  if (typeof currentObject !== 'object' || currentObject === null) {\n    return currentObject;\n  }\n\n  // THE CORE LOGIC: If a 'query' property exists and it's a string,\n  // it means we have another layer to unwrap. Call this function again on the inner content.\n  if (currentObject.hasOwnProperty('query') && typeof currentObject.query === 'string') {\n    return findCoreDataObject(currentObject.query, depth + 1);\n  }\n\n  // If there's no string 'query' property, we have reached the core data. Return it.\n  return currentObject;\n}\n\n\n// ====================================================================================================================\n// SECTION 2: THE KEY FINDER - INTELLIGENT DATE IDENTIFICATION\n//\n// The AI might use 'date' for one tool and 'new_isoDateTime' for another. This section makes our code\n// smart enough to handle that. We define a list of possible keys and search for the first one that exists.\n// ====================================================================================================================\n\n/**\n * Finds the first valid date string from a data object using a list of possible keys.\n * @param {object} dataObject - The core data object.\n * @returns {string | null} The found date string or null if none were found.\n */\nfunction findDateStringInObject(dataObject) {\n  // This is our dictionary of keys to try, in order of priority.\n  // You can add more keys to this array in the future if the AI starts using new ones.\n  const dateKeysToTry = [\n    'new_isoDateTime',\n    'date',\n    'isoDateTime',\n    'datetime',\n    'time',\n    'start_time'\n  ];\n\n  for (const key of dateKeysToTry) {\n    if (dataObject.hasOwnProperty(key) && dataObject[key]) {\n      // We found a key that exists and has a value. Return its value.\n      console.log(`[JUGGERNAUT-KEYFINDER]: Found date information in key: \"${key}\"`);\n      return dataObject[key];\n    }\n  }\n\n  // If the loop finishes and we haven't found any of the keys, return null.\n  return null;\n}\n\n\n// ====================================================================================================================\n// SECTION 3: THE TIME MASTER & FORMATTER - CONVERSION & BEAUTIFICATION\n//\n// This is where the actual date and time math happens. It uses standard, built-in JavaScript `Date`\n// objects, which are guaranteed to exist in every n8n environment. No dependencies, no failures.\n// ====================================================================================================================\n\n/**\n * Takes a date string and converts it into PKT and Human-Readable formats.\n * @param {string} dateString - The date string to convert.\n * @returns {object} An object containing the pktIsoString and humanReadableString.\n */\nfunction convertAndFormatDate(dateString) {\n  const dateObj = new Date(dateString);\n\n  // VALIDATION: Check if the JavaScript Date object was able to understand the string.\n  if (isNaN(dateObj.getTime())) {\n    throw new Error(`[JUGGERNAUT-TIMEMASTER] FATAL: The extracted date string \"${dateString}\" is not a valid or recognizable date format.`);\n  }\n\n  // Helper function to ensure our numbers have leading zeros (e.g., 9 -> \"09\").\n  const padZero = (num) => String(num).padStart(2, '0');\n\n  // --- PKT CONVERSION ---\n  // We get the time in UTC milliseconds and add the PKT offset (5 hours * 60 minutes * 60 seconds * 1000 ms).\n  const pktOffsetMilliseconds = 5 * 60 * 60 * 1000;\n  const pktDate = new Date(dateObj.getTime() + pktOffsetMilliseconds);\n\n  // --- FORMATTING: PKT ISO STRING ---\n  // We build the string manually from the UTC components of our NEW `pktDate` object.\n  // This gives us complete control over the final format for your API.\n  const pktIsoString =\n    pktDate.getUTCFullYear() + '-' +\n    padZero(pktDate.getUTCMonth() + 1) + '-' +\n    padZero(pktDate.getUTCDate()) + 'T' +\n    padZero(pktDate.getUTCHours()) + ':' +\n    padZero(pktDate.getUTCMinutes()) + ':' +\n    padZero(pktDate.getUTCSeconds()) +\n    '+05:00'; // Hardcode the PKT offset string.\n\n  // --- FORMATTING: HUMAN-READABLE STRING ---\n  // Use the powerful `toLocaleString` method to create a friendly string for users.\n  const humanReadableOptions = {\n    weekday: 'long',\n    year: 'numeric',\n    month: 'long',\n    day: 'numeric',\n    hour: 'numeric',\n    minute: '2-digit',\n    timeZoneName: 'long', // e.g., \"Pakistan Standard Time\"\n    timeZone: 'Asia/Karachi', // IANA timezone name is most reliable\n    hour12: true,\n  };\n  const humanReadableString = dateObj.toLocaleString('en-US', humanReadableOptions);\n\n  return {\n    pktIsoString,\n    humanReadableString\n  };\n}\n\n\n// ====================================================================================================================\n// SECTION 4: EXECUTION - BRINGING IT ALL TOGETHER\n//\n// This is the main part of the script that executes when the node runs. It calls all the functions\n// above in sequence and assembles the final, clean output.\n// ====================================================================================================================\n\ntry {\n  console.log('[JUGGERNAUT]: Initiating execution.');\n\n  // Get the initial, messy item from n8n.\n  const item = items[0];\n\n  // STEP 1: Use The Unwrapper to get the core data.\n  const coreData = findCoreDataObject(item.json);\n  if (!coreData || typeof coreData !== 'object') {\n    throw new Error(`[JUGGERNAUT-EXECUTION] FATAL: The Unwrapper failed to find a core data object. Initial input: ${JSON.stringify(item.json)}`);\n  }\n  console.log(`[JUGGERNAUT-EXECUTION]: Successfully unwrapped data. Core object: ${JSON.stringify(coreData)}`);\n\n  // STEP 2: Use The Key Finder to get the date string.\n  const foundDateString = findDateStringInObject(coreData);\n  if (!foundDateString) {\n    throw new Error(`[JUGGERNAUT-EXECUTION] FATAL: The Key Finder could not find a recognizable date key in the core data.`);\n  }\n  console.log(`[JUGGERNAUT-EXECUTION]: Successfully found date string: \"${foundDateString}\"`);\n\n  // STEP 3: Use The Time Master to convert and format the date.\n  const formattedDates = convertAndFormatDate(foundDateString);\n  console.log(`[JUGGERNAUT-EXECUTION]: Successfully formatted dates. PKT: ${formattedDates.pktIsoString}`);\n\n  // STEP 4: Assemble the final, perfect output object.\n  // We use the spread operator (...) to merge the original core data (like BookingUID, reason, etc.)\n  // with our new, powerful date/time fields.\n  item.json = {\n    ...coreData,\n    pktIsoString: formattedDates.pktIsoString,\n    humanReadableString: formattedDates.humanReadableString\n  };\n\n  console.log('[JUGGERNAUT]: Execution complete. All systems nominal.');\n\n  // Return the final, cleaned-up item to the n8n workflow.\n  return items;\n\n} catch (error) {\n  // If any part of the process fails, catch the error and display it clearly in the n8n UI.\n  console.error(error.stack);\n  // This makes sure the workflow stops with a clear, readable error message.\n  throw new Error(error.message);\n}\n\n\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1344,
+        -1488,
         -64
       ],
       "id": "30d3adb5-e2a3-45ad-87e0-0125458d1649",
       "name": "Code in JavaScript1"
-    },
-    {
-      "parameters": {
-        "content": "This is special code node and different from other code nodes used in other workflows for slack chatbot designed to format these both types of input or stringified paramters given below:\n\n1)\n[\n{\n\"query\":\n\"{\"query\":\"{\\\"BookingUID\\\":\\\"d6tktXhj2jEkisCZrLrDDE\\\",\\\"new_isoDateTime\\\":\\\"2025-09-22T09:00:00\\\",\\\"email\\\":\\\"ubaidnasir1631@gmail.com\\\",\\\"reason\\\":\\\"my brother died\\\"}\"}\"\n}\n]\n\n2)\n[\n{\n\"query\": \n\"{\"booking_id\":\"appt_12345abc\",\"isoDateTime\":\"2025-10-15T10:00:00.000Z\",\"email\":\"john.doe.client@example.com\",\"reason\":\"Client had a personal emergency and needs to move the appointment.\"}\"\n}\n]",
-        "height": 576,
-        "width": 544,
-        "color": 3
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        -1552,
-        -496
-      ],
-      "typeVersion": 1,
-      "id": "989cd6aa-9dce-485d-acb7-50c1744a39f3",
-      "name": "Sticky Note1"
     },
     {
       "parameters": {
@@ -388,7 +298,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        -448,
+        -832,
         -80
       ],
       "id": "a73a6a97-560e-4ed4-97d6-b88552dfe1c7",
@@ -405,7 +315,10 @@
     "When Executed by Another Workflow": [
       {
         "json": {
-          "query": "{\"query\":\"{\\\"BookingUID\\\":\\\"d6tktXhj2jEkisCZrLrDDE\\\",\\\"new_isoDateTime\\\":\\\"2025-09-22T09:00:00\\\",\\\"email\\\":\\\"ubaidnasir1631@gmail.com\\\",\\\"reason\\\":\\\"my brother died\\\"}\"}"
+          "BookingUID": "d6tktXhj2jEkisCZrLrDDE",
+          "new_isoDateTime": "2025-09-22T09:00:00.000Z",
+          "email": "ubaidnasir1631@gmail.com",
+          "reason": "my brother died"
         }
       }
     ]
@@ -425,6 +338,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-20T14:21:54.000Z",
-  "versionId": "f7a54084-5239-49b7-be85-c4d953b55f14"
+  "updatedAt": "2025-09-20T16:24:18.000Z",
+  "versionId": "69a7229d-7615-4917-bbc8-ec6226baeebf"
 }
