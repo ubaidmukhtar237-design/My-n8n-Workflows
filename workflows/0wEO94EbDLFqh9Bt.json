@@ -5,7 +5,7 @@
       "main": [
         [
           {
-            "node": "Code in JavaScript",
+            "node": "Code in JavaScript1",
             "type": "main",
             "index": 0
           }
@@ -13,6 +13,33 @@
       ]
     },
     "Code in JavaScript": {
+      "main": [
+        []
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        []
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [],
+        []
+      ]
+    },
+    "Code in JavaScript1": {
       "main": [
         [
           {
@@ -23,72 +50,15 @@
         ]
       ]
     },
-    "Edit Fields": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Edit Fields1": {
-      "main": [
-        [
-          {
-            "node": "If",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If": {
-      "main": [
-        [
-          {
-            "node": "Edit Fields",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Edit Fields",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code in JavaScript1": {
-      "main": [
-        []
-      ]
-    },
     "Edit Fields2": {
       "main": [
-        [
-          {
-            "node": "HTTP Request",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "HTTP Request": {
       "main": [
         [],
-        [
-          {
-            "node": "If1",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     }
   },
@@ -116,7 +86,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "=https://api.cal.com/v2/bookings/{{ $json.booking_id }}/reschedule",
+        "url": "=https://api.cal.com/v2/bookings/{{ $json.edit.booking_id }}/reschedule",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
@@ -150,7 +120,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -176,
+        -768,
         -64
       ],
       "id": "e3f622df-6019-4997-b5c6-7958371f6d13",
@@ -170,8 +140,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1488,
-        -64
+        -2384,
+        -96
       ],
       "id": "a25f0d17-4365-45f9-8e39-ec153be82ff5",
       "name": "Code in JavaScript"
@@ -211,8 +181,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -640,
-        -64
+        -720,
+        -400
       ],
       "id": "c5dfc20c-cd18-4e1d-918a-cc0814ba6ce0",
       "name": "Edit Fields"
@@ -302,7 +272,7 @@
       "typeVersion": 2.2,
       "position": [
         -976,
-        -80
+        -368
       ],
       "id": "333f0d44-ad36-49d0-9e83-20b7fbce6506",
       "name": "If"
@@ -314,8 +284,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -2000,
-        160
+        -1488,
+        -64
       ],
       "id": "30d3adb5-e2a3-45ad-87e0-0125458d1649",
       "name": "Code in JavaScript1"
@@ -478,6 +448,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-20T13:29:20.000Z",
-  "versionId": "4079dcf5-c61d-48a1-9157-56942b6ee298"
+  "updatedAt": "2025-09-20T13:44:45.000Z",
+  "versionId": "6b1d0c8d-9eff-4ffd-a4d2-99376ee864c1"
 }
