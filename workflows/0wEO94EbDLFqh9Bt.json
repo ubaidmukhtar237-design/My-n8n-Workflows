@@ -60,6 +60,8 @@
       "parameters": {
         "method": "POST",
         "url": "=https://api.cal.com/v2/bookings/{{ $json.booking_id }}/reschedule",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -95,16 +97,22 @@
         16
       ],
       "id": "e3f622df-6019-4997-b5c6-7958371f6d13",
-      "name": "HTTP Request"
+      "name": "HTTP Request",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "1KUi1Z17BqtoNnPl",
+          "name": "Cal.com"
+        }
+      }
     },
     {
       "parameters": {
-        "jsCode": "// This code correctly handles double-stringified JSON for a reschedule request\n// and outputs each piece of data as a separate, top-level field.\n\nconst item = items[0];\n\n// 1. Get the initial string from the 'query' property.\nconst initialString = item.json.query;\n\n// Safety check for missing input\nif (!initialString) {\n  item.json.error = \"The 'query' property is missing or empty.\";\n  return [item];\n}\n\ntry {\n  // 2. First parse: Convert the outer string into an array.\n  // Input: \"[{\\\"query\\\":\\\"{\\\\\\\"booking_id\\\\\\\":...}\\\"}]\"\n  // Output: [{ query: \"{\\\"booking_id\\\":...}\" }]\n  const outerArray = JSON.parse(initialString);\n\n  // 3. Extract the nested string from the first object in the array.\n  const nestedString = outerArray[0]?.query;\n\n  // Safety check if the nested string is missing\n  if (!nestedString) {\n    item.json.error = \"The nested 'query' string is missing.\";\n    return [item];\n  }\n\n  // 4. Second parse: Convert the nested string into the final data object.\n  // Input: \"{\\\"booking_id\\\":...}\"\n  // Output: { booking_id: \"...\", new_isoDateTime: \"...\" }\n  const data = JSON.parse(nestedString);\n\n  // 5. Create the new, separate fields in the output.\n  // We use a fallback 'null' in case a field is missing.\n  item.json.booking_id = data.booking_id || null;\n  // --- CORRECTED KEY NAME ---\n  item.json.isoDateTime = data.new_isoDateTime || null; \n  item.json.email = data.email || null;\n  item.json.reason = data.reason || null;\n\n} catch (error) {\n  item.json.error = `Failed to parse query string: ${error.message}`;\n}\n\n// Return the item with all the new, clean fields.\nreturn [item];"
+        "jsCode": "// This is a ROBUST \"Brute Force\" Data Extractor.\n// It is designed to work even when the AI sends horribly formatted, double-wrapped strings.\n// It DOES NOT use JSON.parse() because the input is not valid JSON.\n// It uses Regular Expressions to find and extract the values we need.\n\nconst item = items[0];\n\ntry {\n  // 1. Get the raw, broken string from the 'query' property.\n  const rawString = item.json.query;\n  if (!rawString) throw new Error(\"Input 'query' is missing.\");\n\n  // 2. Helper Function to Extract a Value\n  // This function builds a specific \"search pattern\" to find the text between quotes for a given key.\n  function extractValue(key, str) {\n    // This regex looks for a pattern like: \\\"key\\\":\\\"value\\\"\n    // It is designed to match the AI's broken output, including all the extra escape characters.\n    const regex = new RegExp(`\\\\\\\\\\\\\"${key}\\\\\\\\\\\\\\\":\\\\\\\\\\\\\"(.*?)\\\\\\\\\\\\\"`);\n    const match = str.match(regex);\n    // If a match is found, return the captured value. Otherwise, return null.\n    return match ? match[1] : null;\n  }\n\n  // 3. Use the helper function to extract each piece of data from the broken string.\n  item.json.booking_id = extractValue(\"booking_id\", rawString);\n  \n  // --- THE FIX IS HERE ---\n  // We will check for both 'new_isoDateTime' AND 'isoDateTime' to be safe.\n  item.json.new_isoDateTime = extractValue(\"new_isoDateTime\", rawString) || extractValue(\"isoDateTime\", rawString);\n  // --- END OF FIX ---\n  \n  item.json.email = extractValue(\"email\", rawString);\n  item.json.reason = extractValue(\"reason\", rawString);\n\n} catch (error) {\n  item.json.error = `Failed to extract data from query string: ${error.message}`;\n}\n\n// Return the item with all the new, clean fields.\nreturn [item];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1424,
+        -1456,
         16
       ],
       "id": "a25f0d17-4365-45f9-8e39-ec153be82ff5",
@@ -123,7 +131,7 @@
             {
               "id": "a27d22ed-dbc9-4db7-8f72-14592316480b",
               "name": "isoDateTime",
-              "value": "={{ $json.isoDateTime }}",
+              "value": "={{ $json.new_isoDateTime }}",
               "type": "string"
             },
             {
@@ -176,6 +184,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-20T11:49:52.000Z",
-  "versionId": "9a73d78e-b8fb-401d-a7ea-e3e7ff5698ef"
+  "updatedAt": "2025-09-20T12:21:09.000Z",
+  "versionId": "4d70cee3-314a-4fc6-9b3a-79203f8bb0a6"
 }
