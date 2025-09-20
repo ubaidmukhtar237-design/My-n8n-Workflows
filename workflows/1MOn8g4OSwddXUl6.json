@@ -1,15 +1,203 @@
 {
   "active": false,
-  "connections": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "createdAt": "2025-09-20T19:50:47.274Z",
   "id": "1MOn8g4OSwddXUl6",
   "isArchived": false,
   "meta": null,
-  "name": "Date & Time Node Practice:2",
-  "nodes": [],
+  "name": "Edits Node Practice:2",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -480,
+        272
+      ],
+      "id": "7ad0fc0e-8610-4dee-902e-5aa13436f9ac",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "614a0e89-4a71-4cd7-9bc6-f338eb9a29da",
+              "name": "dateExtracting.Day",
+              "value": "={{ $now.extract('day') }}",
+              "type": "string"
+            },
+            {
+              "id": "cf9ac74d-6550-4b2e-b092-c545221a9664",
+              "name": "dateExtracting.Month",
+              "value": "={{ $now.extract('month') }}",
+              "type": "string"
+            },
+            {
+              "id": "ad43c174-107b-48a4-a13c-1eb62ffcc234",
+              "name": "dateExtracting.Year",
+              "value": "={{ $now.extract('year') }}",
+              "type": "string"
+            },
+            {
+              "id": "eba040cd-a13a-47fa-bb4c-a93f7b30077f",
+              "name": "date",
+              "value": "={{ $now }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        80,
+        0
+      ],
+      "id": "4c874bd9-a2ab-4380-98c3-f2bada4f44ba",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "content": "Basic example of extracting date,year and month of current time.",
+        "height": 240,
+        "width": 640,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -224,
+        -64
+      ],
+      "typeVersion": 1,
+      "id": "fc560ba8-a4ba-4bfa-9a18-f73ad700f5bd",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "To extract date,year,month and to further suppress seconds and milliseconds by setting fixed time.",
+        "height": 240,
+        "width": 640,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        432,
+        -64
+      ],
+      "typeVersion": 1,
+      "id": "72a61e91-2ffd-41af-9df1-470cd5cfaf8d",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3d93694e-655e-4bfb-84c3-1818301590ce",
+              "name": "dateTime",
+              "value": "=2024-09-20T20:13:10.792Z",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        624,
+        16
+      ],
+      "id": "98f88304-678c-4a28-ba9c-db3fb200da33",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "content": "Trigger Node",
+        "height": 224,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -544,
+        208
+      ],
+      "typeVersion": 1,
+      "id": "60992f09-aa30-4cd1-af19-64d69c07b65b",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "614a0e89-4a71-4cd7-9bc6-f338eb9a29da",
+              "name": "dateExtracting.Day",
+              "value": "={{ $json.dateTime.toDateTime().day }}",
+              "type": "string"
+            },
+            {
+              "id": "cf9ac74d-6550-4b2e-b092-c545221a9664",
+              "name": "dateExtracting.Month",
+              "value": "={{ $json.dateTime.toDateTime().month }}",
+              "type": "string"
+            },
+            {
+              "id": "ad43c174-107b-48a4-a13c-1eb62ffcc234",
+              "name": "dateExtracting.Year",
+              "value": "={{ $json.dateTime.toDateTime().year }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        816,
+        16
+      ],
+      "id": "6c864a42-01d4-4be5-a063-90e4cc099d6a",
+      "name": "Edit Fields3"
+    }
+  ],
   "pinData": {},
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "timezone": "Asia/Karachi",
+    "callerPolicy": "workflowsFromSameOwner"
   },
   "shared": [
     {
@@ -23,6 +211,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-20T19:50:47.000Z",
-  "versionId": "73d2e8ef-742f-41e3-a082-d28b8d830f53"
+  "updatedAt": "2025-09-20T20:29:30.000Z",
+  "versionId": "69372c13-e65d-4daa-8a98-f6aec577db4d"
 }
