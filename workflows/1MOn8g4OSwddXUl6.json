@@ -1,0 +1,28 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-09-20T19:50:47.274Z",
+  "id": "1MOn8g4OSwddXUl6",
+  "isArchived": false,
+  "meta": null,
+  "name": "Date & Time Node Practice:2",
+  "nodes": [],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-20T19:50:47.277Z",
+      "updatedAt": "2025-09-20T19:50:47.277Z",
+      "role": "workflow:owner",
+      "workflowId": "1MOn8g4OSwddXUl6",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-20T19:50:47.000Z",
+  "versionId": "73d2e8ef-742f-41e3-a082-d28b8d830f53"
+}
