@@ -12,16 +12,6 @@
         ]
       ]
     },
-    "Code in JavaScript": {
-      "main": [
-        []
-      ]
-    },
-    "Edit Fields": {
-      "main": [
-        []
-      ]
-    },
     "Edit Fields1": {
       "main": [
         [
@@ -31,12 +21,6 @@
             "index": 0
           }
         ]
-      ]
-    },
-    "If": {
-      "main": [
-        [],
-        []
       ]
     },
     "Code in JavaScript1": {
@@ -50,14 +34,26 @@
         ]
       ]
     },
-    "Edit Fields2": {
-      "main": [
-        []
-      ]
-    },
     "HTTP Request": {
       "main": [
-        [],
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet": {
+      "main": [
         []
       ]
     }
@@ -103,15 +99,11 @@
           "parameters": [
             {
               "name": "start",
-              "value": "={{ $json.isoDateTime }}"
+              "value": "={{ $json.edit.new_isoDateTime }}"
             },
             {
               "name": "reschedulingReason",
-              "value": "={{ $json.reason }}"
-            },
-            {
-              "name": "rescheduledBy",
-              "value": "={{ $json.email }}"
+              "value": "={{ $json.edit.reason }}"
             }
           ]
         },
@@ -120,7 +112,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -768,
+        -720,
         -64
       ],
       "id": "e3f622df-6019-4997-b5c6-7958371f6d13",
@@ -135,69 +127,15 @@
     },
     {
       "parameters": {
-        "jsCode": "// This code is now simplified to handle a SINGLE stringified JSON object\n// and is now FLEXIBLE enough to handle inconsistent key names from the AI.\n\nconst item = items[0];\n\n// 1. Get the string from the 'query' property.\nconst queryString = item.json.query;\n\n// Safety check\nif (!queryString) {\n  item.json.error = \"The 'query' property is missing or empty.\";\n  return [item];\n}\n\ntry {\n  // 2. Parse the string back into a usable JavaScript object.\n  const data = JSON.parse(queryString);\n\n  // 3. Create the new, separate fields in the output.\n  item.json.booking_id = data.booking_id || null;\n  \n  // --- THE FIX IS HERE ---\n  // This line now checks for 'new_isoDateTime' first, and if that doesn't exist,\n  // it checks for the old name 'isoDateTime' as a fallback.\n  item.json.new_isoDateTime = data.new_isoDateTime || data.isoDateTime || null;\n  // --- END OF FIX ---\n  \n  item.json.email = data.email || null;\n  item.json.reason = data.reason || null;\n\n} catch (error) {\n  item.json.error = `Failed to parse query string: ${error.message}`;\n}\n\n// Return the item with all the new, clean fields.\nreturn [item];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        -2384,
-        -96
-      ],
-      "id": "a25f0d17-4365-45f9-8e39-ec153be82ff5",
-      "name": "Code in JavaScript"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "0cf31534-5b11-4885-880f-fb4cc33474de",
-              "name": "booking_id",
-              "value": "={{ $json.edit.booking_id }}",
-              "type": "string"
-            },
-            {
-              "id": "a27d22ed-dbc9-4db7-8f72-14592316480b",
-              "name": "isoDateTime",
-              "value": "={{ $json.edit.new_isoDateTime }}",
-              "type": "string"
-            },
-            {
-              "id": "d0ede30a-927c-4d1b-a4ec-fff5a3649f34",
-              "name": "email",
-              "value": "={{ $json.edit.email }}",
-              "type": "string"
-            },
-            {
-              "id": "811ea2fd-f70a-48fc-9564-1c4c8adad958",
-              "name": "reason",
-              "value": "={{ $json.edit.reason }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        -720,
-        -400
-      ],
-      "id": "c5dfc20c-cd18-4e1d-918a-cc0814ba6ce0",
-      "name": "Edit Fields"
-    },
-    {
-      "parameters": {
         "content": "",
         "height": 768,
-        "width": 2064,
+        "width": 1760,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1888,
-        -400
+        -1920,
+        -512
       ],
       "typeVersion": 1,
       "id": "7c72d41b-5e22-43c8-bc11-53890072738f",
@@ -238,53 +176,20 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -1232,
-        -80
+        -960,
+        -64
       ],
       "id": "4fc0eefa-4f39-4210-93c1-f0c01d6f0af6",
       "name": "Edit Fields1"
     },
     {
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "1df95111-0c99-467c-8174-87f6472b201c",
-              "leftValue": "={{ JSON.stringify($json.edit) }}",
-              "rightValue": "null",
-              "operator": {
-                "type": "string",
-                "operation": "contains"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        -976,
-        -368
-      ],
-      "id": "333f0d44-ad36-49d0-9e83-20b7fbce6506",
-      "name": "If"
-    },
-    {
-      "parameters": {
-        "jsCode": "// This is a ROBUST \"Brute Force\" Data Extractor.\n// It is designed to work even when the AI sends horribly formatted, double-wrapped strings.\n// It DOES NOT use JSON.parse() because the input is not valid JSON.\n// It uses Regular Expressions to find and extract the values we need.\n\nconst item = items[0];\n\ntry {\n  // 1. Get the raw, broken string from the 'query' property.\n  const rawString = item.json.query;\n  if (!rawString) throw new Error(\"Input 'query' is missing.\");\n\n  // 2. Helper Function to Extract a Value\n  // This function builds a specific \"search pattern\" to find the text between quotes for a given key.\n  function extractValue(key, str) {\n    // This regex looks for a pattern like: \\\"key\\\":\\\"value\\\"\n    // It is designed to match the AI's broken output, including all the extra escape characters.\n    const regex = new RegExp(`\\\\\\\\\\\\\"${key}\\\\\\\\\\\\\\\":\\\\\\\\\\\\\"(.*?)\\\\\\\\\\\\\"`);\n    const match = str.match(regex);\n    // If a match is found, return the captured value. Otherwise, return null.\n    return match ? match[1] : null;\n  }\n\n  // 3. Use the helper function to extract each piece of data from the broken string.\n  item.json.booking_id = extractValue(\"booking_id\", rawString);\n  \n  // --- THE FIX IS HERE ---\n  // We will check for both 'new_isoDateTime' AND 'isoDateTime' to be safe.\n  item.json.new_isoDateTime = extractValue(\"new_isoDateTime\", rawString) || extractValue(\"isoDateTime\", rawString);\n  // --- END OF FIX ---\n  \n  item.json.email = extractValue(\"email\", rawString);\n  item.json.reason = extractValue(\"reason\", rawString);\n\n} catch (error) {\n  item.json.error = `Failed to extract data from query string: ${error.message}`;\n}\n\n// Return the item with all the new, clean fields.\nreturn [item];"
+        "jsCode": "// This is the ULTIMATE \"Multi-Worker\" Data Cleaner. It will try THREE different\n// methods to clean the AI's garbage output. It is designed to be as\n// resilient as possible to the AI's constantly changing formats.\n\nconst item = items[0];\n\n// --- Helper Function: Extracts a value using a flexible Regex ---\n// This is our primary \"brute force\" method.\nfunction extractValue(key, str) {\n  // This Regex looks for \"key\":\"value\" and handles multiple backslashes.\n  const regex = new RegExp(`\"${key}\"\\\\s*:\\\\s*\"(.*?)\"`);\n  const match = str.match(regex);\n  return match ? match[1].replace(/\\\\/g, '') : null;\n}\n\ntry {\n  let rawString = item.json.query;\n  if (!rawString) throw new Error(\"Input 'query' is missing.\");\n\n  // --- STAGE 1: The \"Brute Force\" Regex Extraction ---\n  // We try this first because it works even on invalid JSON.\n  let bookingId = extractValue(\"booking_id\", rawString) || extractValue(\"BookingUID\", rawString);\n  let dateTime = extractValue(\"new_isoDateTime\", rawString) || extractValue(\"isoDateTime\", rawString);\n  let email = extractValue(\"email\", rawString);\n  let reason = extractValue(\"reason\", rawString);\n\n  // --- STAGE 2: The \"JSON Parse\" Fallback ---\n  // If the Regex failed to find everything, it means the AI might have sent clean JSON.\n  // We will try parsing it as a backup plan.\n  if (!bookingId && !dateTime) {\n    console.log(\"Regex failed. Attempting JSON.parse() fallback...\");\n    try {\n      let data = JSON.parse(rawString);\n      // Handle the \"query-in-a-query\" case\n      if (data.query) {\n        data = JSON.parse(data.query);\n      }\n      bookingId = data.booking_id || data.BookingUID || null;\n      dateTime = data.new_isoDateTime || data.isoDateTime || null;\n      email = data.email || null;\n      reason = data.reason || null;\n    } catch (e) {\n      console.log(\"JSON.parse() also failed. The input string is completely broken.\");\n    }\n  }\n\n  // --- STAGE 3: The \"Ultimate Cleanup\" ---\n  // This is a final check. If the values still have extra backslashes, we clean them.\n  function finalClean(str) {\n    return str ? str.replace(/\\\\/g, '') : null;\n  }\n\n  // Assign the cleaned values to the output.\n  item.json.booking_id = finalClean(bookingId);\n  item.json.new_isoDateTime = finalClean(dateTime);\n  item.json.email = finalClean(email);\n  item.json.reason = finalClean(reason);\n\n} catch (error) {\n  item.json.error = `Failed to extract data from query string: ${error.message}`;\n}\n\n// Return the item with all the new, clean fields.\nreturn [item];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1488,
+        -1344,
         -64
       ],
       "id": "30d3adb5-e2a3-45ad-87e0-0125458d1649",
@@ -292,14 +197,15 @@
     },
     {
       "parameters": {
-        "content": "The AI Agent sometimes passes parameters differently so this code is specifically coded to format this type of input:\n[\n{\n\"query\": \n\"{\\\"booking_id\\\":\\\"appt_12345abc\\\",\\\"isoDateTime\\\":\\\"2025-10-15T10:00:00.000Z\\\",\\\"email\\\":\\\"john.doe.client@example.com\\\",\\\"reason\\\":\\\"Client had a personal emergency and needs to move the appointment.\\\"}\"\n}\n]\n",
-        "height": 416,
+        "content": "This is special code node and different from other code nodes used in other workflows for slack chatbot designed to format these both types of input or stringified paramters given below:\n\n1)\n[\n{\n\"query\":\n\"{\"query\":\"{\\\"BookingUID\\\":\\\"d6tktXhj2jEkisCZrLrDDE\\\",\\\"new_isoDateTime\\\":\\\"2025-09-22T09:00:00\\\",\\\"email\\\":\\\"ubaidnasir1631@gmail.com\\\",\\\"reason\\\":\\\"my brother died\\\"}\"}\"\n}\n]\n\n2)\n[\n{\n\"query\": \n\"{\"booking_id\":\"appt_12345abc\",\"isoDateTime\":\"2025-10-15T10:00:00.000Z\",\"email\":\"john.doe.client@example.com\",\"reason\":\"Client had a personal emergency and needs to move the appointment.\"}\"\n}\n]",
+        "height": 576,
+        "width": 544,
         "color": 3
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
         -1552,
-        -352
+        -496
       ],
       "typeVersion": 1,
       "id": "989cd6aa-9dce-485d-acb7-50c1744a39f3",
@@ -307,128 +213,199 @@
     },
     {
       "parameters": {
-        "content": "To make input in a stringified output to pass it into the if node to check if it contains null.",
-        "height": 272,
-        "color": 3
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        -1296,
-        -208
-      ],
-      "typeVersion": 1,
-      "id": "6c5ccd6c-792a-4e2a-9d7d-8f0d03f0abe1",
-      "name": "Sticky Note2"
-    },
-    {
-      "parameters": {
-        "height": 272,
-        "color": 3
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        -736,
-        -368
-      ],
-      "typeVersion": 1,
-      "id": "f5c9e966-0c60-44f9-9ae1-bda07829b8f7",
-      "name": "Sticky Note3"
-    },
-    {
-      "parameters": {
-        "content": "This if node basically pass parameter stringified differently that we get from AI Agent",
-        "height": 240,
-        "color": 3
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        -1040,
-        -176
-      ],
-      "typeVersion": 1,
-      "id": "875cc969-9991-478f-b08b-05a686d17b7f",
-      "name": "Sticky Note4"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "0cf31534-5b11-4885-880f-fb4cc33474de",
-              "name": "booking_id",
-              "value": "={{ $json.booking_id }}",
-              "type": "string"
-            },
-            {
-              "id": "a27d22ed-dbc9-4db7-8f72-14592316480b",
-              "name": "isoDateTime",
-              "value": "={{ $json.new_isoDateTime }}",
-              "type": "string"
-            },
-            {
-              "id": "d0ede30a-927c-4d1b-a4ec-fff5a3649f34",
-              "name": "email",
-              "value": "={{ $json.email }}",
-              "type": "string"
-            },
-            {
-              "id": "811ea2fd-f70a-48fc-9564-1c4c8adad958",
-              "name": "reason",
-              "value": "={{ $json.reason }}",
-              "type": "string"
-            }
-          ]
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1Sa93ckJV4bNFE9IZ7zHOZC85f95G5UAGQqi57UBN09Q",
+          "mode": "list",
+          "cachedResultName": "cal.com Booking uids",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Sa93ckJV4bNFE9IZ7zHOZC85f95G5UAGQqi57UBN09Q/edit?usp=drivesdk"
         },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        -448,
-        -160
-      ],
-      "id": "8a29e976-e788-4ebf-a0ef-68027f371af2",
-      "name": "Edit Fields2"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Sa93ckJV4bNFE9IZ7zHOZC85f95G5UAGQqi57UBN09Q/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
             {
-              "id": "b2304268-51b2-4054-b902-6cf91951ae72",
-              "leftValue": "={{ JSON.stringify($json.error.status) }}",
-              "rightValue": "404",
-              "operator": {
-                "type": "string",
-                "operation": "contains"
-              }
+              "id": "AttendeeName",
+              "displayName": "AttendeeName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "AttendeeEmail",
+              "displayName": "AttendeeEmail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "AttendeePhoneNo.",
+              "displayName": "AttendeePhoneNo.",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "AttendeeTimeZone",
+              "displayName": "AttendeeTimeZone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "AttendeeLanguage",
+              "displayName": "AttendeeLanguage",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TitleOfTheBooking",
+              "displayName": "TitleOfTheBooking",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "HostNameOfTheEvent",
+              "displayName": "HostNameOfTheEvent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "BookingId",
+              "displayName": "BookingId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "BookingUID",
+              "displayName": "BookingUID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "EventTypeSlug",
+              "displayName": "EventTypeSlug",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "EventTypeID",
+              "displayName": "EventTypeID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "EventTypeLocation",
+              "displayName": "EventTypeLocation",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TheTimeAtBookingIsCreated",
+              "displayName": "TheTimeAtBookingIsCreated",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "StartTime",
+              "displayName": "StartTime",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "EndTime",
+              "displayName": "EndTime",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
             }
           ],
-          "combinator": "and"
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
         },
         "options": {}
       },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
       "position": [
-        -1712,
-        224
+        -448,
+        -80
       ],
-      "id": "8fe43555-f971-4738-8bfa-5af21cbfaeb1",
-      "name": "If1"
+      "id": "a73a6a97-560e-4ed4-97d6-b88552dfe1c7",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JOHwDixlr7umKmYo",
+          "name": "Google Sheets account"
+        }
+      }
     }
   ],
   "pinData": {
     "When Executed by Another Workflow": [
       {
         "json": {
-          "query": "{\"query\":\"{\\\"booking_id\\\":\\\"11056912\\\",\\\"new_isoDateTime\\\":\\\"2025-09-22T09:00:00\\\",\\\"email\\\":\\\"ubaidnasir1631@gmail.com\\\",\\\"reason\\\":\\\"my brother died\\\"}\"}"
+          "query": "{\"query\":\"{\\\"BookingUID\\\":\\\"d6tktXhj2jEkisCZrLrDDE\\\",\\\"new_isoDateTime\\\":\\\"2025-09-22T09:00:00\\\",\\\"email\\\":\\\"ubaidnasir1631@gmail.com\\\",\\\"reason\\\":\\\"my brother died\\\"}\"}"
         }
       }
     ]
@@ -448,6 +425,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-20T13:44:45.000Z",
-  "versionId": "6b1d0c8d-9eff-4ffd-a4d2-99376ee864c1"
+  "updatedAt": "2025-09-20T14:21:54.000Z",
+  "versionId": "f7a54084-5239-49b7-be85-c4d953b55f14"
 }
