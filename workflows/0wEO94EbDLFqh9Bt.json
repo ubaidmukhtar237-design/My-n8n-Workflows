@@ -12,17 +12,6 @@
         ]
       ]
     },
-    "When chat message received": {
-      "main": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Google Gemini Chat Model": {
       "ai_languageModel": [
         [
@@ -34,12 +23,28 @@
         ]
       ]
     },
-    "Get row(s) in sheet in Google Sheets": {
+    "fetch_booking_info": {
       "ai_tool": [
         [
           {
             "node": "AI Agent",
             "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
             "index": 0
           }
         ]
@@ -72,8 +77,8 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
       "position": [
-        -752,
-        -16
+        -1408,
+        -208
       ],
       "id": "0980d0f2-02fc-4a22-85f4-c806a63289e2",
       "name": "When Executed by Another Workflow"
@@ -83,8 +88,8 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -416,
-        -16
+        -1360,
+        -32
       ],
       "id": "6489592e-bf6b-422c-bcd1-5c99d1a1dd7d",
       "name": "When clicking ‘Execute workflow’"
@@ -124,38 +129,25 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -208,
-        -16
+        -1184,
+        0
       ],
       "id": "e3f622df-6019-4997-b5c6-7958371f6d13",
       "name": "HTTP Request"
     },
     {
       "parameters": {
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
-      "typeVersion": 1.3,
-      "position": [
-        0,
-        -144
-      ],
-      "id": "bcc7f440-6605-466e-b507-0de4a10975de",
-      "name": "When chat message received",
-      "webhookId": "83d21d73-a6ae-4555-b7e1-54d2703a4bda"
-    },
-    {
-      "parameters": {
         "promptType": "define",
-        "text": "You are a professional and highly helpful AI data analyst.\n",
+        "text": "=You are a customer support agent whose role is to reschedule bookings and meetings. Always respond as a conversational customer service representative, not as an AI chatbot. All inputs come directly from customers or clients.”\n\n\nInput line stays the same:\n<Input>\n{{ $json.chatInput }}\n</Input>",
+        "hasOutputParser": true,
         "options": {
-          "systemMessage": "=You are an AI automation agent connected to Google Sheets and a booking system. Your task is to manage user bookings efficiently. Follow these steps carefully:\n\n1.Always request the following details from the user:\n\nName (required)\n\nEmail (optional)\n\nPhone number (required)\n\nType of meeting booked (optional), e.g., “Meeting with Ubaid for a therapy session\n\n\n2. Fetch Booking Info:\n   - Retrieve the booking details from Google Sheets using the user’s Phone Number and Name.\n   - Extract: AttendeeName, AttendeeEmail, AttendeePhoneNo., StartTime, EndTime, HostNameOfTheEvent, TitleOfTheBooking, EventTypeLocation and TheTimeAtBookingIsCreated.\n\nThe Output Format Example:\nOutPut Format As Json:\n{\n  \"bookingDetails\": {\n    \"TitleOfTheMeeting\": \"APPOINTMENT FOR THERAPY SESSION between Mukhtar Ubaid and ubaid nasir\",\n    \"BookingID\": \"11053047\",\n    \"UID\": \"d6tkXhj2jEkisCZrlrDDE\",\n    \"StartTime\": \"2025-09-20T07:00:00.000Z\",\n    \"EndTime\": \"2025-09-20T07:30:00.000Z\",\n    \"EventTypeSlug\": \"appointment-for-therapy-session\",\n    \"EventTypeID\": \"3311116\",\n    \"LocationOfTheMeeting\": \"Bright Smile Dental Care, 12-B Gulshan Avenue, Block D, Lahore, Punjab, Pakistan 54000.\",\n    \"BookingCreatedAtUTC\": \"2025-09-20T05:10:26.633Z\",\n    \"HostName\": \"Mukhtar Ubaid\",\n    \"TheTimeAtMeetingIsCreated\": \"2025-09-20T05:10:26.633Z\",\n    \"Attendees\": [\n      {\n        \"Name\": \"ubaid nasir\",\n        \"Email\": \"ubaidnasir1631@gmail.com\",\n        \"TimeZone\": \"Asia/Karachi\",\n        \"Language\": \"en\",\n        \"PhoneNumber\": \"918938391\"\n      }\n    ]\n  },\n}\n\nRules:\n- Only fetch and update Google Sheets; do not perform actions outside your tools.\n- Always confirm action with the user.\n"
+          "systemMessage": "=## Your Core Task:\nWhen a user asks to see their appointment details, your job is to use the `fetch_booking_info` tool to retrieve the information from a Google Sheet.\n\n## Step-by-Step Protocol:\n\n1.  **Acknowledge and Gather Information:**\n    *   First, politely acknowledge the user's request.\n    *   Then, you MUST ask for their `Name` and `Phone Number` to find their booking. Say: \"Of course, I can help with that. To find your appointment, could you please provide your full name and the phone number used for the booking?\"\n\n2.  **Use the `fetch_booking_info` Tool:**\n    *   Once you have the user's `Name` and `Phone Number`, you MUST call the `fetch_booking_info` tool.\n    *   Pass the information you gathered as parameters to the tool.\n\n3.  **Present ALL Information (Exact Literal Match):**\n    *   After the tool returns the booking details, you must present ALL of the information to the user in a clear list.\n    *   Start with a confirmation like, \"Thank you! I've found the complete details for your appointment:\"\n    *   Then, list EVERY detail one by one, using the exact field names from the tool's output. The names are case-sensitive and must be identical.\n    *   End with a helpful note: \"Please keep your BookingID handy in case you need to make any changes in the future.\"\n\n## CRITICAL: Tool Definition\nYou have access to ONE tool:\n\n*   **Tool Name:** `fetch_booking_info`\n    *   **Description:** Use this tool to find and retrieve a user's appointment details from a Google Sheet. The tool will return a JSON object with a structure like `{\"bookingDetails\":{...}}`.\n    *   **Required Parameters:**\n        *   `name` (string): The full name of the user.\n        *   `phoneNumber` (string): The user's phone number.\n\n## Important Rules:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nYou are a highly efficient AI assistant for \"Bright Smile Dental Care\". Your ONLY purpose is to help users find their existing booking details by looking them up in a Google Sheet. You are polite, precise, and you always follow the rules.\n\n## Your Core Task:\nWhen a user asks to see their appointment details, your job is to use the `fetch_booking_info` tool to retrieve a row of information from a Google Sheet.\n\n## Step-by-Step Protocol:\n\n1.  **Acknowledge and Gather Information:**\n    *   First, politely acknowledge the user's request.\n    *   Then, you MUST ask for their `Name` and `Phone Number` to find their booking. Say: \"Of course, I can help with that. To find your appointment, could you please provide your full name and the phone number used for the booking?\"\n\n2.  **Use the `fetch_booking_info` Tool:**\n    *   Once you have the user's `Name` and `Phone Number`, you MUST call the `fetch_booking_info` tool.\n    *   Pass the information you gathered as parameters to the tool.\n\n3.  **Present ALL Information (From Sheet Columns):**\n    *   After the tool returns the row of data from the Google Sheet, you must present the information to the user in a clear, human-readable list.\n    *   Start with a confirmation like, \"Thank you! I've found the complete details for your appointment:\"\n    *   Then, list EVERY detail one by one, using the exact column names as placeholders:\n    *  TitleOfTheMeeting\n    *  BookingId\n    *  BookingUID\n    *  StartTime\n    *  EndTime\n    *  EventTypeSlug\n    *  EventTypeID\n    *  EventTypeLocation\n    *  HostNameOfTheEvent\n    *  TheTimeAtBookingIsCreated\n    *  AttendeeName\n    *  AttendeeEmail\n    *  AttendeeTimeZone\n    *  AttendeeLanguage\n    *  AttendeePhoneNo\n    *   End with a helpful note: \"Please keep your Booking ID handy in case you need to make any changes in the future.\"\n\n## CRITICAL: Tool Definition\nYou have access to ONE tool:\n\n*   **Tool Name:** `fetch_booking_info`\n    *   **Description:** Use this tool to find and retrieve a user's appointment details from a Google Sheet. The tool will return the data as a flat JSON object where each key is a column name from the sheet.\n    *   **Required Parameters:**\n        *   `name` (string): The full name of the user.\n        *   `phoneNumber` (string): The user's phone number.\n\n## Important Rules:\n*   **One Job Only:** Your only capability is to fetch booking information.\n*   **No Information, no Action:** If the user refuses to provide their name or phone number, you cannot proceed.\n*   **Handle \"Not Found\":** If the tool returns no results, you MUST inform the user politely: \"I'm sorry, but I couldn't find any bookings matching that name and phone number.\"\n*   **One Job Only:** Your only capability is to fetch booking information. If the user asks to book, cancel, or reschedule, you MUST reply: \"I can only look up existing appointment details. For any other changes, please contact our front desk or use your BookingID with our rescheduling tool.\"\n*   **No Information, no Action:** If the user refuses to provide their name or phone number, you cannot proceed. Politely explain that this information is required to find their booking.\n*   **Handle \"Not Found\":** If the `fetch_booking_info` tool returns no results, you MUST inform the user politely: \"I'm sorry, but I couldn't find any bookings matching that name and phone number. Please double-check the information and try again.\""
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        208,
+        -472,
         -144
       ],
       "id": "dd788665-a1fe-4489-94d1-196705450084",
@@ -169,8 +161,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        80,
-        64
+        -672,
+        80
       ],
       "id": "7a7bba11-5bef-4f1d-8094-384b1d234b0e",
       "name": "Google Gemini Chat Model",
@@ -202,11 +194,11 @@
       "type": "n8n-nodes-base.googleSheetsTool",
       "typeVersion": 4.7,
       "position": [
-        368,
-        64
+        -336,
+        80
       ],
       "id": "3291aa16-bf1a-4f9a-aacf-ed3aff5a70bc",
-      "name": "Get row(s) in sheet in Google Sheets",
+      "name": "fetch_booking_info",
       "credentials": {
         "googleSheetsOAuth2Api": {
           "id": "JOHwDixlr7umKmYo",
@@ -215,14 +207,71 @@
       }
     },
     {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -128,
+        -144
+      ],
+      "id": "caeafea0-c619-4265-a113-bcc23bb63084",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "trigger": [
+          "message"
+        ],
+        "channelId": {
+          "__rl": true,
+          "value": "C09GWHDMFJ4",
+          "mode": "list",
+          "cachedResultName": "n8n-chatbot"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.slackTrigger",
+      "typeVersion": 1,
+      "position": [
+        -752,
+        -304
+      ],
+      "id": "14eb78dd-e82d-4719-836b-7fb1b2b1a8f4",
+      "name": "Slack Trigger",
+      "webhookId": "1ce69b87-633d-4e24-a9c6-a426ba45ec4e",
+      "credentials": {
+        "slackApi": {
+          "id": "aMhIemzBzRXB4FIF",
+          "name": "Slack account 2"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -768,
+        -144
+      ],
+      "id": "f70369e6-bdd5-4ece-9623-40417e2d5856",
+      "name": "When chat message received",
+      "webhookId": "ee93f384-b2a8-469c-9bf0-e4c36a7a5813"
+    },
+    {
       "parameters": {},
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.3,
       "position": [
-        224,
+        -496,
         64
       ],
-      "id": "44d579b9-210b-460f-be2f-b1f6f9098f94",
+      "id": "bc70dc3d-24c2-46b0-9599-eba1beb98527",
       "name": "Simple Memory"
     }
   ],
@@ -250,6 +299,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-20T05:52:40.000Z",
-  "versionId": "cee16104-82fd-4b36-96da-359b63922212"
+  "updatedAt": "2025-09-20T06:29:12.000Z",
+  "versionId": "067fcab4-7ad5-4973-8302-a1f8a57c8301"
 }
