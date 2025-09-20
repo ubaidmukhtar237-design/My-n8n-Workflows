@@ -1,17 +1,6 @@
 {
   "active": false,
   "connections": {
-    "When clicking ‘Execute workflow’": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "When Executed by Another Workflow": {
       "main": [
         [
@@ -61,22 +50,11 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
       "position": [
-        -1584,
-        -32
+        -1664,
+        16
       ],
       "id": "0980d0f2-02fc-4a22-85f4-c806a63289e2",
       "name": "When Executed by Another Workflow"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
-      "position": [
-        -1504,
-        224
-      ],
-      "id": "6489592e-bf6b-422c-bcd1-5c99d1a1dd7d",
-      "name": "When clicking ‘Execute workflow’"
     },
     {
       "parameters": {
@@ -113,8 +91,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -816,
-        -32
+        -944,
+        16
       ],
       "id": "e3f622df-6019-4997-b5c6-7958371f6d13",
       "name": "HTTP Request"
@@ -126,8 +104,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1376,
-        -32
+        -1424,
+        16
       ],
       "id": "a25f0d17-4365-45f9-8e39-ec153be82ff5",
       "name": "Code in JavaScript"
@@ -167,8 +145,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -1168,
-        -32
+        -1232,
+        16
       ],
       "id": "c5dfc20c-cd18-4e1d-918a-cc0814ba6ce0",
       "name": "Edit Fields"
@@ -198,6 +176,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-20T09:48:58.000Z",
-  "versionId": "903cd071-6512-4193-b28f-9da730b80bc1"
+  "updatedAt": "2025-09-20T11:49:52.000Z",
+  "versionId": "9a73d78e-b8fb-401d-a7ea-e3e7ff5698ef"
 }
