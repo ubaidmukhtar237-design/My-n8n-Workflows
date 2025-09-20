@@ -27,6 +27,17 @@
           }
         ]
       ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-09-20T19:50:47.274Z",
@@ -90,7 +101,7 @@
     {
       "parameters": {
         "content": "Basic example of extracting date,year and month of current time.",
-        "height": 240,
+        "height": 352,
         "width": 640,
         "color": 3
       },
@@ -106,8 +117,8 @@
     {
       "parameters": {
         "content": "To extract date,year,month and to further suppress seconds and milliseconds by setting fixed time.",
-        "height": 240,
-        "width": 640,
+        "height": 352,
+        "width": 832,
         "color": 3
       },
       "type": "n8n-nodes-base.stickyNote",
@@ -136,8 +147,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        624,
-        16
+        512,
+        128
       ],
       "id": "98f88304-678c-4a28-ba9c-db3fb200da33",
       "name": "Edit Fields2"
@@ -178,6 +189,30 @@
               "name": "dateExtracting.Year",
               "value": "={{ $json.dateTime.toDateTime().year }}",
               "type": "string"
+            },
+            {
+              "id": "b2ce0b83-3739-4fa1-aeaf-551cb95aa2af",
+              "name": "dateExtracting.Hour",
+              "value": "={{ $json.dateTime.toDateTime().hour }}",
+              "type": "string"
+            },
+            {
+              "id": "815d46a2-9972-4ce5-abe3-4019ee450d36",
+              "name": "dateExtracting.Minute",
+              "value": "={{ $json.dateTime.toDateTime().minute }}",
+              "type": "string"
+            },
+            {
+              "id": "c2171f81-d95d-4a9d-b66b-66bb2d229fe8",
+              "name": "dateExtracting.Second",
+              "value": "={{ $json.dateTime.toDateTime().second}}",
+              "type": "string"
+            },
+            {
+              "id": "f314a9cb-a68a-4abb-8a14-a1062d16f2df",
+              "name": "dateExtracting.Millisecond",
+              "value": "={{ $json.dateTime.toDateTime().millisecond}}",
+              "type": "string"
             }
           ]
         },
@@ -187,10 +222,63 @@
       "typeVersion": 3.4,
       "position": [
         816,
-        16
+        128
       ],
       "id": "6c864a42-01d4-4be5-a063-90e4cc099d6a",
       "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ac11c1df-c1b3-4fe9-b81e-50f65fe183f8",
+              "name": "date",
+              "value": "={{ $now.setZone(\"Asia/Karachi\").set({ hour: $json.dateExtracting.Hour, minute: $json.dateExtracting.Minute, second: 0, millisecond: 0 }).toISO({ suppressMilliseconds: true }) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1024,
+        128
+      ],
+      "id": "204ab4e5-afad-44f3-8f08-ce84b834adaa",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "content": "To parse and split the date,year etc.",
+        "height": 192,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        720,
+        64
+      ],
+      "typeVersion": 1,
+      "id": "ad9e6ac7-ccd0-4c59-bd76-ca3251bf904e",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "to suppress seconds,milliseconds.",
+        "height": 192,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        992,
+        64
+      ],
+      "typeVersion": 1,
+      "id": "fd68b2ba-a844-4e98-8527-40f4e7e726af",
+      "name": "Sticky Note4"
     }
   ],
   "pinData": {},
@@ -211,6 +299,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-20T20:29:30.000Z",
-  "versionId": "69372c13-e65d-4daa-8a98-f6aec577db4d"
+  "updatedAt": "2025-09-20T20:36:05.000Z",
+  "versionId": "4c634b84-878e-47c4-8696-400fac43592d"
 }
