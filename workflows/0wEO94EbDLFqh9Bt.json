@@ -12,29 +12,7 @@
         ]
       ]
     },
-    "Google Gemini Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "fetch_booking_info": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "AI Agent": {
+    "When Executed by Another Workflow": {
       "main": [
         [
           {
@@ -45,23 +23,23 @@
         ]
       ]
     },
-    "When chat message received": {
+    "Code in JavaScript": {
       "main": [
         [
           {
-            "node": "AI Agent",
+            "node": "Edit Fields",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Simple Memory": {
-      "ai_memory": [
+    "Edit Fields": {
+      "main": [
         [
           {
-            "node": "AI Agent",
-            "type": "ai_memory",
+            "node": "HTTP Request",
+            "type": "main",
             "index": 0
           }
         ]
@@ -83,8 +61,8 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
       "position": [
-        -1408,
-        -208
+        -1584,
+        -32
       ],
       "id": "0980d0f2-02fc-4a22-85f4-c806a63289e2",
       "name": "When Executed by Another Workflow"
@@ -94,8 +72,8 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -1360,
-        -32
+        -1504,
+        224
       ],
       "id": "6489592e-bf6b-422c-bcd1-5c99d1a1dd7d",
       "name": "When clicking ‘Execute workflow’"
@@ -103,7 +81,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://api.cal.com/v2/bookings/da/reschedule",
+        "url": "=https://api.cal.com/v2/bookings/{{ $json.booking_id }}/reschedule",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -118,15 +96,15 @@
           "parameters": [
             {
               "name": "start",
-              "value": "da"
+              "value": "={{ $json.isoDateTime }}"
             },
             {
               "name": "reschedulingReason",
-              "value": "I have to go my office meeting."
+              "value": "={{ $json.reason }}"
             },
             {
               "name": "rescheduledBy",
-              "value": "ubaidnasir1631@gmail.com"
+              "value": "={{ $json.email }}"
             }
           ]
         },
@@ -135,156 +113,72 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -1184,
-        0
+        -816,
+        -32
       ],
       "id": "e3f622df-6019-4997-b5c6-7958371f6d13",
       "name": "HTTP Request"
     },
     {
       "parameters": {
-        "promptType": "define",
-        "text": "=<Input>\n{{ $json.chatInput }}\n</Input>",
-        "options": {
-          "systemMessage": "=You are \"Alex\", a friendly and highly skilled customer support representative for \"Grand Hotel\". Your primary role is to help clients find their appointment details or reschedule their bookings. You must always sound like a helpful human, never like a robot. Your top priority is accuracy and security.\n\n## Core Mission\nYour main goal is to find a user's booking in a Google Sheet by strictly matching the information they provide.\n\n## CRITICAL: Verification Logic\nThis is the most important rule. When a user provides information, you are not just searching; you are **verifying**.\n\n1.  **Strict \"AND\" Matching:** When you use the `fetch_booking_info` tool with a `name` AND a `phoneNumber`, the tool must find a record where **BOTH the name and the phone number match**. The name search should be case-insensitive, but the phone number must be exact.\n2.  **Handling a Mismatch:** If the tool finds a record where one piece of information matches but the other does not (e.g., the phone number matches but the name is different), you **MUST NOT** present the booking details. Instead, you must report the discrepancy and ask for clarification.\n    *   **Example Response for Name Mismatch:** \"Thank you for that. I found a booking with that phone number, but the name on file is 'ubaid nasir'. Is it possible the booking was made under a different name, or would you like to try a different phone number?\"\n3.  **Email as an Alternative:** The same logic applies if you are using an email address. The email (case-insensitive) and name must both match the record.\n\n## Step-by-Step Conversation Flow\n\n1.  **Initial Greeting & Information Gathering:**\n    *   Greet the user warmly and ask how you can help.\n    *   When they ask to find or change their booking, your first response MUST be: \"I can certainly help you with that. To pull up your appointment details, could you please provide the full phone number you used for the booking?\"\n\n2.  **Handling User Responses:**\n    *   **If they provide a phone number:** Ask for their name for verification. \"Thank you! And for security, could you please confirm the full name on the booking?\" Once you have both, proceed to the tool.\n    *   **If they can't provide a phone number:** Offer the alternative. \"No problem. I can also look it up using the email address you booked with. Could you provide that for me, along with your full name?\"\n\n3.  **Using the `fetch_booking_info` Tool:**\n    *   Once you have the required combination (Phone + Name or Email + Name), call the `fetch_booking_info` tool. Pass all the information you have gathered.\n\n4.  **Presenting the Found Information (ONLY on a perfect match):**\n    *   **If the tool finds a perfect match**, respond with: \"Perfect, I've confirmed your details! Here is the information for your appointment:\"\n    *   Then, list the details clearly, using the exact column names:\n    *  TitleOfTheMeeting\n    *  BookingId\n    *  BookingUID\n    *  StartTime\n    *  EndTime\n    *  EventTypeSlug\n    *  EventTypeID\n    *  EventTypeLocation\n    *  HostNameOfTheEvent\n    *  TheTimeAtBookingIsCreated\n    *  AttendeeName\n    *  AttendeeEmail\n    *  AttendeeTimeZone\n    *  AttendeeLanguage\n    *  AttendeePhoneNo\n    *   After listing the details, ask a follow-up question: \"Is there anything you'd like to change, or were you just confirming the details?\"\n\n## Tool Definition\n\nYou have access to ONE tool:\n\n*   **Tool Name:** `fetch_booking_info`\n*   **Description:** Use this tool to find a booking in a Google Sheet. The tool requires a **strict match** on the parameters provided. The search for `name` and `email` is case-insensitive, but `phoneNumber` must be an exact match.\n*   **Parameters:**\n    *   `phoneNumber` (string, optional): The user's exact phone number.\n    *   `email` (string, optional): The user's exact email address.\n    *   `name` (string, required): The user's full name.\n\n## Critical Rules\n\n*   **Handle \"Not Found\":** If the tool returns no results at all, you MUST say: \"I'm sorry, but I couldn't find any bookings that match that combination of name and phone number/email. Could we double-check the details you provided?\"\n*   **Stay In Character:** Always be conversational, polite, and helpful. You are a human customer service agent."
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 2.2,
-      "position": [
-        -464,
-        -144
-      ],
-      "id": "dd788665-a1fe-4489-94d1-196705450084",
-      "name": "AI Agent"
-    },
-    {
-      "parameters": {
-        "modelName": "models/gemini-2.5-pro",
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
-      "typeVersion": 1,
-      "position": [
-        -672,
-        80
-      ],
-      "id": "7a7bba11-5bef-4f1d-8094-384b1d234b0e",
-      "name": "Google Gemini Chat Model",
-      "credentials": {
-        "googlePalmApi": {
-          "id": "sPfpmF39mpaLYCjc",
-          "name": "Google Gemini(PaLM) Api account 2"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "1Sa93ckJV4bNFE9IZ7zHOZC85f95G5UAGQqi57UBN09Q",
-          "mode": "list",
-          "cachedResultName": "cal.com Booking uids",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Sa93ckJV4bNFE9IZ7zHOZC85f95G5UAGQqi57UBN09Q/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Sa93ckJV4bNFE9IZ7zHOZC85f95G5UAGQqi57UBN09Q/edit#gid=0"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheetsTool",
-      "typeVersion": 4.7,
-      "position": [
-        -336,
-        80
-      ],
-      "id": "3291aa16-bf1a-4f9a-aacf-ed3aff5a70bc",
-      "name": "fetch_booking_info",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "JOHwDixlr7umKmYo",
-          "name": "Google Sheets account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
+        "jsCode": "// This code takes the stringified JSON from the 'query' property for a reschedule request,\n// parses it, and then outputs EACH piece of data as a separate, top-level field.\n\nconst item = items[0];\n\n// 1. Get the string from the 'query' property.\nconst queryString = item.json.query;\n\n// Safety check\nif (!queryString) {\n  item.json.error = \"The 'query' property is missing or empty.\";\n  return [item];\n}\n\ntry {\n  // 2. Parse the string back into a usable JavaScript object.\n  const data = JSON.parse(queryString);\n\n  // 3. Create the new, separate fields in the output for every piece of info.\n  // We use a fallback 'null' in case a field is missing from the query.\n  item.json.booking_id = data.booking_id || null;\n  item.json.isoDateTime = data.isoDateTime || null; // <--- THIS LINE IS NOW CORRECT\n  item.json.email = data.email || null;\n  item.json.reason = data.reason || null;\n\n} catch (error) {\n  item.json.error = `Failed to parse query string: ${error.message}`;\n}\n\n// Return the item with all the new, clean fields for rescheduling.\nreturn [item];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -128,
-        -144
+        -1376,
+        -32
       ],
-      "id": "caeafea0-c619-4265-a113-bcc23bb63084",
+      "id": "a25f0d17-4365-45f9-8e39-ec153be82ff5",
       "name": "Code in JavaScript"
     },
     {
       "parameters": {
-        "trigger": [
-          "message"
-        ],
-        "channelId": {
-          "__rl": true,
-          "value": "C09GWHDMFJ4",
-          "mode": "list",
-          "cachedResultName": "n8n-chatbot"
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0cf31534-5b11-4885-880f-fb4cc33474de",
+              "name": "booking_id",
+              "value": "={{ $json.booking_id }}",
+              "type": "string"
+            },
+            {
+              "id": "a27d22ed-dbc9-4db7-8f72-14592316480b",
+              "name": "isoDateTime",
+              "value": "={{ $json.isoDateTime }}",
+              "type": "string"
+            },
+            {
+              "id": "d0ede30a-927c-4d1b-a4ec-fff5a3649f34",
+              "name": "email",
+              "value": "={{ $json.email }}",
+              "type": "string"
+            },
+            {
+              "id": "811ea2fd-f70a-48fc-9564-1c4c8adad958",
+              "name": "reason",
+              "value": "={{ $json.reason }}",
+              "type": "string"
+            }
+          ]
         },
         "options": {}
       },
-      "type": "n8n-nodes-base.slackTrigger",
-      "typeVersion": 1,
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
       "position": [
-        -752,
-        -304
+        -1168,
+        -32
       ],
-      "id": "14eb78dd-e82d-4719-836b-7fb1b2b1a8f4",
-      "name": "Slack Trigger",
-      "webhookId": "1ce69b87-633d-4e24-a9c6-a426ba45ec4e",
-      "credentials": {
-        "slackApi": {
-          "id": "aMhIemzBzRXB4FIF",
-          "name": "Slack account 2"
-        }
-      },
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
-      "typeVersion": 1.3,
-      "position": [
-        -768,
-        -144
-      ],
-      "id": "f70369e6-bdd5-4ece-9623-40417e2d5856",
-      "name": "When chat message received",
-      "webhookId": "ee93f384-b2a8-469c-9bf0-e4c36a7a5813"
-    },
-    {
-      "parameters": {},
-      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
-      "typeVersion": 1.3,
-      "position": [
-        -464,
-        64
-      ],
-      "id": "d6bcffba-d904-4c42-a608-523ae0d76a67",
-      "name": "Simple Memory"
+      "id": "c5dfc20c-cd18-4e1d-918a-cc0814ba6ce0",
+      "name": "Edit Fields"
     }
   ],
   "pinData": {
     "When Executed by Another Workflow": [
       {
         "json": {
-          "query": "{\"booking_id\":\"appt_12345abc\",\"new_isoDateTime\":\"2024-10-30T14:00:00.000Z\"}"
+          "query": "{\"booking_id\":\"appt_12345abc\",\"isoDateTime\":\"2025-10-15T10:00:00.000Z\",\"email\":\"john.doe.client@example.com\",\"reason\":\"Client had a personal emergency and needs to move the appointment.\"}"
         }
       }
     ]
@@ -304,6 +198,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-20T07:40:45.000Z",
-  "versionId": "503e1445-7d69-46f5-b199-6f3f143e89a8"
+  "updatedAt": "2025-09-20T09:09:37.000Z",
+  "versionId": "21d75561-7207-4acf-bb74-d4708d3461f2"
 }
