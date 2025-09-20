@@ -121,7 +121,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// This code takes the stringified JSON from the 'query' property for a reschedule request,\n// parses it, and then outputs EACH piece of data as a separate, top-level field.\n\nconst item = items[0];\n\n// 1. Get the string from the 'query' property.\nconst queryString = item.json.query;\n\n// Safety check\nif (!queryString) {\n  item.json.error = \"The 'query' property is missing or empty.\";\n  return [item];\n}\n\ntry {\n  // 2. Parse the string back into a usable JavaScript object.\n  const data = JSON.parse(queryString);\n\n  // 3. Create the new, separate fields in the output for every piece of info.\n  // We use a fallback 'null' in case a field is missing from the query.\n  item.json.booking_id = data.booking_id || null;\n  item.json.isoDateTime = data.isoDateTime || null; // <--- THIS LINE IS NOW CORRECT\n  item.json.email = data.email || null;\n  item.json.reason = data.reason || null;\n\n} catch (error) {\n  item.json.error = `Failed to parse query string: ${error.message}`;\n}\n\n// Return the item with all the new, clean fields for rescheduling.\nreturn [item];"
+        "jsCode": "// This code correctly handles double-stringified JSON for a reschedule request\n// and outputs each piece of data as a separate, top-level field.\n\nconst item = items[0];\n\n// 1. Get the initial string from the 'query' property.\nconst initialString = item.json.query;\n\n// Safety check for missing input\nif (!initialString) {\n  item.json.error = \"The 'query' property is missing or empty.\";\n  return [item];\n}\n\ntry {\n  // 2. First parse: Convert the outer string into an array.\n  // Input: \"[{\\\"query\\\":\\\"{\\\\\\\"booking_id\\\\\\\":...}\\\"}]\"\n  // Output: [{ query: \"{\\\"booking_id\\\":...}\" }]\n  const outerArray = JSON.parse(initialString);\n\n  // 3. Extract the nested string from the first object in the array.\n  const nestedString = outerArray[0]?.query;\n\n  // Safety check if the nested string is missing\n  if (!nestedString) {\n    item.json.error = \"The nested 'query' string is missing.\";\n    return [item];\n  }\n\n  // 4. Second parse: Convert the nested string into the final data object.\n  // Input: \"{\\\"booking_id\\\":...}\"\n  // Output: { booking_id: \"...\", new_isoDateTime: \"...\" }\n  const data = JSON.parse(nestedString);\n\n  // 5. Create the new, separate fields in the output.\n  // We use a fallback 'null' in case a field is missing.\n  item.json.booking_id = data.booking_id || null;\n  // --- CORRECTED KEY NAME ---\n  item.json.isoDateTime = data.new_isoDateTime || null; \n  item.json.email = data.email || null;\n  item.json.reason = data.reason || null;\n\n} catch (error) {\n  item.json.error = `Failed to parse query string: ${error.message}`;\n}\n\n// Return the item with all the new, clean fields.\nreturn [item];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -198,6 +198,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-20T09:09:37.000Z",
-  "versionId": "21d75561-7207-4acf-bb74-d4708d3461f2"
+  "updatedAt": "2025-09-20T09:48:58.000Z",
+  "versionId": "903cd071-6512-4193-b28f-9da730b80bc1"
 }
