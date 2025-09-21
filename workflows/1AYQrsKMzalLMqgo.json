@@ -16,7 +16,7 @@
       "main": [
         [
           {
-            "node": "Respond to Webhook",
+            "node": "Code in JavaScript",
             "type": "main",
             "index": 0
           }
@@ -29,6 +29,17 @@
           {
             "node": "AI Agent",
             "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
             "index": 0
           }
         ]
@@ -79,14 +90,13 @@
     },
     {
       "parameters": {
-        "respondWith": "text",
-        "responseBody": "={\n  \"message\": \"{{ $json.output }}\"\n}",
+        "respondWith": "allIncomingItems",
         "options": {}
       },
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.4,
       "position": [
-        32,
+        208,
         -16
       ],
       "id": "7e13342a-3406-452e-8e1b-070b5f62f950",
@@ -116,7 +126,7 @@
       "parameters": {
         "content": "## TEST WEBHOOK URL",
         "height": 400,
-        "width": 1072,
+        "width": 1168,
         "color": 3
       },
       "type": "n8n-nodes-base.stickyNote",
@@ -127,6 +137,19 @@
       "typeVersion": 1,
       "id": "c8db94b5-50e8-41d9-8215-3f755414c906",
       "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "jsCode": "// This code removes actual newline characters (line breaks).\n\nconst fieldName = 'output'; // <-- CHANGE THIS to your field name\n\nfor (const item of items) {\n  const text = item.json[fieldName];\n\n  if (typeof text === 'string') {\n    // Use a regular expression /\\\\n/g to find all newline characters\n    const cleanedText = text.replace(/\\n/g, '');\n\n    // Overwrite the original field\n    item.json[fieldName] = cleanedText;\n  }\n}\n\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        32,
+        -16
+      ],
+      "id": "812d768b-ba2d-4b86-844b-b38ba3026de3",
+      "name": "Code in JavaScript"
     }
   ],
   "pinData": {},
@@ -145,6 +168,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-09-21T12:15:41.000Z",
-  "versionId": "83d8d0f3-674b-4714-a77f-16b00a5e471f"
+  "updatedAt": "2025-09-21T12:53:05.000Z",
+  "versionId": "7404125e-1562-44ec-ba87-1b98f220e047"
 }
