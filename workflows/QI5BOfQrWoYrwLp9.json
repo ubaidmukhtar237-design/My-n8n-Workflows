@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "OpenAI Chat Model": {
       "ai_languageModel": [
@@ -139,7 +139,7 @@
   ],
   "staticData": null,
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2025-09-21T11:24:43.000Z",
+  "triggerCount": 1,
+  "updatedAt": "2025-09-21T14:56:00.000Z",
   "versionId": "5e4ae1fe-1397-4c9a-b1c5-75d501baf0f1"
 }
