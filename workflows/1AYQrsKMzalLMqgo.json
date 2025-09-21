@@ -79,6 +79,8 @@
     },
     {
       "parameters": {
+        "respondWith": "text",
+        "responseBody": "={\n  \"message\": \"{{ $json.output }}\"\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.respondToWebhook",
@@ -109,6 +111,22 @@
           "name": "Google Gemini(PaLM) Api account 2"
         }
       }
+    },
+    {
+      "parameters": {
+        "content": "## TEST WEBHOOK URL",
+        "height": 400,
+        "width": 1072,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -704,
+        -64
+      ],
+      "typeVersion": 1,
+      "id": "c8db94b5-50e8-41d9-8215-3f755414c906",
+      "name": "Sticky Note"
     }
   ],
   "pinData": {},
@@ -127,6 +145,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-09-21T11:29:25.000Z",
-  "versionId": "83e913c0-80a5-47ef-a0e1-9f5b834d2b78"
+  "updatedAt": "2025-09-21T11:53:05.000Z",
+  "versionId": "69ef7784-94c0-4f5d-a9cb-fda7b9162d58"
 }
