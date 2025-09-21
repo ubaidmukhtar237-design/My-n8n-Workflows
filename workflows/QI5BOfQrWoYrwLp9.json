@@ -38,7 +38,9 @@
   "createdAt": "2025-09-13T20:49:12.162Z",
   "id": "QI5BOfQrWoYrwLp9",
   "isArchived": false,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "WebHook with Lovable Ai_SIMPLE AI AGENT LIKE CHAT GPT",
   "nodes": [
     {
@@ -73,7 +75,13 @@
         32
       ],
       "id": "a9bc1620-451f-4c85-88dc-aa47a0085d10",
-      "name": "OpenAI Chat Model"
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "5tr8S2LICI3Pm8o5",
+          "name": "OpenAi account"
+        }
+      }
     },
     {
       "parameters": {
@@ -132,6 +140,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-13T20:49:22.000Z",
-  "versionId": "3ccc700a-099d-4aba-9d68-811125e6ebe2"
+  "updatedAt": "2025-09-21T11:24:43.000Z",
+  "versionId": "5e4ae1fe-1397-4c9a-b1c5-75d501baf0f1"
 }
