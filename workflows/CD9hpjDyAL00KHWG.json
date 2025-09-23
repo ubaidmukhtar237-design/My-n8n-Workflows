@@ -5,7 +5,18 @@
       "main": [
         [
           {
-            "node": "Create a charge",
+            "node": "Create a source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a source": {
+      "main": [
+        [
+          {
+            "node": "Send an SMS/MMS/WhatsApp message",
             "type": "main",
             "index": 0
           }
@@ -34,7 +45,26 @@
     },
     {
       "parameters": {
-        "resource": "charge",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        -48
+      ],
+      "id": "3d499948-41a3-4bb6-adff-d6d10ea7d170",
+      "name": "Send an SMS/MMS/WhatsApp message",
+      "credentials": {
+        "twilioApi": {
+          "id": "uqMwV8mLsjPd8ufB",
+          "name": "Twilio account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "source",
         "operation": "create",
         "additionalFields": {}
       },
@@ -45,7 +75,7 @@
         -48
       ],
       "id": "02f13391-168d-42e3-ad8c-e3dc2bfe1ba8",
-      "name": "Create a charge",
+      "name": "Create a source",
       "credentials": {
         "stripeApi": {
           "id": "1OgN9nD7RVrrcVBv",
@@ -70,6 +100,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-23T16:30:10.000Z",
-  "versionId": "886a65a9-a4b6-47da-8b4b-92e99f4260fa"
+  "updatedAt": "2025-09-23T17:23:08.000Z",
+  "versionId": "c1575441-98a9-43d3-8ceb-0062b9bf6622"
 }
