@@ -1,0 +1,75 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Create a charge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-23T16:21:36.196Z",
+  "id": "CD9hpjDyAL00KHWG",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Payments Practice",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -448,
+        -48
+      ],
+      "id": "2980207a-fce2-420d-b569-b0dd3d2f1687",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "resource": "charge",
+        "operation": "create",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.stripe",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        -48
+      ],
+      "id": "02f13391-168d-42e3-ad8c-e3dc2bfe1ba8",
+      "name": "Create a charge",
+      "credentials": {
+        "stripeApi": {
+          "id": "1OgN9nD7RVrrcVBv",
+          "name": "Stripe account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-23T16:21:36.199Z",
+      "updatedAt": "2025-09-23T16:21:36.199Z",
+      "role": "workflow:owner",
+      "workflowId": "CD9hpjDyAL00KHWG",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-23T16:30:10.000Z",
+  "versionId": "886a65a9-a4b6-47da-8b4b-92e99f4260fa"
+}
