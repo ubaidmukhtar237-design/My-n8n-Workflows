@@ -1,0 +1,125 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-24T08:09:29.529Z",
+  "id": "OoETjahBWCqcqrmE",
+  "isArchived": false,
+  "meta": null,
+  "name": "To add year to the ISO format in which month and date is only provided",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -432,
+        -80
+      ],
+      "id": "a89e1e94-7937-4abc-847e-2777e024c142",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "31c322f7-de04-46e7-8164-2edbbaac3396",
+              "name": "date",
+              "value": "2025-09-25T00:00:00.000+05:00",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -224,
+        -80
+      ],
+      "id": "0f2e98b0-5c32-4e9f-989b-7859da150fc1",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "592a0b1f-39b2-4299-b76c-223df23e802e",
+              "name": "date",
+              "value": "={{ $json.date.toDateTime().plus({ hours: 9 }).set({ year: $now.year }) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -16,
+        -80
+      ],
+      "id": "6c3443e2-85e7-4ff4-a73a-e7d29ef090d5",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "content": "#Success",
+        "height": 288,
+        "width": 960,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -528,
+        -192
+      ],
+      "typeVersion": 1,
+      "id": "352c6b9e-45a9-4b73-bdca-e387856b5dd4",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-24T08:09:29.533Z",
+      "updatedAt": "2025-09-24T08:09:29.533Z",
+      "role": "workflow:owner",
+      "workflowId": "OoETjahBWCqcqrmE",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-24T08:25:22.000Z",
+  "versionId": "16b45dd8-7503-495e-a035-7cd4cf1b72f9"
+}
