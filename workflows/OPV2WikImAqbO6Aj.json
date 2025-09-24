@@ -413,7 +413,7 @@
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "={{ { \"results\": [ { \"toolCallId\": $('Webhook').item.json.body.message.toolCalls[0].id, \"result\": JSON.stringify($('Get Slots').item.json.data) } ] } }}",
+        "responseBody": "={{ { \"results\": [ { \"toolCallId\": \"$('Webhook').item.json.body.message.toolCalls[0].id\", \"result\": JSON.stringify($('Get Slots').item.json.data) } ] } }}",
         "options": {}
       },
       "type": "n8n-nodes-base.respondToWebhook",
@@ -1024,6 +1024,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-09-19T15:34:44.000Z",
-  "versionId": "d613e586-ab52-4648-8b50-3dfb48a98a03"
+  "updatedAt": "2025-09-24T10:40:56.000Z",
+  "versionId": "7c14d745-773b-4f81-8ceb-ad2a9edc40dc"
 }
