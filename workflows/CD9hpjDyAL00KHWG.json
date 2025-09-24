@@ -24,7 +24,7 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "name": "YT Channel is AI Affiliator",
+  "name": "Cal.com with Stripe",
   "nodes": [
     {
       "parameters": {},
@@ -98,6 +98,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-24T11:54:07.000Z",
-  "versionId": "8dd9af61-79ab-42e7-b2ae-0001a410a87b"
+  "updatedAt": "2025-09-24T14:14:36.000Z",
+  "versionId": "fe216335-7132-42a5-86e5-35a576d28d05"
 }
