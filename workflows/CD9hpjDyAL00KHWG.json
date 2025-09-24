@@ -14,13 +14,7 @@
     },
     "Create a source": {
       "main": [
-        [
-          {
-            "node": "Send an SMS/MMS/WhatsApp message",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     }
   },
@@ -30,7 +24,7 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "name": "Payments Practice",
+  "name": "YT Channel is AI Affiliator",
   "nodes": [
     {
       "parameters": {},
@@ -45,6 +39,9 @@
     },
     {
       "parameters": {
+        "from": "da",
+        "to": "da",
+        "message": "a",
         "options": {}
       },
       "type": "n8n-nodes-base.twilio",
@@ -66,6 +63,7 @@
       "parameters": {
         "resource": "source",
         "operation": "create",
+        "customerId": "da",
         "additionalFields": {}
       },
       "type": "n8n-nodes-base.stripe",
@@ -100,6 +98,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-23T17:23:08.000Z",
-  "versionId": "c1575441-98a9-43d3-8ceb-0062b9bf6622"
+  "updatedAt": "2025-09-24T11:54:07.000Z",
+  "versionId": "8dd9af61-79ab-42e7-b2ae-0001a410a87b"
 }
