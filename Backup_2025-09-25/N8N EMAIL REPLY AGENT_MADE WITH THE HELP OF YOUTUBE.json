@@ -1,0 +1,419 @@
+{
+  "createdAt": "2025-09-13T21:20:19.230Z",
+  "updatedAt": "2025-09-13T21:20:31.000Z",
+  "id": "7Gl1awG7NOLLF5Ju",
+  "name": "N8N EMAIL REPLY AGENT_MADE WITH THE HELP OF YOUTUBE",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -1136,
+        -80
+      ],
+      "id": "1bbc49ab-7b8a-4519-b01e-f2a6f0f0dfdd",
+      "name": "Gmail Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "31939bc1-9829-4204-b31e-606a6e05c16c",
+              "name": "EMAIL CONTEXT",
+              "value": "=SENDER EMAIL ADDRESS:\n{{ $json.to.value[0].address }}\nEMAIL SUBJECT:\n{{ $json.headers.subject }}\nEMAIL BODY:\n{{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -768,
+        -80
+      ],
+      "id": "d2e68058-ad7c-425f-819d-2e1d387fe69a",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=YOUR ROLE IS TO DETERMINE IF AN EMAIL IS RELATED TO A SPONSORSHIP DEAL OR NOT.\n\nRESPOND WITH A JSON OBJECT WITH THE FOLLOWING FIELDS:\n-isSPONSORSHIP:WHICH CAN EITHER BE TRUE OR FALSE.\n-REASONING:EXPLAIN YOUR ANSWER.\n-LEAD_NAME:THE NAME OF A PERSON AS PER THE EMAIL BODY, LEAVE THE BLANK IF NOT A SPONSOR EMAIL.\n-LEAD_COMPANY:THE COMPANY WANTING TO SPONSOR, LEAVE THE BLANK IF NOT A SPONSOR EMAIL.\n\n\nTHINK CAREFULLY ABOUT YOUR ANSWER:{{ $json['EMAIL CONTEXT'] }}\n\n\n",
+        "hasOutputParser": true,
+        "needsFallback": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -512,
+        -80
+      ],
+      "id": "6d8f43ab-0ed6-420a-86cb-1b917f323ebc",
+      "name": "AI Agent",
+      "alwaysOutputData": false,
+      "executeOnce": false,
+      "retryOnFail": false
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -544,
+        144
+      ],
+      "id": "1e5eb00c-fbaf-43e4-829a-31954d9f4dea",
+      "name": "OpenAI Chat Model"
+    },
+    {
+      "parameters": {
+        "model": "google/gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -416,
+        144
+      ],
+      "id": "a143e3a2-2d70-4d22-8ff9-4a253c50f69b",
+      "name": "OpenRouter Chat Model"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n\t\"type\": \"object\",\n\t\"properties\": {\n\t\t\"isSPONSORSHIP\": {\n\t\t\t\"type\": \"BOOLEAN\"\n\t\t},\n\t\t\"REASONING\": {\n\t\t\t\"type\": \"STRING\"\n\t\t},\n      \"LEAD_NAME\": {\n        \"type\": \"string\"\n      },\n      \"LEAD_COMPANY\": {\n        \"type\": \"string\"\n      }\n\t}\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -288,
+        144
+      ],
+      "id": "bb7b8b82-9dee-4123-b375-834d80a29884",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.output.isSPONSORSHIP }}",
+                    "rightValue": "={{ $json.output.isSPONSORSHIP }}",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "a2e8b8fe-346a-4820-8d80-b97a5e2866b8"
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -80,
+        -80
+      ],
+      "id": "b13802ff-d232-4a59-88a8-7285a1c8698b",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appWvTi1EU0x9JYni",
+          "mode": "list",
+          "cachedResultName": "n8n  5",
+          "cachedResultUrl": "https://airtable.com/appWvTi1EU0x9JYni"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbllSOm6bHyVeXt5x",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/appWvTi1EU0x9JYni/tbllSOm6bHyVeXt5x"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $json.output.LEAD_NAME }}",
+            "Company": "={{ $json.output.LEAD_COMPANY }}",
+            "Reasoning": "={{ $json.output.REASONING }}",
+            "Email": "={{ $('Gmail Trigger').item.json.from.value[0].address }}"
+          },
+          "matchingColumns": [
+            "Name"
+          ],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Company",
+              "displayName": "Company",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Reasoning",
+              "displayName": "Reasoning",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        144,
+        -176
+      ],
+      "id": "3ad52f1c-cf4e-4928-bc66-2cc9f38bc8c7",
+      "name": "Create a record"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=YOUR ROLE IS TO RESPOND TO SPONSORSHIP OPPORTUNITIES BY DRAFTING A RESPONSE EMAIL. ONLY RETURN THE BODY OF THE EMAIL IN HTML FORMAT,DO NOT WRITE HEADER,ONLY THE BODY! THE EMAIL SHOULD INCLUDE INFORMATION ABOUT SPONSORSHIP RATES AND THE TERMS AND CONDITIONS.\n\n",
+              "role": "system"
+            },
+            {
+              "content": "=EMAIL CONTEXT: {{ $('Edit Fields').item.json[\"EMAIL CONTEXT\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        352,
+        -160
+      ],
+      "id": "cca2b4a4-bc4d-48c2-835d-84f99d36cd85",
+      "name": "Message a model"
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "=REPLY: {{ $('Gmail Trigger').item.json.headers.subject }}",
+        "emailType": "html",
+        "message": "={{ $json.message.content }}",
+        "options": {
+          "sendTo": "={{ $('Gmail Trigger').item.json.to.value[0].address }}"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        672,
+        -160
+      ],
+      "id": "1ccd788b-fa90-452a-8027-d2d9328d81fa",
+      "name": "Create a draft",
+      "webhookId": "5384705a-e157-4a1a-a427-4e50c9046f97"
+    }
+  ],
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a record": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Create a draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "dc23f8dc-b9da-4ce8-8290-2b6eb1d54ca9",
+  "triggerCount": 0,
+  "shared": [
+    {
+      "createdAt": "2025-09-13T21:20:19.232Z",
+      "updatedAt": "2025-09-13T21:20:19.232Z",
+      "role": "workflow:owner",
+      "workflowId": "7Gl1awG7NOLLF5Ju",
+      "projectId": "HHLWOKEAArOwm3kN"
+    }
+  ],
+  "tags": []
+}
