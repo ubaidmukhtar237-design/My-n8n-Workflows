@@ -108,17 +108,36 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "name": "My workflow 2",
+  "name": "https://youtu.be/M3MKLvQ-rMQ?si=4nxqHDzmbyB3CwGT",
   "nodes": [
     {
       "parameters": {
+        "formTitle": "Google Maps Scraper For Dental Clinics",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Search Query",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Location",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Max Number of Results",
+              "fieldType": "number",
+              "placeholder": "5",
+              "requiredField": true
+            }
+          ]
+        },
         "options": {}
       },
       "type": "n8n-nodes-base.formTrigger",
       "typeVersion": 2.3,
       "position": [
         0,
-        124
+        128
       ],
       "id": "a4b73995-5f36-40d6-ba69-5e6b6c492a8b",
       "name": "On form submission",
@@ -136,10 +155,16 @@
       "typeVersion": 1,
       "position": [
         224,
-        124
+        128
       ],
       "id": "2dd398c7-699f-470f-9995-d593e67f1a37",
-      "name": "Run an Actor"
+      "name": "Run an Actor",
+      "credentials": {
+        "apifyApi": {
+          "id": "4kJhe7Ypk9ILNsh9",
+          "name": "Apify account"
+        }
+      }
     },
     {
       "parameters": {
@@ -149,7 +174,7 @@
       "typeVersion": 1,
       "position": [
         448,
-        124
+        128
       ],
       "id": "0a880bde-67ab-4ee5-9c25-9578aeeb28ea",
       "name": "Get dataset items"
@@ -183,7 +208,7 @@
       "typeVersion": 2.2,
       "position": [
         672,
-        124
+        128
       ],
       "id": "4a3a9e24-3e7c-43a8-ab0c-2337eaba7cdc",
       "name": "Filter"
@@ -196,7 +221,7 @@
       "typeVersion": 3,
       "position": [
         896,
-        124
+        128
       ],
       "id": "14b5d29f-12c7-43c5-ac31-66c695fb279a",
       "name": "Loop Over Items"
@@ -252,7 +277,7 @@
       "typeVersion": 4.7,
       "position": [
         1472,
-        124
+        128
       ],
       "id": "aeb86fca-0e5a-4e70-9694-a93df2724dbc",
       "name": "Append row in sheet",
@@ -307,8 +332,15 @@
     }
   ],
   "staticData": null,
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2025-09-28T23:14:11.611Z",
+      "updatedAt": "2025-09-28T23:14:11.611Z",
+      "id": "Jx94Pu991I79qq2C",
+      "name": "Dental Clinics"
+    }
+  ],
   "triggerCount": 0,
-  "updatedAt": "2025-09-28T22:54:44.000Z",
-  "versionId": "0ebc16aa-fd8a-4e39-8f2f-86063de8192e"
+  "updatedAt": "2025-09-28T23:20:04.000Z",
+  "versionId": "9fac976d-5226-4099-84ae-aedfd0d843f8"
 }
