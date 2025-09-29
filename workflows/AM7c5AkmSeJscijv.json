@@ -141,7 +141,8 @@
       ],
       "id": "a4b73995-5f36-40d6-ba69-5e6b6c492a8b",
       "name": "On form submission",
-      "webhookId": "4ac878c2-536f-431b-8766-2193e4f1ca13"
+      "webhookId": "4ac878c2-536f-431b-8766-2193e4f1ca13",
+      "disabled": true
     },
     {
       "parameters": {
@@ -333,7 +334,7 @@
         "messages": {
           "values": [
             {
-              "content": "=Business: {{ $('Loop Over Items').item.json.title }} Address: {{ $('Loop Over Items').item.json.address }} Website: {{ $('Loop Over Items').item.json.website }} Phone: {{ $('Loop Over Items').item.json.phone }}"
+              "content": "=You are an AI Assitant to search the given information of salon in United States Of America.\n\nGiven Info:\nBusiness: {{ $('Loop Over Items').item.json.title }} Address: {{ $('Loop Over Items').item.json.address }} Website: {{ $('Loop Over Items').item.json.website }} Phone: {{ $('Loop Over Items').item.json.phone }}"
             }
           ]
         },
@@ -381,15 +382,8 @@
     }
   ],
   "staticData": null,
-  "tags": [
-    {
-      "createdAt": "2025-09-28T23:14:11.611Z",
-      "updatedAt": "2025-09-28T23:14:11.611Z",
-      "id": "Jx94Pu991I79qq2C",
-      "name": "Dental Clinics"
-    }
-  ],
+  "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-28T23:53:49.000Z",
-  "versionId": "38ae9836-854a-4a44-ae33-c4d8a76054b2"
+  "updatedAt": "2025-09-29T00:03:48.000Z",
+  "versionId": "af65d47b-bcfb-4840-8fa8-ae73592f3109"
 }
