@@ -147,7 +147,13 @@
     },
     "Code in JavaScript1": {
       "main": [
-        []
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Get row(s) in sheet in Google Sheets": {
@@ -168,7 +174,7 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "name": "My Own Practice",
+  "name": "Email Scraper For free:My own made workflow",
   "nodes": [
     {
       "parameters": {
@@ -325,7 +331,7 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -624,
+        -832,
         -48
       ],
       "id": "74d8a0f4-c73f-42bf-804c-83f95a847573",
@@ -334,14 +340,14 @@
     {
       "parameters": {
         "content": "To get website url of dental clinic in usa from google maps",
-        "height": 608,
+        "height": 656,
         "width": 2208,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
         -928,
-        -224
+        -272
       ],
       "typeVersion": 1,
       "id": "e16c2f25-d562-48e5-b3c3-c10fae901cc1",
@@ -604,22 +610,7 @@
           "cachedResultName": "Sheet1",
           "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SqQo5bPrZtgzPhzUPJHw9ikI4lKY0CPPQRBEjSQZBo8/edit#gid=0"
         },
-        "filtersUI": {
-          "values": [
-            {
-              "lookupColumn": "Url",
-              "lookupValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('values0_Value', ``, 'string') }}"
-            }
-          ]
-        },
-        "options": {
-          "dataLocationOnSheet": {
-            "values": {
-              "rangeDefinition": "specifyRangeA1",
-              "range": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Range', ``, 'string') }}"
-            }
-          }
-        }
+        "options": {}
       },
       "type": "n8n-nodes-base.googleSheetsTool",
       "typeVersion": 4.7,
@@ -661,6 +652,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-29T19:59:20.000Z",
-  "versionId": "50734884-e894-4b4d-8ac9-e6a54ab9b52d"
+  "updatedAt": "2025-09-29T20:24:53.000Z",
+  "versionId": "2dab02ad-4ce6-442d-9448-1602e1a24adb"
 }
