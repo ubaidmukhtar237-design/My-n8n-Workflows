@@ -147,13 +147,7 @@
     },
     "Code in JavaScript1": {
       "main": [
-        [
-          {
-            "node": "Update row in sheet",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Get row(s) in sheet in Google Sheets": {
@@ -436,7 +430,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=Only extract the **email address** and **phone number** from the website provided as input. \nDo not include any other information. \nOutput the results strictly in JSON format, using this structure:\n\n{\n  \"email\": \"example@example.com\",\n  \"phone\": \"+1-123-456-7890\"\n}\n\nUse the following input URL to extract the data:\n{{ $json.Url }}\n",
+        "text": "=You are an expert at extracting contact information from dental clinic websites in the USA. \n\nInstructions:\n1. Only extract the **email address**, **phone number**, and the **dental clinic name** from the website provided as input.\n2. Do not include any other information such as addresses, social media links, or unrelated content.\n3. Output the results strictly in JSON format using this structure:\n\n{\n  \"clinicName\": \"Example Dental Clinic\",\n  \"email\": \"example@example.com\",\n  \"phone\": \"(773) 276-5566\",\n  \"url\": \"https://www.exampleclinic.com\"\n}\n\n4. Use the following input URL to extract the data:\n{{ $json.Url }}\n\n5. Only provide information that is **directly listed on the website itself**. Do not guess or use external sources.\n\n6. If the given URL is incorrect, broken, or you cannot find the website:\n   a. Perform a search to find a **similar dental clinic website** in the United States based on the input URL.\n   b. Only extract the **email and phone number listed on the actual website** you find.\n   c. Do not provide false, guessed, or non-existing email addresses or phone numbers.\n   \n7. Always include the exact **URL of the website you actually extracted information from** in the output. Do not include any search URLs or links you used to find the website—only the URL where the email, phone, and clinic name were obtained.\n\n",
         "options": {
           "systemMessage": "=You are an expert at extracting contact information from dental clinic websites in the USA. \n"
         }
@@ -495,7 +489,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// The input data is a messy string located in items[0].json.query.\nconst rawInputString = items[0].json.query;\n\n// Find the start '{' and end '}' of the JSON object within the string.\nconst startIndex = rawInputString.indexOf('{');\nconst endIndex = rawInputString.lastIndexOf('}');\n\n// Check if we found a valid JSON block. If not, throw an error.\nif (startIndex === -1 || endIndex === -1) {\n  throw new Error(\"Could not find a valid JSON object in the input string.\");\n}\n\n// Extract the clean JSON string from between the braces.\nconst jsonString = rawInputString.substring(startIndex, endIndex + 1);\n\ntry {\n  // Parse the clean string into a JavaScript object.\n  const data = JSON.parse(jsonString);\n\n  // Create a new output item with the extracted email and phone fields.\n  const outputData = {\n    json: {\n      email: data.email,\n      phone: data.phone\n    }\n  };\n\n  // Return the new item. It must be inside an array.\n  return [outputData];\n\n} catch (error) {\n  // If parsing still fails for some reason, provide a helpful error message.\n  console.error(\"The extracted string that failed to parse was: \", jsonString);\n  throw new Error(`Failed to parse the extracted JSON. Error: ${error.message}`);\n}"
+        "jsCode": "// The input data is a messy string located in items[0].json.query.\nconst rawInputString = items[0].json.query;\n\n// Find the start '{' and end '}' of the JSON object within the string.\nconst startIndex = rawInputString.indexOf('{');\nconst endIndex = rawInputString.lastIndexOf('}');\n\n// Check if we found a valid JSON block. If not, throw an error.\nif (startIndex === -1 || endIndex === -1) {\n  throw new Error(\"Could not find a valid JSON object in the input string.\");\n}\n\n// Extract the clean JSON string from between the braces.\nconst jsonString = rawInputString.substring(startIndex, endIndex + 1);\n\ntry {\n  // Parse the clean string into a JavaScript object.\n  const data = JSON.parse(jsonString);\n\n  // Create a new output item with the extracted email and phone fields.\n  const outputData = {\n    json: {\n      email: data.email,\n      phone: data.phone,\n      url: data.url\n    }\n  };\n\n  // Return the new item. It must be inside an array.\n  return [outputData];\n\n} catch (error) {\n  // If parsing still fails for some reason, provide a helpful error message.\n  console.error(\"The extracted string that failed to parse was: \", jsonString);\n  throw new Error(`Failed to parse the extracted JSON. Error: ${error.message}`);\n}"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -655,7 +649,7 @@
     "When Executed by Another Workflow": [
       {
         "json": {
-          "Url": "https://www.fantasticdental.com"
+          "Url": "https://www.forestfamilydentistry.com"
         }
       }
     ]
@@ -675,6 +669,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-29T18:55:25.000Z",
-  "versionId": "ed5394c0-dd72-4ae3-9615-8be68d15bbd7"
+  "updatedAt": "2025-09-29T19:30:09.000Z",
+  "versionId": "4eee4bf1-72f9-4fc6-9d16-2799d7945299"
 }
