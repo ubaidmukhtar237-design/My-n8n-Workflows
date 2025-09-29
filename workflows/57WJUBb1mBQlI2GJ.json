@@ -174,7 +174,7 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "name": "Email Scraper For free:My own made workflow",
+  "name": "Email Scraper For Dental Clinic for free:My own made workflow",
   "nodes": [
     {
       "parameters": {
@@ -674,6 +674,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-29T20:46:48.000Z",
-  "versionId": "97725eea-001c-492b-a4fb-2ee84c24af14"
+  "updatedAt": "2025-09-29T21:06:04.000Z",
+  "versionId": "4d7b5b86-c085-496b-8481-f16df2747f35"
 }
