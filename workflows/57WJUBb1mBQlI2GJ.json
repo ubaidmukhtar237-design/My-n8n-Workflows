@@ -1,17 +1,6 @@
 {
   "active": false,
   "connections": {
-    "When chat message received": {
-      "main": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Google Gemini Chat Model": {
       "ai_languageModel": [
         [
@@ -44,6 +33,28 @@
           }
         ]
       ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-09-29T09:40:34.317Z",
@@ -56,20 +67,8 @@
   "nodes": [
     {
       "parameters": {
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
-      "typeVersion": 1.3,
-      "position": [
-        -528,
-        -48
-      ],
-      "id": "3160c67e-53a5-4273-990c-3c014c2790de",
-      "name": "When chat message received",
-      "webhookId": "6b9e8e38-eee7-43c4-acf9-ee9dbbbeb664"
-    },
-    {
-      "parameters": {
+        "promptType": "define",
+        "text": "=Task: Find 100 dental clinic website URLs in the United States.\n\nInstructions:\n1. Use Google Maps or publicly available online sources to identify dental clinics located in the USA.\n2. Only include clinics that have a website listed. Skip clinics without websites.\n3. Do not include clinics outside the USA.\n4. Provide **exact website URLs** only, no extra information like addresses, phone numbers, or emails.\n5. Return the output as a **plain list**, one URL per line, in JSON format if possible:\n\nExample:\n{\n  \"websites\": [\n    \"https://www.exampledental1.com\",\n    \"https://www.exampledental2.com\",\n    ...\n  ]\n}\n\n6. Make sure the URLs are live and correctly formatted (include https:// if applicable).\n7. Limit the output to exactly 100 unique websites.\n\nEnd of instructions.\n",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -126,7 +125,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Get the input text from the 'query' field of the first item\nconst inputText = items[0].json.query;\n\n// Regex to match patterns like: Name (Location) - `URL`\nconst regex = /(.*?)\\s*\\((.*?)\\)\\s*-\\s*`(https?:\\/\\/[^\\s`]+)`/g;\n\nlet match;\nconst results = [];\n\n// Loop through all matches found in the input text\nwhile ((match = regex.exec(inputText)) !== null) {\n  if (match[1] && match[2] && match[3]) {\n    results.push({\n      name: match[1].trim(),\n      location: match[2].trim(),\n      url: match[3].trim(),\n    });\n  }\n}\n\n// Return the structured JSON\nreturn [{ json: { query: results } }];\n"
+        "jsCode": "// The input data is a string in items[0].json.query\nconst rawInputString = items[0].json.query;\n\n// The actual JSON data is embedded inside this string. We need to extract it.\n// Let's find the first '{' and the last '}' to get the JSON part.\nconst startIndex = rawInputString.indexOf('{');\nconst endIndex = rawInputString.lastIndexOf('}');\n\n// Check if we found a valid JSON object block\nif (startIndex === -1 || endIndex === -1) {\n  throw new Error(\"Could not find a JSON object in the input string.\");\n}\n\n// Extract the clean JSON string from between the braces\nconst jsonString = rawInputString.substring(startIndex, endIndex + 1);\n\ntry {\n  // Now, parse the clean JSON string\n  const data = JSON.parse(jsonString);\n\n  // The URLs are in an array under the 'websites' key\n  const websites = data.websites;\n\n  // Return a new item for each website. This is the standard\n  // way to process lists, allowing subsequent nodes to run\n  // for each individual URL.\n  return websites.map(url => {\n    return {\n      json: {\n        url: url\n      }\n    };\n  });\n\n} catch (error) {\n  // If parsing still fails, throw a more informative error\n  throw new Error(`Failed to parse JSON. Error: ${error.message}.`);\n}"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -136,573 +135,113 @@
       ],
       "id": "abd82ce6-c805-4d85-9602-7eb0a22c60eb",
       "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1SqQo5bPrZtgzPhzUPJHw9ikI4lKY0CPPQRBEjSQZBo8",
+          "mode": "list",
+          "cachedResultName": "Url Storage",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SqQo5bPrZtgzPhzUPJHw9ikI4lKY0CPPQRBEjSQZBo8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SqQo5bPrZtgzPhzUPJHw9ikI4lKY0CPPQRBEjSQZBo8/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Url": "={{ $json.url }}"
+          },
+          "matchingColumns": [
+            "Url"
+          ],
+          "schema": [
+            {
+              "id": "Url",
+              "displayName": "Url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        448,
+        -48
+      ],
+      "id": "85205904-d77e-46bd-9c3d-54c71a328253",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JOHwDixlr7umKmYo",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -624,
+        -48
+      ],
+      "id": "74d8a0f4-c73f-42bf-804c-83f95a847573",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "content": "To get website url of dental clinic in usa from google maps",
+        "height": 608,
+        "width": 1904,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -928,
+        -224
+      ],
+      "typeVersion": 1,
+      "id": "e16c2f25-d562-48e5-b3c3-c10fae901cc1",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "To find Email and phone number of stored urls",
+        "height": 608,
+        "width": 1904,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -928,
+        416
+      ],
+      "typeVersion": 1,
+      "id": "86b96284-3016-43cd-934e-f31bbcff3243",
+      "name": "Sticky Note1"
     }
   ],
   "pinData": {
     "AI Agent": [
       {
         "json": {
-          "output": "Of course. Here is a list of over 100 dental clinics across the USA with their active website links.\n\n**Important Note:** You requested links with `http://`. However, the modern web standard is `https://` for security. Virtually all `http://` links will automatically redirect to the secure `https://` version. The links provided below use `https://` as it is the correct and current format.\n\nThis list is organized by state for easier navigation and includes a variety of general, cosmetic, pediatric, and specialty dental practices.\n\n***\n\n### **California**\n\n1.  Dr. Bill Dorfman, DDS (Beverly Hills) - `https://www.billdorfmandds.com`\n2.  Rifkin & Raanan (Beverly Hills) - `https://www.rifkinraanan.com`\n3.  The L.A. Smile (Los Angeles) - `https://www.thelasmile.com`\n4.  La Jolla Cosmetic Dentistry & Orthodontics (La Jolla) - `https://www.lajollacosmeticdentist.com`\n5.  San Francisco Dental Arts (San Francisco) - `https://www.sfdentalarts.com`\n6.  The Dental Care Center (Los Angeles) - `https://www.thedentalcarecenter.com`\n7.  Bedford Dental Group (Beverly Hills) - `https://www.bhdentist.com`\n8.  Irvine Spectrum Dental (Irvine) - `https://www.irvinespectrumdental.com`\n9.  Sacramento Dentistry Group (Sacramento) - `https://www.sacramentodentistry.com`\n10. West Hollywood Holistic and Cosmetic Dental Care (West Hollywood) - `https://www.whdentist.com`\n\n### **New York**\n\n11. Sachar Dental NYC (New York) - `https://www.sachardental.com`\n12. 209 NYC Dental (New York) - `https://www.209nycdental.com`\n13. Manhattan Dental Spa (New York) - `https://www.manhattandentalspa.com`\n14. Lee Gause DDS (New York) - `https://www.smileinsider.com`\n15. V. V. D. Dental (Brooklyn) - `https://www.vvddental.com`\n16. Park 56 Dental Group (New York) - `https://www.park56dental.com`\n17. Tend (Multiple Locations) - `https://www.hellotend.com`\n18. Apa Aesthetic (New York) - `https://www.apaaesthetic.com`\n19. East Side Dental Medicine (New York) - `https://www.eastsidedentalmedicine.com`\n20. Central Park West Dentistry (New York) - `https://www.cpwdentistry.com`\n\n### **Texas**\n\n21. URBN Dental (Houston) - `https://www.urbndental.com`\n22. Smile Sonrisa Dental (Houston) - `https://www.smilesonrisadental.com`\n23. The Dental Centre of Dallas (Dallas) - `https://www.dallasdentalcentre.com`\n24. Austin Dental Spa (Austin) - `https://www.austindentalspa.com`\n25. Texas Dentistry for Kids (Multiple Locations) - `https://www.texasdentistryforkids.com`\n26. Mint Dentistry (Multiple Locations) - `https://www.mintdentistry.com`\n27. Stonebriar Smile Design (Frisco) - `https://www.stonebriarsmiledesign.com`\n28. Alamo Heights Dental (San Antonio) - `https://www.alamoheightsdental.com`\n29. Westlake Hills Dental Arts (Austin) - `https://www.westlakehillsdentalarts.com`\n30. Bayou City Smiles (Houston) - `https://www.bayoucitysmiles.com`\n\n### **Florida**\n\n31. Miami Designer Smiles (Miami) - `https://www.miamidesignersmiles.com`\n32. South Florida Dental Care (Pembroke Pines) - `https://www.southfloridadentalcare.com`\n33. Smile Studio (Miami) - `https://www.smilestudiomiami.com`\n34. Orlando Dental Arts (Orlando) - `https://www.orlandodentalarts.com`\n35. Tampa Dentistry (Tampa) - `https://www.tampadentistry.com`\n36. Friedman Dental Group (Multiple Locations) - `https://www.friedmandentalgroup.com`\n37. Coral Gables Dentistry (Coral Gables) - `https://www.coralgablesdentistry.com`\n38. PGA Dentistry (Palm Beach Gardens) - `https://www.pgadentistry.com`\n39. Jacksonville Gentle Dentistry (Jacksonville) - `https://www.jacksonvillegentledentistry.com`\n40. BayView Dental Arts (Naples) - `https://www.bayviewdentalarts.com`\n\n### **Illinois**\n\n41. The Chicago Dental Studio (Chicago) - `https://www.thechicagodentalstudio.com`\n42. Water Tower Dental Care (Chicago) - `https://www.watertowerdentalcare.com`\n43. Lincoln Park Smiles (Chicago) - `https://www.lincolnparksmiles.com`\n44. Sugar Fix Dental Loft (Chicago) - `https://www.sugarfixdental.com`\n45. University Associates in Dentistry (Chicago) - `https://www.uadchicago.com`\n46. Big City Dental (Chicago) - `https://www.bigcitydental.com`\n47. Premier Dental of an Evanston (Evanston) - `https://www.premierdentalofevanston.com`\n48. Smile Chicago (Chicago) - `https://www.smilechicago.com`\n49. Art of Modern Dentistry (Chicago) - `https://www.amdentalchicago.com`\n50. ORA Dental Studio (Chicago) - `https://www.oradentalstudio.com`\n\n### **Arizona**\n\n51. Smile Today (Phoenix) - `https://www.smiletoday.net`\n52. Harris Dental (Phoenix) - `https://www.harrisdental.com`\n53. Biltmore Dental Center (Phoenix) - `https://www.biltmoredentalcenter.com`\n54. Scottsdale Dental Excellence (Scottsdale) - `https://www.scottsdaledentalexcellence.com`\n55. PERFECT TEETH (Multiple Locations) - `https://www.perfectteeth.com`\n56. sedation and cosmetic dentistry (Goodyear) - `https://www.sedationandcosmeticdentistry.com`\n57. Rita Ranch Dental Group (Tucson) - `https://www.ritaranchdentalgroup.com`\n58. Sunbit (Mesa) - `https://www.sunbit.com`\n59. Desert Dentistry (Multiple Locations) - `https://www.desertdentistry.com`\n60. AZ-Smiles (Glendale) - `https://www.az-smiles.com`\n\n### **Colorado**\n\n61. Aspenwood Dental Associates (Aurora) - `https://www.aspenwooddental.com`\n62. Downtown Denver Dental (Denver) - `https://www.downtowndenverdental.com`\n63. Espire Dental (Multiple Locations) - `https://www.espiredental.com`\n64. Boulder Dental Arts (Boulder) - `https://www.boulderdentalarts.com`\n65. Cody Dental Group (Denver) - `https://www.codydental.com`\n66. Cherry Creek Dental Spa (Denver) - `https://www.cherrycreekdentalspa.com`\n67. Colorado Springs Oral Surgery (Colorado Springs) - `https://www.coloradospringsos.com`\n68. Mountain High Family Dental (Centennial) - `https://www.mhfdsmiles.com`\n69. Vail Dentistry (Edwards) - `https://www.vaildentistry.com`\n70. Lowry Dental (Denver) - `https://www.lowrydental.com`\n\n### **Washington**\n\n71. Seattle Dental Associates (Seattle) - `https://www.seattledentalassociates.com`\n72. Bellevue Dental Care (Bellevue) - `https://www.bellevuedentalcare.com`\n73. Belltown Dentistry (Seattle) - `https://www.belltowndentistry.com`\n74. Sound Dental (Seattle) - `https://www.sounddentalseattle.com`\n75. Light Dental Studios (Multiple Locations) - `https://www.lightdentalstudios.com`\n76. Smiles By Design (Kirkland) - `https://www.smilesbydesign.com`\n77. Southcenter Dental (Tukwila) - `https://www.southcenterdental.com`\n78. Tacoma Dental Group (Tacoma) - `https://www.tacomadentalgroup.com`\n79. Willamette Dental Group (Multiple States) - `https://www.willamettedental.com`\n80. Fidler on the Tooth (Seattle) - `https://www.fidleronthetooth.com`\n\n### **Massachusetts**\n\n81. The Dental Lounge (Boston) - `https://www.thedentalloungeboston.com`\n82. Boston Dental (Boston) - `https://www.bostondental.com`\n83. Dental Arts of Boston (Boston) - `https://www.dentalartsofboston.com`\n84. Beacon Hill Dental Associates (Boston) - `https://www.beaconhilldental.net`\n85. Chestnut Hill Dental (Chestnut Hill) - `https://www.chestnuthilldental.com`\n86. Cambridge Smiles (Cambridge) - `https://www.cambridgesmiles.com`\n87. Great Hill Dental (Multiple Locations) - `https://www.greathilldental.com`\n88. Warshauer & Santamaria (Boston) - `https://www.bostonsmile.com`\n89. Longwood Dental Group (Brookline) - `https://www.longwood-dental.com`\n90. Newton Dental Associates (Newton) - `https://www.newtondentalassociates.com`\n\n### **Pennsylvania**\n\n91. The Philadelphia Dentist (Philadelphia) - `https://www.thephiladelphiadentist.com`\n92. Dentistry for Life (Philadelphia) - `https://www.dentistryforlife.net`\n93. Rittenhouse Dentists (Philadelphia) - `https://www.rittenhousedentists.com`\n94. Center City Dental (Philadelphia) - `https://www.centercity.dental`\n95. Pittsburgh Dental Spa (Pittsburgh) - `https://www.pittsburghdentalspa.com`\n96. South Hills Dental Arts (Pittsburgh) - `https://www.southhillsdentalarts.com`\n97. Verber Dental Group (Multiple Locations) - `https://www.verberdental.com`\n98. Fox Chase Dental (Philadelphia) - `https://www.foxchasedental.com`\n99. The Dentists at Shadyside Place (Pittsburgh) - `https://www.dentistshadyside.com`\n100. Bryn Mawr Dental Associates (Bryn Mawr) - `https://www.brynmawrdental.com`\n\n### **Various Other States**\n\n101. **(GA)** Atlanta Dental Spa - `https://www.atlantadentalspa.com`\n102. **(GA)** Buckhead Dental Associates - `https://www.buckheaddentalassociates.com`\n103. **(NV)** The Dental Implant Institute (Las Vegas) - `https://www.unbelievablesmiles.com`\n104. **(NV)** Boston Dental Group (Las Vegas) - `https://www.bostondentalgroup.com`\n105. **(MI)** The Birmingham Center for Cosmetic Dentistry - `https://www.smilebirmingham.com`\n106. **(OR)** Portland City Dental (Portland) - `https://www.portlandcitydental.com`\n107. **(NC)** Stanley Dentistry (Cary) - `https://www.stanleydentistry.com`\n108. **(TN)** Nashville Dentistry Co. (Nashville) - `https://www.nashvilledentistryco.com`\n109. **(OH)** Cleveland Dental Institute (Cleveland) - `https://www.clevelanddentistinstitute.com`\n110. **(VA)** Tysons Dentistry (Vienna) - `https://www.tysonsdentistry.com`\n111. **(MD)** L'Enfant Plaza Dental Arts (Washington, D.C.) - `https://www.lenfantplazadentalarts.com`\n112. **(MN)** The Dental Specialists (Multiple Locations) - `https://www.thedentalspecialists.com`"
-        }
-      }
-    ],
-    "Edit Fields": [
-      {
-        "json": {
-          "query": "Of course. Here is a list of over 100 dental clinics across the USA with their active website links.\n\n**Important Note:** You requested links with `http://`. However, the modern web standard is `https://` for security. Virtually all `http://` links will automatically redirect to the secure `https://` version. The links provided below use `https://` as it is the correct and current format.\n\nThis list is organized by state for easier navigation and includes a variety of general, cosmetic, pediatric, and specialty dental practices.\n\n***\n\n### **California**\n\n1.  Dr. Bill Dorfman, DDS (Beverly Hills) - `https://www.billdorfmandds.com`\n2.  Rifkin & Raanan (Beverly Hills) - `https://www.rifkinraanan.com`\n3.  The L.A. Smile (Los Angeles) - `https://www.thelasmile.com`\n4.  La Jolla Cosmetic Dentistry & Orthodontics (La Jolla) - `https://www.lajollacosmeticdentist.com`\n5.  San Francisco Dental Arts (San Francisco) - `https://www.sfdentalarts.com`\n6.  The Dental Care Center (Los Angeles) - `https://www.thedentalcarecenter.com`\n7.  Bedford Dental Group (Beverly Hills) - `https://www.bhdentist.com`\n8.  Irvine Spectrum Dental (Irvine) - `https://www.irvinespectrumdental.com`\n9.  Sacramento Dentistry Group (Sacramento) - `https://www.sacramentodentistry.com`\n10. West Hollywood Holistic and Cosmetic Dental Care (West Hollywood) - `https://www.whdentist.com`\n\n### **New York**\n\n11. Sachar Dental NYC (New York) - `https://www.sachardental.com`\n12. 209 NYC Dental (New York) - `https://www.209nycdental.com`\n13. Manhattan Dental Spa (New York) - `https://www.manhattandentalspa.com`\n14. Lee Gause DDS (New York) - `https://www.smileinsider.com`\n15. V. V. D. Dental (Brooklyn) - `https://www.vvddental.com`\n16. Park 56 Dental Group (New York) - `https://www.park56dental.com`\n17. Tend (Multiple Locations) - `https://www.hellotend.com`\n18. Apa Aesthetic (New York) - `https://www.apaaesthetic.com`\n19. East Side Dental Medicine (New York) - `https://www.eastsidedentalmedicine.com`\n20. Central Park West Dentistry (New York) - `https://www.cpwdentistry.com`\n\n### **Texas**\n\n21. URBN Dental (Houston) - `https://www.urbndental.com`\n22. Smile Sonrisa Dental (Houston) - `https://www.smilesonrisadental.com`\n23. The Dental Centre of Dallas (Dallas) - `https://www.dallasdentalcentre.com`\n24. Austin Dental Spa (Austin) - `https://www.austindentalspa.com`\n25. Texas Dentistry for Kids (Multiple Locations) - `https://www.texasdentistryforkids.com`\n26. Mint Dentistry (Multiple Locations) - `https://www.mintdentistry.com`\n27. Stonebriar Smile Design (Frisco) - `https://www.stonebriarsmiledesign.com`\n28. Alamo Heights Dental (San Antonio) - `https://www.alamoheightsdental.com`\n29. Westlake Hills Dental Arts (Austin) - `https://www.westlakehillsdentalarts.com`\n30. Bayou City Smiles (Houston) - `https://www.bayoucitysmiles.com`\n\n### **Florida**\n\n31. Miami Designer Smiles (Miami) - `https://www.miamidesignersmiles.com`\n32. South Florida Dental Care (Pembroke Pines) - `https://www.southfloridadentalcare.com`\n33. Smile Studio (Miami) - `https://www.smilestudiomiami.com`\n34. Orlando Dental Arts (Orlando) - `https://www.orlandodentalarts.com`\n35. Tampa Dentistry (Tampa) - `https://www.tampadentistry.com`\n36. Friedman Dental Group (Multiple Locations) - `https://www.friedmandentalgroup.com`\n37. Coral Gables Dentistry (Coral Gables) - `https://www.coralgablesdentistry.com`\n38. PGA Dentistry (Palm Beach Gardens) - `https://www.pgadentistry.com`\n39. Jacksonville Gentle Dentistry (Jacksonville) - `https://www.jacksonvillegentledentistry.com`\n40. BayView Dental Arts (Naples) - `https://www.bayviewdentalarts.com`\n\n### **Illinois**\n\n41. The Chicago Dental Studio (Chicago) - `https://www.thechicagodentalstudio.com`\n42. Water Tower Dental Care (Chicago) - `https://www.watertowerdentalcare.com`\n43. Lincoln Park Smiles (Chicago) - `https://www.lincolnparksmiles.com`\n44. Sugar Fix Dental Loft (Chicago) - `https://www.sugarfixdental.com`\n45. University Associates in Dentistry (Chicago) - `https://www.uadchicago.com`\n46. Big City Dental (Chicago) - `https://www.bigcitydental.com`\n47. Premier Dental of an Evanston (Evanston) - `https://www.premierdentalofevanston.com`\n48. Smile Chicago (Chicago) - `https://www.smilechicago.com`\n49. Art of Modern Dentistry (Chicago) - `https://www.amdentalchicago.com`\n50. ORA Dental Studio (Chicago) - `https://www.oradentalstudio.com`\n\n### **Arizona**\n\n51. Smile Today (Phoenix) - `https://www.smiletoday.net`\n52. Harris Dental (Phoenix) - `https://www.harrisdental.com`\n53. Biltmore Dental Center (Phoenix) - `https://www.biltmoredentalcenter.com`\n54. Scottsdale Dental Excellence (Scottsdale) - `https://www.scottsdaledentalexcellence.com`\n55. PERFECT TEETH (Multiple Locations) - `https://www.perfectteeth.com`\n56. sedation and cosmetic dentistry (Goodyear) - `https://www.sedationandcosmeticdentistry.com`\n57. Rita Ranch Dental Group (Tucson) - `https://www.ritaranchdentalgroup.com`\n58. Sunbit (Mesa) - `https://www.sunbit.com`\n59. Desert Dentistry (Multiple Locations) - `https://www.desertdentistry.com`\n60. AZ-Smiles (Glendale) - `https://www.az-smiles.com`\n\n### **Colorado**\n\n61. Aspenwood Dental Associates (Aurora) - `https://www.aspenwooddental.com`\n62. Downtown Denver Dental (Denver) - `https://www.downtowndenverdental.com`\n63. Espire Dental (Multiple Locations) - `https://www.espiredental.com`\n64. Boulder Dental Arts (Boulder) - `https://www.boulderdentalarts.com`\n65. Cody Dental Group (Denver) - `https://www.codydental.com`\n66. Cherry Creek Dental Spa (Denver) - `https://www.cherrycreekdentalspa.com`\n67. Colorado Springs Oral Surgery (Colorado Springs) - `https://www.coloradospringsos.com`\n68. Mountain High Family Dental (Centennial) - `https://www.mhfdsmiles.com`\n69. Vail Dentistry (Edwards) - `https://www.vaildentistry.com`\n70. Lowry Dental (Denver) - `https://www.lowrydental.com`\n\n### **Washington**\n\n71. Seattle Dental Associates (Seattle) - `https://www.seattledentalassociates.com`\n72. Bellevue Dental Care (Bellevue) - `https://www.bellevuedentalcare.com`\n73. Belltown Dentistry (Seattle) - `https://www.belltowndentistry.com`\n74. Sound Dental (Seattle) - `https://www.sounddentalseattle.com`\n75. Light Dental Studios (Multiple Locations) - `https://www.lightdentalstudios.com`\n76. Smiles By Design (Kirkland) - `https://www.smilesbydesign.com`\n77. Southcenter Dental (Tukwila) - `https://www.southcenterdental.com`\n78. Tacoma Dental Group (Tacoma) - `https://www.tacomadentalgroup.com`\n79. Willamette Dental Group (Multiple States) - `https://www.willamettedental.com`\n80. Fidler on the Tooth (Seattle) - `https://www.fidleronthetooth.com`\n\n### **Massachusetts**\n\n81. The Dental Lounge (Boston) - `https://www.thedentalloungeboston.com`\n82. Boston Dental (Boston) - `https://www.bostondental.com`\n83. Dental Arts of Boston (Boston) - `https://www.dentalartsofboston.com`\n84. Beacon Hill Dental Associates (Boston) - `https://www.beaconhilldental.net`\n85. Chestnut Hill Dental (Chestnut Hill) - `https://www.chestnuthilldental.com`\n86. Cambridge Smiles (Cambridge) - `https://www.cambridgesmiles.com`\n87. Great Hill Dental (Multiple Locations) - `https://www.greathilldental.com`\n88. Warshauer & Santamaria (Boston) - `https://www.bostonsmile.com`\n89. Longwood Dental Group (Brookline) - `https://www.longwood-dental.com`\n90. Newton Dental Associates (Newton) - `https://www.newtondentalassociates.com`\n\n### **Pennsylvania**\n\n91. The Philadelphia Dentist (Philadelphia) - `https://www.thephiladelphiadentist.com`\n92. Dentistry for Life (Philadelphia) - `https://www.dentistryforlife.net`\n93. Rittenhouse Dentists (Philadelphia) - `https://www.rittenhousedentists.com`\n94. Center City Dental (Philadelphia) - `https://www.centercity.dental`\n95. Pittsburgh Dental Spa (Pittsburgh) - `https://www.pittsburghdentalspa.com`\n96. South Hills Dental Arts (Pittsburgh) - `https://www.southhillsdentalarts.com`\n97. Verber Dental Group (Multiple Locations) - `https://www.verberdental.com`\n98. Fox Chase Dental (Philadelphia) - `https://www.foxchasedental.com`\n99. The Dentists at Shadyside Place (Pittsburgh) - `https://www.dentistshadyside.com`\n100. Bryn Mawr Dental Associates (Bryn Mawr) - `https://www.brynmawrdental.com`\n\n### **Various Other States**\n\n101. **(GA)** Atlanta Dental Spa - `https://www.atlantadentalspa.com`\n102. **(GA)** Buckhead Dental Associates - `https://www.buckheaddentalassociates.com`\n103. **(NV)** The Dental Implant Institute (Las Vegas) - `https://www.unbelievablesmiles.com`\n104. **(NV)** Boston Dental Group (Las Vegas) - `https://www.bostondentalgroup.com`\n105. **(MI)** The Birmingham Center for Cosmetic Dentistry - `https://www.smilebirmingham.com`\n106. **(OR)** Portland City Dental (Portland) - `https://www.portlandcitydental.com`\n107. **(NC)** Stanley Dentistry (Cary) - `https://www.stanleydentistry.com`\n108. **(TN)** Nashville Dentistry Co. (Nashville) - `https://www.nashvilledentistryco.com`\n109. **(OH)** Cleveland Dental Institute (Cleveland) - `https://www.clevelanddentistinstitute.com`\n110. **(VA)** Tysons Dentistry (Vienna) - `https://www.tysonsdentistry.com`\n111. **(MD)** L'Enfant Plaza Dental Arts (Washington, D.C.) - `https://www.lenfantplazadentalarts.com`\n112. **(MN)** The Dental Specialists (Multiple Locations) - `https://www.thedentalspecialists.com`"
-        }
-      }
-    ],
-    "Code in JavaScript": [
-      {
-        "json": {
-          "query": [
-            {
-              "name": "1.  Dr. Bill Dorfman, DDS",
-              "location": "Beverly Hills",
-              "url": "https://www.billdorfmandds.com"
-            },
-            {
-              "name": "2.  Rifkin & Raanan",
-              "location": "Beverly Hills",
-              "url": "https://www.rifkinraanan.com"
-            },
-            {
-              "name": "3.  The L.A. Smile",
-              "location": "Los Angeles",
-              "url": "https://www.thelasmile.com"
-            },
-            {
-              "name": "4.  La Jolla Cosmetic Dentistry & Orthodontics",
-              "location": "La Jolla",
-              "url": "https://www.lajollacosmeticdentist.com"
-            },
-            {
-              "name": "5.  San Francisco Dental Arts",
-              "location": "San Francisco",
-              "url": "https://www.sfdentalarts.com"
-            },
-            {
-              "name": "6.  The Dental Care Center",
-              "location": "Los Angeles",
-              "url": "https://www.thedentalcarecenter.com"
-            },
-            {
-              "name": "7.  Bedford Dental Group",
-              "location": "Beverly Hills",
-              "url": "https://www.bhdentist.com"
-            },
-            {
-              "name": "8.  Irvine Spectrum Dental",
-              "location": "Irvine",
-              "url": "https://www.irvinespectrumdental.com"
-            },
-            {
-              "name": "9.  Sacramento Dentistry Group",
-              "location": "Sacramento",
-              "url": "https://www.sacramentodentistry.com"
-            },
-            {
-              "name": "10. West Hollywood Holistic and Cosmetic Dental Care",
-              "location": "West Hollywood",
-              "url": "https://www.whdentist.com"
-            },
-            {
-              "name": "11. Sachar Dental NYC",
-              "location": "New York",
-              "url": "https://www.sachardental.com"
-            },
-            {
-              "name": "12. 209 NYC Dental",
-              "location": "New York",
-              "url": "https://www.209nycdental.com"
-            },
-            {
-              "name": "13. Manhattan Dental Spa",
-              "location": "New York",
-              "url": "https://www.manhattandentalspa.com"
-            },
-            {
-              "name": "14. Lee Gause DDS",
-              "location": "New York",
-              "url": "https://www.smileinsider.com"
-            },
-            {
-              "name": "15. V. V. D. Dental",
-              "location": "Brooklyn",
-              "url": "https://www.vvddental.com"
-            },
-            {
-              "name": "16. Park 56 Dental Group",
-              "location": "New York",
-              "url": "https://www.park56dental.com"
-            },
-            {
-              "name": "17. Tend",
-              "location": "Multiple Locations",
-              "url": "https://www.hellotend.com"
-            },
-            {
-              "name": "18. Apa Aesthetic",
-              "location": "New York",
-              "url": "https://www.apaaesthetic.com"
-            },
-            {
-              "name": "19. East Side Dental Medicine",
-              "location": "New York",
-              "url": "https://www.eastsidedentalmedicine.com"
-            },
-            {
-              "name": "20. Central Park West Dentistry",
-              "location": "New York",
-              "url": "https://www.cpwdentistry.com"
-            },
-            {
-              "name": "21. URBN Dental",
-              "location": "Houston",
-              "url": "https://www.urbndental.com"
-            },
-            {
-              "name": "22. Smile Sonrisa Dental",
-              "location": "Houston",
-              "url": "https://www.smilesonrisadental.com"
-            },
-            {
-              "name": "23. The Dental Centre of Dallas",
-              "location": "Dallas",
-              "url": "https://www.dallasdentalcentre.com"
-            },
-            {
-              "name": "24. Austin Dental Spa",
-              "location": "Austin",
-              "url": "https://www.austindentalspa.com"
-            },
-            {
-              "name": "25. Texas Dentistry for Kids",
-              "location": "Multiple Locations",
-              "url": "https://www.texasdentistryforkids.com"
-            },
-            {
-              "name": "26. Mint Dentistry",
-              "location": "Multiple Locations",
-              "url": "https://www.mintdentistry.com"
-            },
-            {
-              "name": "27. Stonebriar Smile Design",
-              "location": "Frisco",
-              "url": "https://www.stonebriarsmiledesign.com"
-            },
-            {
-              "name": "28. Alamo Heights Dental",
-              "location": "San Antonio",
-              "url": "https://www.alamoheightsdental.com"
-            },
-            {
-              "name": "29. Westlake Hills Dental Arts",
-              "location": "Austin",
-              "url": "https://www.westlakehillsdentalarts.com"
-            },
-            {
-              "name": "30. Bayou City Smiles",
-              "location": "Houston",
-              "url": "https://www.bayoucitysmiles.com"
-            },
-            {
-              "name": "31. Miami Designer Smiles",
-              "location": "Miami",
-              "url": "https://www.miamidesignersmiles.com"
-            },
-            {
-              "name": "32. South Florida Dental Care",
-              "location": "Pembroke Pines",
-              "url": "https://www.southfloridadentalcare.com"
-            },
-            {
-              "name": "33. Smile Studio",
-              "location": "Miami",
-              "url": "https://www.smilestudiomiami.com"
-            },
-            {
-              "name": "34. Orlando Dental Arts",
-              "location": "Orlando",
-              "url": "https://www.orlandodentalarts.com"
-            },
-            {
-              "name": "35. Tampa Dentistry",
-              "location": "Tampa",
-              "url": "https://www.tampadentistry.com"
-            },
-            {
-              "name": "36. Friedman Dental Group",
-              "location": "Multiple Locations",
-              "url": "https://www.friedmandentalgroup.com"
-            },
-            {
-              "name": "37. Coral Gables Dentistry",
-              "location": "Coral Gables",
-              "url": "https://www.coralgablesdentistry.com"
-            },
-            {
-              "name": "38. PGA Dentistry",
-              "location": "Palm Beach Gardens",
-              "url": "https://www.pgadentistry.com"
-            },
-            {
-              "name": "39. Jacksonville Gentle Dentistry",
-              "location": "Jacksonville",
-              "url": "https://www.jacksonvillegentledentistry.com"
-            },
-            {
-              "name": "40. BayView Dental Arts",
-              "location": "Naples",
-              "url": "https://www.bayviewdentalarts.com"
-            },
-            {
-              "name": "41. The Chicago Dental Studio",
-              "location": "Chicago",
-              "url": "https://www.thechicagodentalstudio.com"
-            },
-            {
-              "name": "42. Water Tower Dental Care",
-              "location": "Chicago",
-              "url": "https://www.watertowerdentalcare.com"
-            },
-            {
-              "name": "43. Lincoln Park Smiles",
-              "location": "Chicago",
-              "url": "https://www.lincolnparksmiles.com"
-            },
-            {
-              "name": "44. Sugar Fix Dental Loft",
-              "location": "Chicago",
-              "url": "https://www.sugarfixdental.com"
-            },
-            {
-              "name": "45. University Associates in Dentistry",
-              "location": "Chicago",
-              "url": "https://www.uadchicago.com"
-            },
-            {
-              "name": "46. Big City Dental",
-              "location": "Chicago",
-              "url": "https://www.bigcitydental.com"
-            },
-            {
-              "name": "47. Premier Dental of an Evanston",
-              "location": "Evanston",
-              "url": "https://www.premierdentalofevanston.com"
-            },
-            {
-              "name": "48. Smile Chicago",
-              "location": "Chicago",
-              "url": "https://www.smilechicago.com"
-            },
-            {
-              "name": "49. Art of Modern Dentistry",
-              "location": "Chicago",
-              "url": "https://www.amdentalchicago.com"
-            },
-            {
-              "name": "50. ORA Dental Studio",
-              "location": "Chicago",
-              "url": "https://www.oradentalstudio.com"
-            },
-            {
-              "name": "51. Smile Today",
-              "location": "Phoenix",
-              "url": "https://www.smiletoday.net"
-            },
-            {
-              "name": "52. Harris Dental",
-              "location": "Phoenix",
-              "url": "https://www.harrisdental.com"
-            },
-            {
-              "name": "53. Biltmore Dental Center",
-              "location": "Phoenix",
-              "url": "https://www.biltmoredentalcenter.com"
-            },
-            {
-              "name": "54. Scottsdale Dental Excellence",
-              "location": "Scottsdale",
-              "url": "https://www.scottsdaledentalexcellence.com"
-            },
-            {
-              "name": "55. PERFECT TEETH",
-              "location": "Multiple Locations",
-              "url": "https://www.perfectteeth.com"
-            },
-            {
-              "name": "56. sedation and cosmetic dentistry",
-              "location": "Goodyear",
-              "url": "https://www.sedationandcosmeticdentistry.com"
-            },
-            {
-              "name": "57. Rita Ranch Dental Group",
-              "location": "Tucson",
-              "url": "https://www.ritaranchdentalgroup.com"
-            },
-            {
-              "name": "58. Sunbit",
-              "location": "Mesa",
-              "url": "https://www.sunbit.com"
-            },
-            {
-              "name": "59. Desert Dentistry",
-              "location": "Multiple Locations",
-              "url": "https://www.desertdentistry.com"
-            },
-            {
-              "name": "60. AZ-Smiles",
-              "location": "Glendale",
-              "url": "https://www.az-smiles.com"
-            },
-            {
-              "name": "61. Aspenwood Dental Associates",
-              "location": "Aurora",
-              "url": "https://www.aspenwooddental.com"
-            },
-            {
-              "name": "62. Downtown Denver Dental",
-              "location": "Denver",
-              "url": "https://www.downtowndenverdental.com"
-            },
-            {
-              "name": "63. Espire Dental",
-              "location": "Multiple Locations",
-              "url": "https://www.espiredental.com"
-            },
-            {
-              "name": "64. Boulder Dental Arts",
-              "location": "Boulder",
-              "url": "https://www.boulderdentalarts.com"
-            },
-            {
-              "name": "65. Cody Dental Group",
-              "location": "Denver",
-              "url": "https://www.codydental.com"
-            },
-            {
-              "name": "66. Cherry Creek Dental Spa",
-              "location": "Denver",
-              "url": "https://www.cherrycreekdentalspa.com"
-            },
-            {
-              "name": "67. Colorado Springs Oral Surgery",
-              "location": "Colorado Springs",
-              "url": "https://www.coloradospringsos.com"
-            },
-            {
-              "name": "68. Mountain High Family Dental",
-              "location": "Centennial",
-              "url": "https://www.mhfdsmiles.com"
-            },
-            {
-              "name": "69. Vail Dentistry",
-              "location": "Edwards",
-              "url": "https://www.vaildentistry.com"
-            },
-            {
-              "name": "70. Lowry Dental",
-              "location": "Denver",
-              "url": "https://www.lowrydental.com"
-            },
-            {
-              "name": "71. Seattle Dental Associates",
-              "location": "Seattle",
-              "url": "https://www.seattledentalassociates.com"
-            },
-            {
-              "name": "72. Bellevue Dental Care",
-              "location": "Bellevue",
-              "url": "https://www.bellevuedentalcare.com"
-            },
-            {
-              "name": "73. Belltown Dentistry",
-              "location": "Seattle",
-              "url": "https://www.belltowndentistry.com"
-            },
-            {
-              "name": "74. Sound Dental",
-              "location": "Seattle",
-              "url": "https://www.sounddentalseattle.com"
-            },
-            {
-              "name": "75. Light Dental Studios",
-              "location": "Multiple Locations",
-              "url": "https://www.lightdentalstudios.com"
-            },
-            {
-              "name": "76. Smiles By Design",
-              "location": "Kirkland",
-              "url": "https://www.smilesbydesign.com"
-            },
-            {
-              "name": "77. Southcenter Dental",
-              "location": "Tukwila",
-              "url": "https://www.southcenterdental.com"
-            },
-            {
-              "name": "78. Tacoma Dental Group",
-              "location": "Tacoma",
-              "url": "https://www.tacomadentalgroup.com"
-            },
-            {
-              "name": "79. Willamette Dental Group",
-              "location": "Multiple States",
-              "url": "https://www.willamettedental.com"
-            },
-            {
-              "name": "80. Fidler on the Tooth",
-              "location": "Seattle",
-              "url": "https://www.fidleronthetooth.com"
-            },
-            {
-              "name": "81. The Dental Lounge",
-              "location": "Boston",
-              "url": "https://www.thedentalloungeboston.com"
-            },
-            {
-              "name": "82. Boston Dental",
-              "location": "Boston",
-              "url": "https://www.bostondental.com"
-            },
-            {
-              "name": "83. Dental Arts of Boston",
-              "location": "Boston",
-              "url": "https://www.dentalartsofboston.com"
-            },
-            {
-              "name": "84. Beacon Hill Dental Associates",
-              "location": "Boston",
-              "url": "https://www.beaconhilldental.net"
-            },
-            {
-              "name": "85. Chestnut Hill Dental",
-              "location": "Chestnut Hill",
-              "url": "https://www.chestnuthilldental.com"
-            },
-            {
-              "name": "86. Cambridge Smiles",
-              "location": "Cambridge",
-              "url": "https://www.cambridgesmiles.com"
-            },
-            {
-              "name": "87. Great Hill Dental",
-              "location": "Multiple Locations",
-              "url": "https://www.greathilldental.com"
-            },
-            {
-              "name": "88. Warshauer & Santamaria",
-              "location": "Boston",
-              "url": "https://www.bostonsmile.com"
-            },
-            {
-              "name": "89. Longwood Dental Group",
-              "location": "Brookline",
-              "url": "https://www.longwood-dental.com"
-            },
-            {
-              "name": "90. Newton Dental Associates",
-              "location": "Newton",
-              "url": "https://www.newtondentalassociates.com"
-            },
-            {
-              "name": "91. The Philadelphia Dentist",
-              "location": "Philadelphia",
-              "url": "https://www.thephiladelphiadentist.com"
-            },
-            {
-              "name": "92. Dentistry for Life",
-              "location": "Philadelphia",
-              "url": "https://www.dentistryforlife.net"
-            },
-            {
-              "name": "93. Rittenhouse Dentists",
-              "location": "Philadelphia",
-              "url": "https://www.rittenhousedentists.com"
-            },
-            {
-              "name": "94. Center City Dental",
-              "location": "Philadelphia",
-              "url": "https://www.centercity.dental"
-            },
-            {
-              "name": "95. Pittsburgh Dental Spa",
-              "location": "Pittsburgh",
-              "url": "https://www.pittsburghdentalspa.com"
-            },
-            {
-              "name": "96. South Hills Dental Arts",
-              "location": "Pittsburgh",
-              "url": "https://www.southhillsdentalarts.com"
-            },
-            {
-              "name": "97. Verber Dental Group",
-              "location": "Multiple Locations",
-              "url": "https://www.verberdental.com"
-            },
-            {
-              "name": "98. Fox Chase Dental",
-              "location": "Philadelphia",
-              "url": "https://www.foxchasedental.com"
-            },
-            {
-              "name": "99. The Dentists at Shadyside Place",
-              "location": "Pittsburgh",
-              "url": "https://www.dentistshadyside.com"
-            },
-            {
-              "name": "100. Bryn Mawr Dental Associates",
-              "location": "Bryn Mawr",
-              "url": "https://www.brynmawrdental.com"
-            },
-            {
-              "name": "103. **",
-              "location": "NV)** The Dental Implant Institute (Las Vegas",
-              "url": "https://www.unbelievablesmiles.com"
-            },
-            {
-              "name": "104. **",
-              "location": "NV)** Boston Dental Group (Las Vegas",
-              "url": "https://www.bostondentalgroup.com"
-            },
-            {
-              "name": "106. **",
-              "location": "OR)** Portland City Dental (Portland",
-              "url": "https://www.portlandcitydental.com"
-            },
-            {
-              "name": "107. **",
-              "location": "NC)** Stanley Dentistry (Cary",
-              "url": "https://www.stanleydentistry.com"
-            },
-            {
-              "name": "108. **",
-              "location": "TN)** Nashville Dentistry Co. (Nashville",
-              "url": "https://www.nashvilledentistryco.com"
-            },
-            {
-              "name": "109. **",
-              "location": "OH)** Cleveland Dental Institute (Cleveland",
-              "url": "https://www.clevelanddentistinstitute.com"
-            },
-            {
-              "name": "110. **",
-              "location": "VA)** Tysons Dentistry (Vienna",
-              "url": "https://www.tysonsdentistry.com"
-            },
-            {
-              "name": "111. **",
-              "location": "MD)** L'Enfant Plaza Dental Arts (Washington, D.C.",
-              "url": "https://www.lenfantplazadentalarts.com"
-            },
-            {
-              "name": "112. **",
-              "location": "MN)** The Dental Specialists (Multiple Locations",
-              "url": "https://www.thedentalspecialists.com"
-            }
-          ]
+          "output": "```json\n{\n  \"websites\": [\n    \"https://www.209nycdental.com\",\n    \"https://www.hellotend.com\",\n    \"https://www.tribecadentalstudio.com\",\n    \"https://www.millerspinaldds.com\",\n    \"https://www.cpwdentistry.com\",\n    \"https://www.nygeneraldentistry.com\",\n    \"https://www.sohosmile.com\",\n    \"https://www.lemchensalzer.com\",\n    \"https://www.nycsmiledesign.com\",\n    \"https://www.glassmandentalcare.com\",\n    \"https://www.centurycitysmiles.com\",\n    \"https://www.thedentalcarecenter.com\",\n    \"https://www.billdorfmandds.com\",\n    \"https://www.smilela.com\",\n    \"https://www.ladentalclinic.com\",\n    \"https://www.geachdental.com\",\n    \"https://www.westsidedentalassociates.com\",\n    \"https://www.downtowndentalla.com\",\n    \"https://www.rifkinraanan.com\",\n    \"https://www.beverlyhillsdentalarts.com\",\n    \"https://www.watertowerdentalcare.com\",\n    \"https://www.thechicagodentalstudio.com\",\n    \"https://www.bigsmiledental.com\",\n    \"https://www.lincolnparksmiles.com\",\n    \"https://www.millenniumparkdental.com\",\n    \"https://www.artofmoderndentistry.com\",\n    \"https://www.dentalsmilesofwestloop.com\",\n    \"https://www.wickerparkdentalgroup.com\",\n    \"https://www.uadchicago.com\",\n    \"https://www.thedentalstandard.com\",\n    \"https://www.antoinedental.com\",\n    \"https://www.thehoustondentists.com\",\n    \"https://www.urbndental.com\",\n    \"https://www.montrosedental.com\",\n    \"https://www.greenwaydental.com\",\n    \"https://www.mysignaturesmiles.com\",\n    \"https://www.lovettdental.com\",\n    \"https://www.houstonuptowndentists.com\",\n    \"https://www.baytowngentledental.com\",\n    \"https://www.cosmeticdentaltexas.com\",\n    \"https://www.biltmoredentalcenter.com\",\n    \"https://www.centralvalleydentistry.com\",\n    \"https://www.desertdentistry.com\",\n    \"https://www.artisticd.com\",\n    \"https://www.dentaloncentral.com\",\n    \"https://www.paradisevalleydental.com\",\n    \"https://www.drrickdentistry.com\",\n    \"https://www.onpointedentistry.com\",\n    \"https://www.smiletoday.net\",\n    \"https://www.harrisdental.com\",\n    \"https://www.brickelldentalcare.com\",\n    \"https://www.miamidesignersmiles.com\",\n    \"https://www.gedentistry.com\",\n    \"https://drpattydental.com\",\n    \"https://www.smilestudiomiami.com\",\n    \"https://www.oconnordentalcare.com\",\n    \"https://www.biscaynedental.com\",\n    \"https://www.southgablesdental.com\",\n    \"https://www.pinecrestdental.com\",\n    \"https://www.fantasticdental.com\",\n    \"https://www.seattledentalassociates.com\",\n    \"https://www.belltowndentistry.com\",\n    \"https://www.aestheticdentalcenter.com\",\n    \"https://www.downtownseattledentists.com\",\n    \"https://www.fidleronthetooth.com\",\n    \"https://www.bryantdental.com\",\n    \"https://www.seattlesbestsmiles.com\",\n    \"https://www.rooseveltdental.com\",\n    \"https://www.greenlakedental.com\",\n    \"https://www.sound-dental.com\",\n    \"https://www.lartdental.com\",\n    \"https://www.icondentaldenver.com\",\n    \"https://espiredental.com\",\n    \"https://www.downtowndenverdental.com\",\n    \"https://www.cherrycreekdental.com\",\n    \"https://www.washparkdental.com\",\n    \"https://www.citycenterdentalgroup.com\",\n    \"https://www.codydental.com\",\n    \"https://www.highlandsmiles.com\",\n    \"https://www.moderndentistryofdenver.com\",\n    \"https://www.thedentalloftboston.com\",\n    \"https://www.dentalartsofboston.com\",\n    \"https://www.newburydental.com\",\n    \"https://www.copleydental.com\",\n    \"https://www.bostondental.com\",\n    \"https://www.backbaydentalcare.com\",\n    \"https://www.smileboston.com\",\n    \"https://www.charlesriverdental.com\",\n    \"https://www.longwood-dental.com\",\n    \"https://www.beaconhilldental.net\",\n    \"https://www.austindental.com\",\n    \"https://www.westlakehillsdentalarts.com\",\n    \"https://www.mydentistinaustin.com\",\n    \"https://www.swishsmiles.com\",\n    \"https://www.enameldentistry.com\",\n    \"https://www.thetoothbar.com\",\n    \"https://www.trudentistryaustin.com\",\n    \"https://www.forestfamilydentistry.com\"\n  ]\n}\n```"
         }
       }
     ]
@@ -722,6 +261,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-29T09:56:21.000Z",
-  "versionId": "1651d45b-960f-4980-a128-2e71e867b54c"
+  "updatedAt": "2025-09-29T17:59:44.000Z",
+  "versionId": "f3242433-c85a-40e3-ac9b-6a01602c7996"
 }
