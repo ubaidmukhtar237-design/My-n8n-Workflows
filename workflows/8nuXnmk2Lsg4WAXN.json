@@ -717,502 +717,567 @@
     "Run workflow": [
       {
         "json": {
-          "query": "bay+area+dental+clinic"
+          "query": "https://heartland.com/"
         }
       },
       {
         "json": {
-          "query": "los+angeles+dental+clinic"
+          "query": "https://www.aspendental.com/"
         }
       },
       {
         "json": {
-          "query": "san+francisco+dental+clinic"
+          "query": "https://www.pacificdentalservices.com/"
         }
       },
       {
         "json": {
-          "query": "oakland+dental+clinic"
+          "query": "https://smilebrands.com/"
         }
       },
       {
         "json": {
-          "query": "san+jose+dental+clinic"
+          "query": "https://www.dentalcarealliance.com/"
         }
       },
       {
         "json": {
-          "query": "sacramento+dental+clinic"
+          "query": "https://www.affordabledentures.com/"
         }
       },
       {
         "json": {
-          "query": "fresno+dental+clinic"
+          "query": "https://www.westerndental.com/"
         }
       },
       {
         "json": {
-          "query": "long+beach+dental+clinic"
+          "query": "https://www.greatexpressions.com/"
         }
       },
       {
         "json": {
-          "query": "anaheim+dental+clinic"
+          "query": "https://www.interdent.com/"
         }
       },
       {
         "json": {
-          "query": "santa+rosa+dental+clinic"
+          "query": "https://www.clearchoice.com/"
         }
       },
       {
         "json": {
-          "query": "san+diego+dental+clinic"
+          "query": "https://www.azbiltmoredentistry.com/"
         }
       },
       {
         "json": {
-          "query": "pasadena+dental+clinic"
+          "query": "https://www.smilearizonadentistry.com/"
         }
       },
       {
         "json": {
-          "query": "berkeley+dental+clinic"
+          "query": "https://www.weningerdentistry.com/"
         }
       },
       {
         "json": {
-          "query": "palo+alto+dental+clinic"
+          "query": "https://www.ladentalarts.com/"
         }
       },
       {
         "json": {
-          "query": "santa+monica+dental+clinic"
+          "query": "https://www.sfdentalarts.com/"
         }
       },
       {
         "json": {
-          "query": "beverly+hills+dental+clinic"
+          "query": "https://www.thelasmiledentist.com/"
         }
       },
       {
         "json": {
-          "query": "malibu+dental+clinic"
+          "query": "https://www.lajollacosmeticdentist.com/"
         }
       },
       {
         "json": {
-          "query": "stockton+dental+clinic"
+          "query": "https://www.sacramentodentistry.com/"
         }
       },
       {
         "json": {
-          "query": "modesto+dental+clinic"
+          "query": "https://www.irvinespectrumdental.com/"
         }
       },
       {
         "json": {
-          "query": "san+mateo+dental+clinic"
+          "query": "https://www.paloaltodentalgroup.com/"
         }
       },
       {
         "json": {
-          "query": "redwood+city+dental+clinic"
+          "query": "https://espiredental.com/"
         }
       },
       {
         "json": {
-          "query": "menlo+park+dental+clinic"
+          "query": "https://www.cherrycreekdental.com/"
         }
       },
       {
         "json": {
-          "query": "mountain+view+dental+clinic"
+          "query": "https://www.boulderdentalarts.com/"
         }
       },
       {
         "json": {
-          "query": "cupertino+dental+clinic"
+          "query": "https://www.southfloridadentalcare.com/"
         }
       },
       {
         "json": {
-          "query": "sunnyvale+dental+clinic"
+          "query": "https://www.orlandodentalgroup.com/"
         }
       },
       {
         "json": {
-          "query": "fremont+dental+clinic"
+          "query": "https://www.tampapalmsdentistry.com/"
         }
       },
       {
         "json": {
-          "query": "union+city+dental+clinic"
+          "query": "https://www.jaxdentalspecialists.com/"
         }
       },
       {
         "json": {
-          "query": "hayward+dental+clinic"
+          "query": "https://www.miamicosmeticdentist.com/"
         }
       },
       {
         "json": {
-          "query": "pleasanton+dental+clinic"
+          "query": "https://www.atlantadentalspa.com/"
         }
       },
       {
         "json": {
-          "query": "dublin+dental+clinic"
+          "query": "https://www.feathertouchdental.com/"
         }
       },
       {
         "json": {
-          "query": "livermore+dental+clinic"
+          "query": "https://www.savannahdentalsolutions.com/"
         }
       },
       {
         "json": {
-          "query": "walnut+creek+dental+clinic"
+          "query": "https://www.chicagodentalstudio.com/"
         }
       },
       {
         "json": {
-          "query": "concord+dental+clinic"
+          "query": "https://www.lpda.net/"
         }
       },
       {
         "json": {
-          "query": "antioch+dental+clinic"
+          "query": "https://www.watertowerdentalcare.com/"
         }
       },
       {
         "json": {
-          "query": "richmond+dental+clinic"
+          "query": "https://www.bostondental.com/"
         }
       },
       {
         "json": {
-          "query": "vallejo+dental+clinic"
+          "query": "https://www.chestnuthilldental.com/"
         }
       },
       {
         "json": {
-          "query": "fairfield+dental+clinic"
+          "query": "https://www.cambridgedental.com/"
         }
       },
       {
         "json": {
-          "query": "napa+dental+clinic"
+          "query": "https://www.thedentalstudiodetroit.com/"
         }
       },
       {
         "json": {
-          "query": "sonoma+dental+clinic"
+          "query": "https://www.grandrapidsdental.com/"
         }
       },
       {
         "json": {
-          "query": "santa+cruz+dental+clinic"
+          "query": "https://www.annarbordentalassociates.com/"
         }
       },
       {
         "json": {
-          "query": "monterey+dental+clinic"
+          "query": "https://www.lasvegassmilecenter.com/"
         }
       },
       {
         "json": {
-          "query": "carmel+dental+clinic"
+          "query": "https://www.saharadentallasvegas.com/"
         }
       },
       {
         "json": {
-          "query": "salinas+dental+clinic"
+          "query": "https://www.renodentalassociates.com/"
         }
       },
       {
         "json": {
-          "query": "ventura+dental+clinic"
+          "query": "https://www.hellotend.com/"
         }
       },
       {
         "json": {
-          "query": "oxnard+dental+clinic"
+          "query": "https://www.nygeneraldentistry.com/"
         }
       },
       {
         "json": {
-          "query": "thousand+oaks+dental+clinic"
+          "query": "https://www.manhattandentalspa.com/"
         }
       },
       {
         "json": {
-          "query": "bakersfield+dental+clinic"
+          "query": "https://www.brooklyndental.com/"
         }
       },
       {
         "json": {
-          "query": "palmdale+dental+clinic"
+          "query": "https://www.advanceddentalcarenyc.com/"
         }
       },
       {
         "json": {
-          "query": "lancaster+dental+clinic"
+          "query": "https://www.charlottedentistry.com/"
         }
       },
       {
         "json": {
-          "query": "riverside+dental+clinic"
+          "query": "https://www.raleighdentalarts.com/"
         }
       },
       {
         "json": {
-          "query": "san+bernardino+dental+clinic"
+          "query": "https://www.ashevilledentalcare.com/"
         }
       },
       {
         "json": {
-          "query": "fontana+dental+clinic"
+          "query": "https://www.clevelanddentistinstitute.com/"
         }
       },
       {
         "json": {
-          "query": "ontario+dental+clinic"
+          "query": "https://www.columbusdentalarts.com/"
         }
       },
       {
         "json": {
-          "query": "rancho+cucamonga+dental+clinic"
+          "query": "https://www.cincinnatidentalservices.com/"
         }
       },
       {
         "json": {
-          "query": "corona+dental+clinic"
+          "query": "https://www.portland-dental.com/"
         }
       },
       {
         "json": {
-          "query": "murrieta+dental+clinic"
+          "query": "https://www.timberdental.com/"
         }
       },
       {
         "json": {
-          "query": "temecula+dental+clinic"
+          "query": "https://www.eugenedentalgroup.com/"
         }
       },
       {
         "json": {
-          "query": "chula+vista+dental+clinic"
+          "query": "https://www.phillydentistry.com/"
         }
       },
       {
         "json": {
-          "query": "oceanside+dental+clinic"
+          "query": "https://www.pittsburghdentalspa.com/"
         }
       },
       {
         "json": {
-          "query": "escondido+dental+clinic"
+          "query": "https://www.dentistryforlife.net/"
         }
       },
       {
         "json": {
-          "query": "carlsbad+dental+clinic"
+          "query": "https://www.nashvilledentistryco.com/"
         }
       },
       {
         "json": {
-          "query": "encinitas+dental+clinic"
+          "query": "https://www.memphisdentalgroup.com/"
         }
       },
       {
         "json": {
-          "query": "la+jolla+dental+clinic"
+          "query": "https://www.knoxvilledentalcenter.com/"
         }
       },
       {
         "json": {
-          "query": "clovis+dental+clinic"
+          "query": "https://www.mintdentistry.com/"
         }
       },
       {
         "json": {
-          "query": "merced+dental+clinic"
+          "query": "https://www.houstondental.com/"
         }
       },
       {
         "json": {
-          "query": "turlock+dental+clinic"
+          "query": "https://www.austindental.com/"
         }
       },
       {
         "json": {
-          "query": "madera+dental+clinic"
+          "query": "https://www.sanantoniodentalcenter.com/"
         }
       },
       {
         "json": {
-          "query": "chico+dental+clinic"
+          "query": "https://www.dallasdentalwellness.com/"
         }
       },
       {
         "json": {
-          "query": "redding+dental+clinic"
+          "query": "https://www.thedentistsofhouston.com/"
         }
       },
       {
         "json": {
-          "query": "eureka+dental+clinic"
+          "query": "https://www.westlakehillsdentalarts.com/"
         }
       },
       {
         "json": {
-          "query": "arcata+dental+clinic"
+          "query": "https://www.saltlakedentalclinic.com/"
         }
       },
       {
         "json": {
-          "query": "yuba+city+dental+clinic"
+          "query": "https://www.canyonroaddental.com/"
         }
       },
       {
         "json": {
-          "query": "marysville+dental+clinic"
+          "query": "https://www.genesis-dental.com/"
         }
       },
       {
         "json": {
-          "query": "davis+dental+clinic"
+          "query": "https://www.vadentist.com/"
         }
       },
       {
         "json": {
-          "query": "roseville+dental+clinic"
+          "query": "https://www.arlingtondentistrycenter.com/"
         }
       },
       {
         "json": {
-          "query": "rocklin+dental+clinic"
+          "query": "https://www.alexandriadentalhealth.com/"
         }
       },
       {
         "json": {
-          "query": "elk+grove+dental+clinic"
+          "query": "https://www.seattlesdental.com/"
         }
       },
       {
         "json": {
-          "query": "west+sacramento+dental+clinic"
+          "query": "https://www.bellevuedentalcare.com/"
         }
       },
       {
         "json": {
-          "query": "novato+dental+clinic"
+          "query": "https://www.spokanedental.com/"
         }
       },
       {
         "json": {
-          "query": "san+rafael+dental+clinic"
+          "query": "https://www.dentalassociates.com/"
         }
       },
       {
         "json": {
-          "query": "mill+valley+dental+clinic"
+          "query": "https://www.madisonfamilydental.com/"
         }
       },
       {
         "json": {
-          "query": "sausalito+dental+clinic"
+          "query": "https://www.milwaukeedentalgroup.com/"
         }
       },
       {
         "json": {
-          "query": "petaluma+dental+clinic"
+          "query": "https://www.sandiegocosmeticdentist.com/"
         }
       },
       {
         "json": {
-          "query": "san+luis+obispo+dental+clinic"
+          "query": "https://www.northbeachdentalsf.com/"
         }
       },
       {
         "json": {
-          "query": "pismo+beach+dental+clinic"
+          "query": "https://www.downtowndenverdentist.com/"
         }
       },
       {
         "json": {
-          "query": "santa+barbara+dental+clinic"
+          "query": "https://www.brickelldentalcare.com/"
         }
       },
       {
         "json": {
-          "query": "goleta+dental+clinic"
+          "query": "https://www.buckheaddentalassociates.com/"
         }
       },
       {
         "json": {
-          "query": "lompoc+dental+clinic"
+          "query": "https://www.streetervilledentalstudio.com/"
         }
       },
       {
         "json": {
-          "query": "simi+valley+dental+clinic"
+          "query": "https://www.newburydental.com/"
         }
       },
       {
         "json": {
-          "query": "moorpark+dental+clinic"
+          "query": "https://www.midtowndentalcenter.com/"
         }
       },
       {
         "json": {
-          "query": "camarillo+dental+clinic"
+          "query": "https://www.southenddentistry.com/"
         }
       },
       {
         "json": {
-          "query": "calabasas+dental+clinic"
+          "query": "https://www.pearldistrictdental.com/"
         }
       },
       {
         "json": {
-          "query": "glendale+dental+clinic"
+          "query": "https://www.rittenhousedentalgroup.com/"
         }
       },
       {
         "json": {
-          "query": "burbank+dental+clinic"
+          "query": "https://www.gulchdentalstudio.com/"
         }
       },
       {
         "json": {
-          "query": "north+hollywood+dental+clinic"
+          "query": "https://www.uptowndentistdallas.com/"
         }
       },
       {
         "json": {
-          "query": "hollywood+dental+clinic"
+          "query": "https://www.downtownseattledentists.com/"
         }
       },
       {
         "json": {
-          "query": "downtown+la+dental+clinic"
+          "query": "https://www.dcdentalspa.com/"
         }
       },
       {
         "json": {
-          "query": "inglewood+dental+clinic"
+          "query": "https://www.dupontcircledentistry.com/"
         }
       },
       {
         "json": {
-          "query": "compton+dental+clinic"
+          "query": "https://www.paradisevalleydental.com/"
         }
       },
       {
         "json": {
-          "query": "gardena+dental+clinic"
+          "query": "https://www.beverlyhillsdentalarts.com/"
+        }
+      },
+      {
+        "json": {
+          "query": "https://www.miamibeachdentalcenter.com/"
+        }
+      },
+      {
+        "json": {
+          "query": "https://www.dallasdentalarts.com/"
+        }
+      },
+      {
+        "json": {
+          "query": "https://www.alamodentalcenter.com/"
+        }
+      },
+      {
+        "json": {
+          "query": "https://www.mainstreetsmiles.com/"
+        }
+      },
+      {
+        "json": {
+          "query": "https://www.smilegeneration.com/"
+        }
+      },
+      {
+        "json": {
+          "query": "https://www.southshoredentalcare.com/"
+        }
+      },
+      {
+        "json": {
+          "query": "https://www.legacy-dental.com/"
+        }
+      },
+      {
+        "json": {
+          "query": "https://www.newyorkfamilydentistry.com/"
+        }
+      },
+      {
+        "json": {
+          "query": "https://www.chicagoloopdentistry.com/"
+        }
+      },
+      {
+        "json": {
+          "query": "https://www.sonrisadental.com/"
+        }
+      },
+      {
+        "json": {
+          "query": "https://www.galleriadentalarts.com/"
+        }
+      },
+      {
+        "json": {
+          "query": "https://www.riveroaksdentist.com/"
+        }
+      },
+      {
+        "json": {
+          "query": "https://www.denverhighlandsdentist.com/"
         }
       }
     ]
@@ -1232,6 +1297,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-29T00:27:32.000Z",
-  "versionId": "f0e69532-c094-44d4-bc21-f0f24e0cb7ce"
+  "updatedAt": "2025-09-29T00:45:57.000Z",
+  "versionId": "515fd2f8-230c-4290-bf6b-41b86d99a6f4"
 }
