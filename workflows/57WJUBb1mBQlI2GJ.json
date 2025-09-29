@@ -267,7 +267,7 @@
           "__rl": true,
           "value": "1SqQo5bPrZtgzPhzUPJHw9ikI4lKY0CPPQRBEjSQZBo8",
           "mode": "list",
-          "cachedResultName": "Url Storage",
+          "cachedResultName": "Url Storage:Dental Clinics,Salons,BarberShops,Day Spa and MedSpa",
           "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SqQo5bPrZtgzPhzUPJHw9ikI4lKY0CPPQRBEjSQZBo8/edit?usp=drivesdk"
         },
         "sheetName": {
@@ -326,6 +326,16 @@
               "type": "string",
               "canBeUsedToMatch": true,
               "removed": false
+            },
+            {
+              "id": "Email Sended?",
+              "displayName": "Email Sended?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
             }
           ],
           "attemptToConvertTypes": false,
@@ -397,7 +407,7 @@
           "__rl": true,
           "value": "57WJUBb1mBQlI2GJ",
           "mode": "list",
-          "cachedResultName": "My Own Practice"
+          "cachedResultName": "Email Scraper For Dental Clinic for free:My own made workflow"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -535,7 +545,7 @@
           "__rl": true,
           "value": "1SqQo5bPrZtgzPhzUPJHw9ikI4lKY0CPPQRBEjSQZBo8",
           "mode": "list",
-          "cachedResultName": "Url Storage:Dental Clinics",
+          "cachedResultName": "Url Storage:Dental Clinics,Salons,BarberShops,Day Spa and MedSpa",
           "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SqQo5bPrZtgzPhzUPJHw9ikI4lKY0CPPQRBEjSQZBo8/edit?usp=drivesdk"
         },
         "sheetName": {
@@ -551,7 +561,8 @@
             "Email ": "={{ $json.email ? $json.email : 'notProvided' }}",
             "PhoneNumber": "={{ $json.phone ? $json.phone : 'notProvided' }}",
             "Url": "={{ $('When Executed by Another Workflow').item.json.Url }}",
-            "Name of the Clinic": "={{ $json.name }}"
+            "Name of the Clinic": "={{ $json.name }}",
+            "Email Sended?": "No"
           },
           "matchingColumns": [
             "Url"
@@ -588,6 +599,16 @@
             {
               "id": "Name of the Clinic",
               "displayName": "Name of the Clinic",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email Sended?",
+              "displayName": "Email Sended?",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -688,15 +709,7 @@
       "name": "Call 'My Own Practice'1"
     }
   ],
-  "pinData": {
-    "When Executed by Another Workflow": [
-      {
-        "json": {
-          "Url": "https://www.nycsmiledesign.com"
-        }
-      }
-    ]
-  },
+  "pinData": {},
   "settings": {
     "executionOrder": "v1"
   },
@@ -712,6 +725,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-29T21:58:43.000Z",
-  "versionId": "4a61ac9f-9e36-4fb8-ac7e-913d0aa10126"
+  "updatedAt": "2025-09-29T22:29:33.000Z",
+  "versionId": "95894bea-bf0f-43db-99f3-38a06da502f3"
 }
