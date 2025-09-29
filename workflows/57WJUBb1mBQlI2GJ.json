@@ -166,6 +166,17 @@
           }
         ]
       ]
+    },
+    "Update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Call 'My Own Practice'1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-09-29T09:40:34.317Z",
@@ -648,6 +659,33 @@
           "name": "Google Sheets account"
         }
       }
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "FaBU6QRJJzbX1ap7",
+          "mode": "list",
+          "cachedResultName": "Dental Clinic"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        400,
+        592
+      ],
+      "id": "509b3383-20d2-4aa3-aea9-3e53c4366fa8",
+      "name": "Call 'My Own Practice'1"
     }
   ],
   "pinData": {
@@ -674,6 +712,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-29T21:06:04.000Z",
-  "versionId": "4d7b5b86-c085-496b-8481-f16df2747f35"
+  "updatedAt": "2025-09-29T21:58:43.000Z",
+  "versionId": "4a61ac9f-9e36-4fb8-ac7e-913d0aa10126"
 }
