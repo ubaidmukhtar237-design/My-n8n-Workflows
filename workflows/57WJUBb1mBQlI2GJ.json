@@ -181,7 +181,7 @@
         "promptType": "define",
         "text": "=Task: Find 100 dental clinic website URLs in the United States.\n\nInstructions:\n1. Use Google Maps or publicly available online sources to identify dental clinics located in the USA.\n2. Only include clinics that have a website listed. Skip clinics without websites.\n3. Do not include clinics outside the USA.\n4. Provide exact website URLs only, no extra information like addresses, phone numbers, or emails.\n5. Return the output as a plain list, one URL per line, in JSON format if possible.\n6. Make sure the URLs are live and correctly formatted (include https:// if applicable).\n7. Limit the output to exactly 100 unique websites.\n8. Exclude any websites already found in the Google Sheets tool.\n",
         "options": {
-          "systemMessage": "=You are an expert AI agent that finds website URLs of dental clinics located only in the USA using Google Maps or other public online sources.  \n\nSTRICT RULES:\n- Only return valid URLs of dental clinics’ official websites.  \n- Do not include addresses, phone numbers, emails, or non-dental businesses.  \n- Always output strictly in JSON format with this structure:  \n\n{\n  \"websites\": [\n    \"https://www.exampleclinic1.com\",\n    \"https://www.exampleclinic2.com\",\n    ...\n  ]\n}\n\n- Always use the tool `Get row(s) in sheet in Google Sheets` to check for existing URLs.  \n  - Never return or search for any URLs already listed in the sheet.  \n  - Only provide new, unique website URLs not found in the sheet.  \n"
+          "systemMessage": "=You are an expert AI agent that finds website URLs of dental clinics located only in the USA using Google Maps or other public online sources.  \n\nSTRICT RULES:\n- Only return valid URLs of dental clinics’ official websites along with the official name of the dental clinic as it appears on the website.\n- Do not include addresses, phone numbers, emails, or non-dental businesses.  \n- Always output strictly in JSON format with this structure:  \n\n{ \n\"websites\": [ \n\"https://www.exampleclinic1.com\", \n\"https://www.exampleclinic2.com\", \n... \n ] \n}\n\n\n- Always use the tool `Get row(s) in sheet in Google Sheets` to check for existing URLs.  \n  - Never return or search for any URLs already listed in the sheet.  \n  - Only provide new, unique website URLs not found in the sheet.  \n"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -269,7 +269,8 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "Url": "={{ $json.url }}"
+            "Url": "={{ $json.url }}",
+            "Name of the Clinic": "={{ $json.name }}"
           },
           "matchingColumns": [
             "Url"
@@ -304,6 +305,16 @@
               "type": "string",
               "canBeUsedToMatch": true,
               "removed": true
+            },
+            {
+              "id": "Name of the Clinic",
+              "displayName": "Name of the Clinic",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
             }
           ],
           "attemptToConvertTypes": false,
@@ -436,7 +447,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=Only extract the **email address** and **phone number** from the website provided as input. \nDo not include any other information. \nOutput the results strictly in JSON format, using this structure:\n\n{\n  \"email\": \"example@example.com\",\n  \"phone\": \"+1-123-456-7890\"\n}\n\nUse the following input URL to extract the data:\n{{ $json.Url }}",
+        "text": "=Only extract the **clinic name**, **email address**, and **phone number** from the provided website URL.\nDo not include any other information. \nOutput the results strictly in JSON format, using this structure:\n\n{\n  \"email\": \"example@example.com\",\n  \"phone\": \"(212) 452-3344\"\n  \"name\": \"Forest Dental Clinic\"\n}\n\nUse the following provided input URL to extract the data:\n{{ $json.Url }}",
         "options": {
           "systemMessage": "=You are an expert at extracting contact information from dental clinic websites in the USA. "
         }
@@ -495,7 +506,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// The input data is a messy string located in items[0].json.query.\nconst rawInputString = items[0].json.query;\n\n// Find the start '{' and end '}' of the JSON object within the string.\nconst startIndex = rawInputString.indexOf('{');\nconst endIndex = rawInputString.lastIndexOf('}');\n\n// Check if we found a valid JSON block. If not, throw an error.\nif (startIndex === -1 || endIndex === -1) {\n  throw new Error(\"Could not find a valid JSON object in the input string.\");\n}\n\n// Extract the clean JSON string from between the braces.\nconst jsonString = rawInputString.substring(startIndex, endIndex + 1);\n\ntry {\n  // Parse the clean string into a JavaScript object.\n  const data = JSON.parse(jsonString);\n\n  // Create a new output item with the extracted email and phone fields.\n  const outputData = {\n    json: {\n      email: data.email,\n      phone: data.phone,\n      url: data.url,\n      urlId: data.urlId\n    }\n  };\n\n  // Return the new item. It must be inside an array.\n  return [outputData];\n\n} catch (error) {\n  // If parsing still fails for some reason, provide a helpful error message.\n  console.error(\"The extracted string that failed to parse was: \", jsonString);\n  throw new Error(`Failed to parse the extracted JSON. Error: ${error.message}`);\n}"
+        "jsCode": "// The input data is a messy string located in items[0].json.query.\nconst rawInputString = items[0].json.query;\n\n// Find the start '{' and end '}' of the JSON object within the string.\nconst startIndex = rawInputString.indexOf('{');\nconst endIndex = rawInputString.lastIndexOf('}');\n\n// Check if we found a valid JSON block. If not, throw an error.\nif (startIndex === -1 || endIndex === -1) {\n  throw new Error(\"Could not find a valid JSON object in the input string.\");\n}\n\n// Extract the clean JSON string from between the braces.\nconst jsonString = rawInputString.substring(startIndex, endIndex + 1);\n\ntry {\n  // Parse the clean string into a JavaScript object.\n  const data = JSON.parse(jsonString);\n\n  // Create a new output item with the extracted email and phone fields.\n  const outputData = {\n    json: {\n      email: data.email,\n      phone: data.phone,\n      name: data.name\n    }\n  };\n\n  // Return the new item. It must be inside an array.\n  return [outputData];\n\n} catch (error) {\n  // If parsing still fails for some reason, provide a helpful error message.\n  console.error(\"The extracted string that failed to parse was: \", jsonString);\n  throw new Error(`Failed to parse the extracted JSON. Error: ${error.message}`);\n}"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -528,7 +539,8 @@
           "value": {
             "Email ": "={{ $json.email ? $json.email : 'notProvided' }}",
             "PhoneNumber": "={{ $json.phone ? $json.phone : 'notProvided' }}",
-            "Url": "={{ $('When Executed by Another Workflow').item.json.Url }}"
+            "Url": "={{ $('When Executed by Another Workflow').item.json.Url }}",
+            "Name of the Clinic": "={{ $json.name }}"
           },
           "matchingColumns": [
             "Url"
@@ -561,6 +573,16 @@
               "display": true,
               "type": "string",
               "canBeUsedToMatch": true
+            },
+            {
+              "id": "Name of the Clinic",
+              "displayName": "Name of the Clinic",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
             },
             {
               "id": "row_number",
@@ -652,6 +674,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-29T20:24:53.000Z",
-  "versionId": "2dab02ad-4ce6-442d-9448-1602e1a24adb"
+  "updatedAt": "2025-09-29T20:46:48.000Z",
+  "versionId": "97725eea-001c-492b-a4fb-2ee84c24af14"
 }
