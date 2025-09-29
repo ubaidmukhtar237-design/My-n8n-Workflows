@@ -155,6 +155,17 @@
           }
         ]
       ]
+    },
+    "Get row(s) in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-09-29T09:40:34.317Z",
@@ -516,7 +527,7 @@
           "mappingMode": "defineBelow",
           "value": {
             "Email ": "={{ $json.email ? $json.email : 'notProvided' }}",
-            "PhoneNumber": "={{ $json.phone }}",
+            "PhoneNumber": "={{ $json.phone ? $json.phone : 'notProvided' }}",
             "Url": "={{ $('When Executed by Another Workflow').item.json.Url }}"
           },
           "matchingColumns": [
@@ -582,6 +593,55 @@
           "name": "Google Sheets account"
         }
       }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1SqQo5bPrZtgzPhzUPJHw9ikI4lKY0CPPQRBEjSQZBo8",
+          "mode": "list",
+          "cachedResultName": "Url Storage:Dental Clinics",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SqQo5bPrZtgzPhzUPJHw9ikI4lKY0CPPQRBEjSQZBo8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SqQo5bPrZtgzPhzUPJHw9ikI4lKY0CPPQRBEjSQZBo8/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Url",
+              "lookupValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('values0_Value', ``, 'string') }}"
+            },
+            {
+              "lookupColumn": "Email ",
+              "lookupValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('values1_Value', ``, 'string') }}"
+            },
+            {
+              "lookupColumn": "PhoneNumber",
+              "lookupValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('values2_Value', ``, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        -176,
+        128
+      ],
+      "id": "ab077ad5-5966-4414-bb84-7aaf1aa2e262",
+      "name": "Get row(s) in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JOHwDixlr7umKmYo",
+          "name": "Google Sheets account"
+        }
+      }
     }
   ],
   "pinData": {
@@ -615,6 +675,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-29T18:21:55.000Z",
-  "versionId": "557eb77f-8089-4d56-b7d6-98ba1417373a"
+  "updatedAt": "2025-09-29T18:55:25.000Z",
+  "versionId": "ed5394c0-dd72-4ae3-9615-8be68d15bbd7"
 }
