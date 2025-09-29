@@ -55,6 +55,106 @@
           }
         ]
       ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'My Own Practice'": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Call 'My Own Practice'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-09-29T09:40:34.317Z",
@@ -69,7 +169,9 @@
       "parameters": {
         "promptType": "define",
         "text": "=Task: Find 100 dental clinic website URLs in the United States.\n\nInstructions:\n1. Use Google Maps or publicly available online sources to identify dental clinics located in the USA.\n2. Only include clinics that have a website listed. Skip clinics without websites.\n3. Do not include clinics outside the USA.\n4. Provide **exact website URLs** only, no extra information like addresses, phone numbers, or emails.\n5. Return the output as a **plain list**, one URL per line, in JSON format if possible:\n\nExample:\n{\n  \"websites\": [\n    \"https://www.exampledental1.com\",\n    \"https://www.exampledental2.com\",\n    ...\n  ]\n}\n\n6. Make sure the URLs are live and correctly formatted (include https:// if applicable).\n7. Limit the output to exactly 100 unique websites.\n\nEnd of instructions.\n",
-        "options": {}
+        "options": {
+          "systemMessage": "=You are an expert AI agent that finds **website URLs** of **dental clinics located only in the USA** using Google Maps. \nOnly return valid URLs of dental clinics’ official websites. \nDo not include any other information such as addresses, phone numbers, emails, or non-dental businesses. \nOutput the results strictly in JSON format using this structure:\n\n{\n  \"websites\": [\n    \"https://www.exampleclinic1.com\",\n    \"https://www.exampleclinic2.com\",\n    ...\n  ]\n}\n"
+        }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
@@ -171,6 +273,26 @@
               "type": "string",
               "canBeUsedToMatch": true,
               "removed": false
+            },
+            {
+              "id": "Email ",
+              "displayName": "Email ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PhoneNumber",
+              "displayName": "PhoneNumber",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
             }
           ],
           "attemptToConvertTypes": false,
@@ -208,7 +330,7 @@
       "parameters": {
         "content": "To get website url of dental clinic in usa from google maps",
         "height": 608,
-        "width": 1904,
+        "width": 2208,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
@@ -224,17 +346,242 @@
       "parameters": {
         "content": "To find Email and phone number of stored urls",
         "height": 608,
-        "width": 1904,
+        "width": 2208,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
         -928,
-        416
+        400
       ],
       "typeVersion": 1,
       "id": "86b96284-3016-43cd-934e-f31bbcff3243",
       "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "57WJUBb1mBQlI2GJ",
+          "mode": "list",
+          "cachedResultName": "My Own Practice"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {}
+        },
+        "mode": "each",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        864,
+        16
+      ],
+      "id": "48cf0415-84e8-4148-9657-a57b5ab07632",
+      "name": "Call 'My Own Practice'"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        656,
+        -48
+      ],
+      "id": "6d393e5f-2758-49e6-a070-3acbe70dbb88",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "amount": 0.5
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1088,
+        16
+      ],
+      "id": "21d32a83-fe2c-4e23-a15d-d054c9a251b3",
+      "name": "Wait",
+      "webhookId": "72583972-f7ba-4e97-9d8d-470dacbccdb3"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -752,
+        592
+      ],
+      "id": "59b80e66-3b91-4e16-8554-dd230ca4d89b",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Only extract the **email address** and **phone number** from the website provided as input. \nDo not include any other information. \nOutput the results strictly in JSON format, using this structure:\n\n{\n  \"email\": \"example@example.com\",\n  \"phone\": \"+1-123-456-7890\"\n}\n\nUse the following input URL to extract the data:\n{{ $json.Url }}\n",
+        "options": {
+          "systemMessage": "=You are an expert at extracting contact information from dental clinic websites in the USA. \n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -544,
+        592
+      ],
+      "id": "a3f5259e-b945-41e7-868c-d8a93a78fe0a",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -592,
+        768
+      ],
+      "id": "932bff32-b55f-4aae-8a02-bc6fba393394",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "sPfpmF39mpaLYCjc",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b9177f48-6233-42ea-9343-730530759d95",
+              "name": "query",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -192,
+        592
+      ],
+      "id": "4a3bfc52-ffd8-4cd3-bd25-4a66d0a9ca31",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// The input data is a messy string located in items[0].json.query.\nconst rawInputString = items[0].json.query;\n\n// Find the start '{' and end '}' of the JSON object within the string.\nconst startIndex = rawInputString.indexOf('{');\nconst endIndex = rawInputString.lastIndexOf('}');\n\n// Check if we found a valid JSON block. If not, throw an error.\nif (startIndex === -1 || endIndex === -1) {\n  throw new Error(\"Could not find a valid JSON object in the input string.\");\n}\n\n// Extract the clean JSON string from between the braces.\nconst jsonString = rawInputString.substring(startIndex, endIndex + 1);\n\ntry {\n  // Parse the clean string into a JavaScript object.\n  const data = JSON.parse(jsonString);\n\n  // Create a new output item with the extracted email and phone fields.\n  const outputData = {\n    json: {\n      email: data.email,\n      phone: data.phone\n    }\n  };\n\n  // Return the new item. It must be inside an array.\n  return [outputData];\n\n} catch (error) {\n  // If parsing still fails for some reason, provide a helpful error message.\n  console.error(\"The extracted string that failed to parse was: \", jsonString);\n  throw new Error(`Failed to parse the extracted JSON. Error: ${error.message}`);\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -16,
+        592
+      ],
+      "id": "eb134b5c-9466-45a8-afab-dfae20879bda",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1SqQo5bPrZtgzPhzUPJHw9ikI4lKY0CPPQRBEjSQZBo8",
+          "mode": "list",
+          "cachedResultName": "Url Storage:Dental Clinics",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SqQo5bPrZtgzPhzUPJHw9ikI4lKY0CPPQRBEjSQZBo8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SqQo5bPrZtgzPhzUPJHw9ikI4lKY0CPPQRBEjSQZBo8/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Email ": "={{ $json.email ? $json.email : 'notProvided' }}",
+            "PhoneNumber": "={{ $json.phone }}",
+            "Url": "={{ $('When Executed by Another Workflow').item.json.Url }}"
+          },
+          "matchingColumns": [
+            "Url"
+          ],
+          "schema": [
+            {
+              "id": "Url",
+              "displayName": "Url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email ",
+              "displayName": "Email ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PhoneNumber",
+              "displayName": "PhoneNumber",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        192,
+        592
+      ],
+      "id": "23505273-02ca-400d-9d0b-f0ad5fc5637a",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JOHwDixlr7umKmYo",
+          "name": "Google Sheets account"
+        }
+      }
     }
   ],
   "pinData": {
@@ -242,6 +589,13 @@
       {
         "json": {
           "output": "```json\n{\n  \"websites\": [\n    \"https://www.209nycdental.com\",\n    \"https://www.hellotend.com\",\n    \"https://www.tribecadentalstudio.com\",\n    \"https://www.millerspinaldds.com\",\n    \"https://www.cpwdentistry.com\",\n    \"https://www.nygeneraldentistry.com\",\n    \"https://www.sohosmile.com\",\n    \"https://www.lemchensalzer.com\",\n    \"https://www.nycsmiledesign.com\",\n    \"https://www.glassmandentalcare.com\",\n    \"https://www.centurycitysmiles.com\",\n    \"https://www.thedentalcarecenter.com\",\n    \"https://www.billdorfmandds.com\",\n    \"https://www.smilela.com\",\n    \"https://www.ladentalclinic.com\",\n    \"https://www.geachdental.com\",\n    \"https://www.westsidedentalassociates.com\",\n    \"https://www.downtowndentalla.com\",\n    \"https://www.rifkinraanan.com\",\n    \"https://www.beverlyhillsdentalarts.com\",\n    \"https://www.watertowerdentalcare.com\",\n    \"https://www.thechicagodentalstudio.com\",\n    \"https://www.bigsmiledental.com\",\n    \"https://www.lincolnparksmiles.com\",\n    \"https://www.millenniumparkdental.com\",\n    \"https://www.artofmoderndentistry.com\",\n    \"https://www.dentalsmilesofwestloop.com\",\n    \"https://www.wickerparkdentalgroup.com\",\n    \"https://www.uadchicago.com\",\n    \"https://www.thedentalstandard.com\",\n    \"https://www.antoinedental.com\",\n    \"https://www.thehoustondentists.com\",\n    \"https://www.urbndental.com\",\n    \"https://www.montrosedental.com\",\n    \"https://www.greenwaydental.com\",\n    \"https://www.mysignaturesmiles.com\",\n    \"https://www.lovettdental.com\",\n    \"https://www.houstonuptowndentists.com\",\n    \"https://www.baytowngentledental.com\",\n    \"https://www.cosmeticdentaltexas.com\",\n    \"https://www.biltmoredentalcenter.com\",\n    \"https://www.centralvalleydentistry.com\",\n    \"https://www.desertdentistry.com\",\n    \"https://www.artisticd.com\",\n    \"https://www.dentaloncentral.com\",\n    \"https://www.paradisevalleydental.com\",\n    \"https://www.drrickdentistry.com\",\n    \"https://www.onpointedentistry.com\",\n    \"https://www.smiletoday.net\",\n    \"https://www.harrisdental.com\",\n    \"https://www.brickelldentalcare.com\",\n    \"https://www.miamidesignersmiles.com\",\n    \"https://www.gedentistry.com\",\n    \"https://drpattydental.com\",\n    \"https://www.smilestudiomiami.com\",\n    \"https://www.oconnordentalcare.com\",\n    \"https://www.biscaynedental.com\",\n    \"https://www.southgablesdental.com\",\n    \"https://www.pinecrestdental.com\",\n    \"https://www.fantasticdental.com\",\n    \"https://www.seattledentalassociates.com\",\n    \"https://www.belltowndentistry.com\",\n    \"https://www.aestheticdentalcenter.com\",\n    \"https://www.downtownseattledentists.com\",\n    \"https://www.fidleronthetooth.com\",\n    \"https://www.bryantdental.com\",\n    \"https://www.seattlesbestsmiles.com\",\n    \"https://www.rooseveltdental.com\",\n    \"https://www.greenlakedental.com\",\n    \"https://www.sound-dental.com\",\n    \"https://www.lartdental.com\",\n    \"https://www.icondentaldenver.com\",\n    \"https://espiredental.com\",\n    \"https://www.downtowndenverdental.com\",\n    \"https://www.cherrycreekdental.com\",\n    \"https://www.washparkdental.com\",\n    \"https://www.citycenterdentalgroup.com\",\n    \"https://www.codydental.com\",\n    \"https://www.highlandsmiles.com\",\n    \"https://www.moderndentistryofdenver.com\",\n    \"https://www.thedentalloftboston.com\",\n    \"https://www.dentalartsofboston.com\",\n    \"https://www.newburydental.com\",\n    \"https://www.copleydental.com\",\n    \"https://www.bostondental.com\",\n    \"https://www.backbaydentalcare.com\",\n    \"https://www.smileboston.com\",\n    \"https://www.charlesriverdental.com\",\n    \"https://www.longwood-dental.com\",\n    \"https://www.beaconhilldental.net\",\n    \"https://www.austindental.com\",\n    \"https://www.westlakehillsdentalarts.com\",\n    \"https://www.mydentistinaustin.com\",\n    \"https://www.swishsmiles.com\",\n    \"https://www.enameldentistry.com\",\n    \"https://www.thetoothbar.com\",\n    \"https://www.trudentistryaustin.com\",\n    \"https://www.forestfamilydentistry.com\"\n  ]\n}\n```"
+        }
+      }
+    ],
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "Url": "https://www.fantasticdental.com"
         }
       }
     ]
@@ -261,6 +615,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-29T17:59:44.000Z",
-  "versionId": "f3242433-c85a-40e3-ac9b-6a01602c7996"
+  "updatedAt": "2025-09-29T18:21:55.000Z",
+  "versionId": "557eb77f-8089-4d56-b7d6-98ba1417373a"
 }
