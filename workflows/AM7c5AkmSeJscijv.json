@@ -145,11 +145,13 @@
     },
     {
       "parameters": {
+        "actorSource": "store",
         "actorId": {
           "__rl": true,
-          "mode": "list",
-          "value": ""
-        }
+          "value": "=https://console.apify.com/actors/nwua9Gu5YrADL7ZDj",
+          "mode": "url"
+        },
+        "customBody": "={\n  \"searchStringsArray\": [\n    \"{{ $json['Search Query'] }}\"\n  ],\n  \"locationQuery\": \"{{ $json.Location }}, USA\",\n  \"maxCrawledPlacesPerSearch\": \"{{ $json['Max Number of Results'] }}\",\n  \"language\": \"en\",\n  \"searchMatching\": \"all\",\n  \"placeMinimumStars\": \"\",\n  \"website\": \"allPlaces\",\n  \"skipClosedPlaces\": false,\n  \"scrapePlaceDetailPage\": false,\n  \"scrapeTableReservationProvider\": false,\n  \"includeWebResults\": false,\n  \"scrapeDirectories\": false,\n  \"maxQuestions\": 0,\n  \"scrapeContacts\": true,\n  \"maximumLeadsEnrichmentRecords\": 0,\n  \"maxReviews\": 0,\n  \"reviewsSort\": \"newest\",\n  \"reviewsFilterString\": \"\",\n  \"reviewsOrigin\": \"all\",\n  \"scrapeReviewsPersonalData\": true,\n  \"scrapeImageAuthors\": false,\n  \"allPlacesNoSearchAction\": \"\"\n}"
       },
       "type": "@apify/n8n-nodes-apify.apify",
       "typeVersion": 1,
@@ -168,7 +170,8 @@
     },
     {
       "parameters": {
-        "resource": "Datasets"
+        "resource": "Datasets",
+        "datasetId": "={{ $json.defaultDatasetId }}"
       },
       "type": "@apify/n8n-nodes-apify.apify",
       "typeVersion": 1,
@@ -177,7 +180,13 @@
         128
       ],
       "id": "0a880bde-67ab-4ee5-9c25-9578aeeb28ea",
-      "name": "Get dataset items"
+      "name": "Get dataset items",
+      "credentials": {
+        "apifyApi": {
+          "id": "4kJhe7Ypk9ILNsh9",
+          "name": "Apify account"
+        }
+      }
     },
     {
       "parameters": {
@@ -191,12 +200,22 @@
           "conditions": [
             {
               "id": "b4a392a5-19da-487c-aa96-42ff8d6f7ca3",
-              "leftValue": "",
+              "leftValue": "={{ $json.permanentlyClosed }}",
               "rightValue": "",
               "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "7ba1f4e8-c1d2-4209-b510-44480d042351",
+              "leftValue": "={{ $json.temporarilyClosed }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
               }
             }
           ],
@@ -228,6 +247,8 @@
     },
     {
       "parameters": {
+        "promptType": "define",
+        "text": "=I want you to do research on a business and give me a few items I can bring up in an email or phone call.\n\nUse the Gemini Tool for research\n\nThe business info is listed below\n\nTitle: {{ $json.title }}\nWebsite: {{ $json.website }}\nPhone:{{ $json.phone }}\nAddress: {{ $json.address }}\n\nTo save token usage, just give me short sentences with quick info. I don't need the business info repeated unless you know the owners name\n\nExample: Frank Pepe Rated an 8.5 by Dave Portnoy",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -264,14 +285,27 @@
         "operation": "append",
         "documentId": {
           "__rl": true,
+          "value": "1YtM1zq-m4uJ5Auhxc0E8PSR3cEimtf0_WrP01q0RWY8",
           "mode": "list",
-          "value": ""
+          "cachedResultName": "Send Emails Salons,Dental Clincic and RealEstateAgency1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1YtM1zq-m4uJ5Auhxc0E8PSR3cEimtf0_WrP01q0RWY8/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
+          "value": 478091426,
           "mode": "list",
-          "value": ""
-        }
+          "cachedResultName": "Sheet2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1YtM1zq-m4uJ5Auhxc0E8PSR3cEimtf0_WrP01q0RWY8/edit#gid=478091426"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
       },
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
@@ -292,12 +326,15 @@
       "parameters": {
         "modelId": {
           "__rl": true,
+          "value": "models/gemini-2.5-pro",
           "mode": "list",
-          "value": ""
+          "cachedResultName": "models/gemini-2.5-pro"
         },
         "messages": {
           "values": [
-            {}
+            {
+              "content": "=Business: {{ $('Loop Over Items').item.json.title }} Address: {{ $('Loop Over Items').item.json.address }} Website: {{ $('Loop Over Items').item.json.website }} Phone: {{ $('Loop Over Items').item.json.phone }}"
+            }
           ]
         },
         "options": {}
@@ -318,7 +355,19 @@
       }
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "On form submission": [
+      {
+        "json": {
+          "Search Query": "Dental Clincs",
+          "Location": "USA",
+          "Max Number of Results": 1,
+          "submittedAt": "2025-09-29T01:33:14.384+02:00",
+          "formMode": "test"
+        }
+      }
+    ]
+  },
   "settings": {
     "executionOrder": "v1"
   },
@@ -341,6 +390,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2025-09-28T23:20:04.000Z",
-  "versionId": "9fac976d-5226-4099-84ae-aedfd0d843f8"
+  "updatedAt": "2025-09-28T23:53:49.000Z",
+  "versionId": "38ae9836-854a-4a44-ae33-c4d8a76054b2"
 }
