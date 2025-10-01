@@ -703,7 +703,7 @@
     },
     {
       "parameters": {
-        "url": "={{ $json.query }}",
+        "url": "={{ $json.Url }}",
         "options": {
           "batching": {
             "batch": {}
@@ -816,6 +816,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-10-01T14:42:18.000Z",
-  "versionId": "256a3dea-9f63-4cd3-8301-ed6b77c019e4"
+  "updatedAt": "2025-10-01T15:38:40.000Z",
+  "versionId": "df8c6897-be24-444c-bda4-539d4bff8c1a"
 }
