@@ -241,10 +241,10 @@
         "messages": {
           "values": [
             {
-              "content": "=Extract clinic name, email, and phone.\n\nReference URL: {{ $('Loop Over Items3').item.json.query }}\nWebsite HTML content: {{ $json.data }}"
+              "content": "=Extract clinic name, email, and phone.\n\nReference URL: {{ $('Loop Over Items3').item.json.Url }}\nWebsite HTML content: {{ $json.data }}"
             },
             {
-              "content": "=You are an extraction engine. \nUse ONLY the provided website HTML (from {{ $json.data }}) to extract data. \nThe URL ({{ $('Loop Over Items3').item.json.query }}) is for reference only, NOT for extraction.\n\nRules:\n- Return only clinic name, email, and phone.\n- Output must be raw JSON only, no extra text or code fences.\n- If a field is missing, set it to null.\n- Email must match local@domain.tld or null.\n- Phone must match a real number format or null.\n- Name must come only from official branding in the HTML (title tag, header, logo) or null.\n\nFormat:\n{\n  \"email\": \"example@example.com\",\n  \"phone\": \"(212) 452-3344\",\n  \"name\": \"Forest Dental Clinic\"\n}\n",
+              "content": "=You are an extraction engine. \nUse ONLY the provided website HTML (from {{ $json.data }}) to extract data. \nThe URL ({{ $('Loop Over Items3').item.json.Url }}) is for reference only, NOT for extraction.\n\nRules:\n- Return only clinic name, email, and phone.\n- Output must be raw JSON only, no extra text or code fences.\n- If a field is missing, set it to null.\n- Email must match local@domain.tld or null.\n- Phone must match a real number format or null.\n- Name must come only from official branding in the HTML (title tag, header, logo) or null.\n\nFormat:\n{\n  \"email\": \"example@example.com\",\n  \"phone\": \"(212) 452-3344\",\n  \"name\": \"Forest Dental Clinic\"\n}\n",
               "role": "model"
             }
           ]
@@ -460,7 +460,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "position": [
         1168,
-        344
+        352
       ],
       "typeVersion": 1,
       "id": "1059a356-3fb9-4bef-8d30-cb6a248d9d44",
@@ -856,6 +856,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-10-01T18:16:23.000Z",
-  "versionId": "85b9eb85-5862-435d-bf0a-c8892f31f1d7"
+  "updatedAt": "2025-10-01T22:52:24.000Z",
+  "versionId": "89bcd78a-2838-495a-86ed-efd4f119d411"
 }
