@@ -8,6 +8,11 @@
             "node": "GeoCoding",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "UNIX TimeStap",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -16,7 +21,7 @@
       "main": [
         [
           {
-            "node": "Distance Matrix",
+            "node": "Merge",
             "type": "main",
             "index": 0
           }
@@ -26,6 +31,28 @@
     "Distance Matrix": {
       "main": [
         []
+      ]
+    },
+    "UNIX TimeStap": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Distance Matrix",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     }
   },
@@ -41,7 +68,7 @@
       "typeVersion": 1,
       "position": [
         -528,
-        -32
+        64
       ],
       "id": "8041bfcf-94a7-43bb-9267-2db0445393aa",
       "name": "When clicking ‘Execute workflow’"
@@ -97,7 +124,7 @@
             },
             {
               "name": "departure_time",
-              "value": "=now"
+              "value": "={{ $json.unixTimestamp }}"
             },
             {
               "name": "key",
@@ -110,24 +137,35 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -80,
-        -32
+        144,
+        64
       ],
       "id": "81cfe5ca-fd3e-400e-860d-41cfd8ee2b63",
       "name": "Distance Matrix"
     },
     {
       "parameters": {
-        "jsCode": "/**\n * Calculates the required UNIX timestamp (seconds since epoch) from an ISO 8601 string.\n * This is the format required by the Google Distance Matrix API for 'departure_time'.\n *\n * The input date string MUST include the timezone offset (e.g., '2025-10-05T22:30:00+05:00').\n *\n * @param {string} isoDateString The ISO 8601 date and time string with timezone offset.\n * @returns {number} The UNIX timestamp in seconds.\n */\nfunction convertIsoToUnixTimestamp(isoDateString) {\n    // 1. Create a Date object from the ISO string.\n    // JavaScript correctly parses the string and accounts for the '+05:00' timezone offset.\n    const targetDate = new Date(isoDateString);\n\n    // Check if the date parsing was successful\n    if (isNaN(targetDate.getTime())) {\n        console.error(\"Error: Invalid date string provided.\");\n        return 0; // Return 0 or handle error as appropriate\n    }\n\n    // 2. Get the time in milliseconds since the epoch.\n    const timeInMilliseconds = targetDate.getTime();\n\n    // 3. Convert milliseconds to seconds by dividing by 1000.\n    // The Math.floor ensures a clean integer, as required by the API.\n    const timeInSeconds = Math.floor(timeInMilliseconds / 1000);\n\n    return timeInSeconds;\n}\n\n// --- EXAMPLE USAGE ---\n\n// The time string you want to use for the API call (e.g., booking time).\nconst bookingTimeString = \"2025-10-05T22:30:00+05:00\";\n\nconst departureTimestamp = convertIsoToUnixTimestamp(bookingTimeString);\n\nconsole.log(\"Input ISO 8601 String:\", bookingTimeString);\nconsole.log(\"Equivalent Date Object (in local time zone):\", new Date(bookingTimeString).toString());\nconsole.log(\"Calculated UNIX Timestamp (seconds) for API:\", departureTimestamp);\n\n// You would then use this 'departureTimestamp' variable in your API call:\n// ...&departure_time=' + departureTimestamp + '&..."
+        "jsCode": "// This version is compatible with older n8n instances.\n\nfor (const item of items) {\n  // The input field name from your data.\n  const inputFieldName = 'avaiableTime';\n\n  // The desired name for the output field.\n  const outputFieldName = 'unixTimestamp';\n\n  const isoString = item.json[inputFieldName];\n\n  if (!isoString) {\n    item.json.error = `Input field '${inputFieldName}' not found.`;\n    continue;\n  }\n\n  // Create a Date object from the ISO string.\n  const dateObject = new Date(isoString);\n\n  // Check if the date is valid.\n  if (isNaN(dateObject.getTime())) {\n    item.json.error = `Invalid date format in '${inputFieldName}': ${isoString}`;\n    continue;\n  }\n\n  // Convert milliseconds to seconds for the UNIX timestamp.\n  const unixTimestampInSeconds = Math.floor(dateObject.getTime() / 1000);\n\n  // Add the new field to the item.\n  item.json[outputFieldName] = unixTimestampInSeconds;\n}\n\n// Return the modified data.\nreturn items;"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -528,
-        192
+        -304,
+        160
       ],
       "id": "7bc857f8-e074-4179-ba49-5f5c436e8d99",
       "name": "UNIX TimeStap"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -80,
+        64
+      ],
+      "id": "d5bd7eac-2bb9-4cd8-9e71-cad0da4601c8",
+      "name": "Merge"
     }
   ],
   "pinData": {
@@ -135,7 +173,8 @@
       {
         "json": {
           "serviceAgentAddress": "1560 Broadway, New York, NY 10036, USA",
-          "customerAddress": "11 Brooklyn Bridge Blvd, Brooklyn, NY 11201, USA"
+          "customerAddress": "11 Brooklyn Bridge Blvd, Brooklyn, NY 11201, USA",
+          "avaiableTime": "2025-10-05T22:30:00+05:00"
         }
       }
     ],
@@ -497,6 +536,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-10-04T20:00:11.000Z",
-  "versionId": "1db2a219-5968-48ed-a6fa-3e79148a8f37"
+  "updatedAt": "2025-10-04T20:28:26.000Z",
+  "versionId": "015e418f-4d6d-407a-ac38-35db048b6a79"
 }
