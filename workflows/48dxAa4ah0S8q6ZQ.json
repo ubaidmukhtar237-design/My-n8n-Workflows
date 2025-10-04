@@ -66,7 +66,7 @@
   "id": "48dxAa4ah0S8q6ZQ",
   "isArchived": false,
   "meta": null,
-  "name": "blank",
+  "name": "Geocoding and Distance Matrix:Practice",
   "nodes": [
     {
       "parameters": {},
@@ -184,7 +184,7 @@
             {
               "id": "9adb0118-52c8-4350-9a1d-a5e64c0900cf",
               "name": "=Answer",
-              "value": "=It would take {{ $json.rows[0].elements[0].duration_in_traffic.text }} to reach your address at {{ $json.destination_addresses[0] }}.",
+              "value": "=It would take {{ $json.rows[0].elements[0].duration_in_traffic.text }} to reach your address at {{ $('When clicking ‘Execute workflow’').item.json.customerAddress }}.",
               "type": "string"
             }
           ]
@@ -194,11 +194,27 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        352,
+        384,
         64
       ],
       "id": "f65ece3a-271d-4423-98a3-3ea28ba6d777",
       "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "content": "Geocoding and Distance Matrix:Practice",
+        "height": 400,
+        "width": 1392,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -656,
+        -80
+      ],
+      "typeVersion": 1,
+      "id": "0f9c6267-0f8c-426d-9820-107e0d5e05e6",
+      "name": "Sticky Note"
     }
   ],
   "pinData": {
@@ -466,6 +482,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-10-04T20:57:44.000Z",
-  "versionId": "b763a060-802e-4b20-8a26-8d20f4046d7c"
+  "updatedAt": "2025-10-04T21:10:13.000Z",
+  "versionId": "ce0eade0-1494-46ac-9bbd-3d72b8ef9a54"
 }
