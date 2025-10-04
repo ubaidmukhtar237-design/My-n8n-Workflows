@@ -1,12 +1,57 @@
 {
   "active": false,
-  "connections": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "createdAt": "2025-10-03T22:34:59.149Z",
   "id": "48dxAa4ah0S8q6ZQ",
   "isArchived": false,
   "meta": null,
   "name": "blank",
-  "nodes": [],
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -384,
+        -128
+      ],
+      "id": "8041bfcf-94a7-43bb-9267-2db0445393aa",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -176,
+        -128
+      ],
+      "id": "5a3bc0d0-24cd-4ea3-8e3f-dfee01f141e3",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "u8uI1HNYy7Uo1WNN",
+          "name": "GEOCODING AND DISTANCE MATRIX"
+        }
+      }
+    }
+  ],
   "pinData": {},
   "settings": {
     "executionOrder": "v1"
@@ -23,6 +68,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-10-03T22:34:59.000Z",
-  "versionId": "2dfd348f-646f-4b37-9042-b921aa0e6c73"
+  "updatedAt": "2025-10-04T15:42:14.000Z",
+  "versionId": "c872bbcc-75c8-47d2-88b3-99ff2e5528c2"
 }
