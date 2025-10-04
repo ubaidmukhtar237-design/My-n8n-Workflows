@@ -5,56 +5,18 @@
       "main": [
         [
           {
-            "node": "Customer Address",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Service Agent Address",
+            "node": "GeoCoding",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Customer Address": {
+    "GeoCoding": {
       "main": [
         [
           {
-            "node": "Merge",
-            "type": "main",
-            "index": 1
-          }
-        ]
-      ]
-    },
-    "Service Agent Address": {
-      "main": [
-        [
-          {
-            "node": "Merge",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Merge": {
-      "main": [
-        [
-          {
-            "node": "Edit Fields",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Edit Fields": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request1",
+            "node": "Distance Matrix",
             "type": "main",
             "index": 0
           }
@@ -81,21 +43,44 @@
     },
     {
       "parameters": {
-        "url": "https://maps.googleapis.com/maps/api/distancematrix/json",
+        "url": "=https://maps.googleapis.com/maps/api/geocode/json",
         "sendQuery": true,
         "queryParameters": {
           "parameters": [
             {
+              "name": "address",
+              "value": "={{ $json.serviceAgentAddress.replace(/ /g, '+') }}|{{ $json.customerAddress.replace(/ /g, '+') }}"
+            },
+            {
               "name": "key",
               "value": "AIzaSyDx9u7u9BEaMo-bUNXmzJXXORd1kHXaLv8"
-            },
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -336,
+        -32
+      ],
+      "id": "0d0f20e6-f563-476d-ae87-97ff2a478775",
+      "name": "GeoCoding"
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/distancematrix/json",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
             {
               "name": "origins",
               "value": "={{ $json.results[0].geometry.location.lat }},{{ $json.results[0].geometry.location.lng }}"
             },
             {
               "name": "destinations",
-              "value": "="
+              "value": "={{ $json.results[1].geometry.location.lat }},{{ $json.results[1].geometry.location.lng }}"
             },
             {
               "name": "units",
@@ -104,6 +89,10 @@
             {
               "name": "mode",
               "value": "driving"
+            },
+            {
+              "name": "key",
+              "value": "AIzaSyDx9u7u9BEaMo-bUNXmzJXXORd1kHXaLv8"
             }
           ]
         },
@@ -112,105 +101,11 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        352,
+        -128,
         -32
       ],
       "id": "81cfe5ca-fd3e-400e-860d-41cfd8ee2b63",
-      "name": "HTTP Request1"
-    },
-    {
-      "parameters": {
-        "url": "=https://maps.googleapis.com/maps/api/geocode/json",
-        "sendQuery": true,
-        "queryParameters": {
-          "parameters": [
-            {
-              "name": "address",
-              "value": "={{ $json.customerAddress.replace(/ /g, '+') }}"
-            },
-            {
-              "name": "key",
-              "value": "AIzaSyDx9u7u9BEaMo-bUNXmzJXXORd1kHXaLv8"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        -304,
-        48
-      ],
-      "id": "5a3bc0d0-24cd-4ea3-8e3f-dfee01f141e3",
-      "name": "Customer Address"
-    },
-    {
-      "parameters": {
-        "url": "=https://maps.googleapis.com/maps/api/geocode/json",
-        "sendQuery": true,
-        "queryParameters": {
-          "parameters": [
-            {
-              "name": "address",
-              "value": "={{ $json.serviceAgentAddress }}"
-            },
-            {
-              "name": "key",
-              "value": "AIzaSyDx9u7u9BEaMo-bUNXmzJXXORd1kHXaLv8"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        -304,
-        -128
-      ],
-      "id": "0d0f20e6-f563-476d-ae87-97ff2a478775",
-      "name": "Service Agent Address"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3.2,
-      "position": [
-        -80,
-        -32
-      ],
-      "id": "426a159c-c3b7-4e7c-a19c-2bdee82c58cb",
-      "name": "Merge"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "62f07509-ef12-45b4-8ffa-2ff8b36616de",
-              "name": "Origins",
-              "value": "={{ $json.results[0].geometry.location.lat }},{{ $json.results[0].geometry.location.lng }}",
-              "type": "string"
-            },
-            {
-              "id": "cb142257-b05d-4293-9257-b833fefb8177",
-              "name": "Destination",
-              "value": "={{ $json.results[0].geometry.location.lat }},{{ $json.results[0].geometry.location.lng }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        128,
-        -32
-      ],
-      "id": "d98c762b-da19-4959-b4b8-f65b894b3fb9",
-      "name": "Edit Fields"
+      "name": "Distance Matrix"
     }
   ],
   "pinData": {
@@ -222,105 +117,29 @@
         }
       }
     ],
-    "Customer Address": [
+    "Distance Matrix": [
       {
         "json": {
-          "results": [
+          "destination_addresses": [
+            "501 6th Ave, New York, NY 10011, USA"
+          ],
+          "origin_addresses": [
+            "200-02 46th Ave, Flushing, NY 11361, USA"
+          ],
+          "rows": [
             {
-              "address_components": [
+              "elements": [
                 {
-                  "long_name": "47",
-                  "short_name": "47",
-                  "types": [
-                    "street_number"
-                  ]
-                },
-                {
-                  "long_name": "West 13th Street",
-                  "short_name": "W 13th St",
-                  "types": [
-                    "route"
-                  ]
-                },
-                {
-                  "long_name": "Manhattan",
-                  "short_name": "Manhattan",
-                  "types": [
-                    "political",
-                    "sublocality",
-                    "sublocality_level_1"
-                  ]
-                },
-                {
-                  "long_name": "New York",
-                  "short_name": "New York",
-                  "types": [
-                    "locality",
-                    "political"
-                  ]
-                },
-                {
-                  "long_name": "New York County",
-                  "short_name": "New York County",
-                  "types": [
-                    "administrative_area_level_2",
-                    "political"
-                  ]
-                },
-                {
-                  "long_name": "New York",
-                  "short_name": "NY",
-                  "types": [
-                    "administrative_area_level_1",
-                    "political"
-                  ]
-                },
-                {
-                  "long_name": "United States",
-                  "short_name": "US",
-                  "types": [
-                    "country",
-                    "political"
-                  ]
-                },
-                {
-                  "long_name": "10011",
-                  "short_name": "10011",
-                  "types": [
-                    "postal_code"
-                  ]
-                }
-              ],
-              "formatted_address": "47 W 13th St, New York, NY 10011, USA",
-              "geometry": {
-                "location": {
-                  "lat": 40.7362169,
-                  "lng": -73.9966079
-                },
-                "location_type": "ROOFTOP",
-                "viewport": {
-                  "northeast": {
-                    "lat": 40.73762843029149,
-                    "lng": -73.9952185197085
+                  "distance": {
+                    "text": "23.7 km",
+                    "value": 23700
                   },
-                  "southwest": {
-                    "lat": 40.73493046970849,
-                    "lng": -73.99791648029151
-                  }
+                  "duration": {
+                    "text": "32 mins",
+                    "value": 1945
+                  },
+                  "status": "OK"
                 }
-              },
-              "navigation_points": [
-                {
-                  "location": {
-                    "latitude": 40.7362869,
-                    "longitude": -73.9965674
-                  }
-                }
-              ],
-              "place_id": "ChIJVULSxpdZwokRHgEApdDc1z8",
-              "types": [
-                "street_address",
-                "subpremise"
               ]
             }
           ],
@@ -328,7 +147,7 @@
         }
       }
     ],
-    "Service Agent Address": [
+    "GeoCoding": [
       {
         "json": {
           "results": [
@@ -423,67 +242,102 @@
                   }
                 }
               ],
+              "partial_match": true,
               "place_id": "EicyMDEtMTAgNDZ0aCBBdmUsIEJheXNpZGUsIE5ZIDExMzYxLCBVU0EiMBIuChQKEgnt75MkxWHCiRFxosxwibr6yRAKKhQKEglHhNcr0GHCiRF9iaKdPoWAPA",
               "types": [
                 "street_address"
               ]
-            }
-          ],
-          "status": "OK"
-        }
-      }
-    ],
-    "HTTP Request1": [
-      {
-        "json": {
-          "destination_addresses": [
-            "200-02 46th Ave, Flushing, NY 11361, USA"
-          ],
-          "origin_addresses": [
-            "200-02 46th Ave, Flushing, NY 11361, USA"
-          ],
-          "rows": [
+            },
             {
-              "elements": [
+              "address_components": [
                 {
-                  "distance": {
-                    "text": "1 m",
-                    "value": 0
-                  },
-                  "duration": {
-                    "text": "1 min",
-                    "value": 0
-                  },
-                  "status": "OK"
-                }
-              ]
-            }
-          ],
-          "status": "OK"
-        }
-      },
-      {
-        "json": {
-          "destination_addresses": [
-            "13th Street, 47 W 13th St, New York, NY 10011, USA"
-          ],
-          "origin_addresses": [
-            "13th Street, 47 W 13th St, New York, NY 10011, USA"
-          ],
-          "rows": [
-            {
-              "elements": [
+                  "long_name": "West 13th Street",
+                  "short_name": "W 13th St",
+                  "types": [
+                    "route"
+                  ]
+                },
                 {
-                  "distance": {
-                    "text": "1 m",
-                    "value": 0
-                  },
-                  "duration": {
-                    "text": "1 min",
-                    "value": 0
-                  },
-                  "status": "OK"
+                  "long_name": "Manhattan",
+                  "short_name": "Manhattan",
+                  "types": [
+                    "political",
+                    "sublocality",
+                    "sublocality_level_1"
+                  ]
+                },
+                {
+                  "long_name": "New York",
+                  "short_name": "New York",
+                  "types": [
+                    "locality",
+                    "political"
+                  ]
+                },
+                {
+                  "long_name": "New York County",
+                  "short_name": "New York County",
+                  "types": [
+                    "administrative_area_level_2",
+                    "political"
+                  ]
+                },
+                {
+                  "long_name": "New York",
+                  "short_name": "NY",
+                  "types": [
+                    "administrative_area_level_1",
+                    "political"
+                  ]
+                },
+                {
+                  "long_name": "United States",
+                  "short_name": "US",
+                  "types": [
+                    "country",
+                    "political"
+                  ]
+                },
+                {
+                  "long_name": "10011",
+                  "short_name": "10011",
+                  "types": [
+                    "postal_code"
+                  ]
                 }
+              ],
+              "formatted_address": "W 13th St, New York, NY 10011, USA",
+              "geometry": {
+                "bounds": {
+                  "northeast": {
+                    "lat": 40.73908900000003,
+                    "lng": -73.9941255
+                  },
+                  "southwest": {
+                    "lat": 40.73533119999998,
+                    "lng": -74.003073
+                  }
+                },
+                "location": {
+                  "lat": 40.7367611,
+                  "lng": -73.9975599
+                },
+                "location_type": "GEOMETRIC_CENTER",
+                "viewport": {
+                  "northeast": {
+                    "lat": 40.73908900000003,
+                    "lng": -73.9941255
+                  },
+                  "southwest": {
+                    "lat": 40.73533119999998,
+                    "lng": -74.003073
+                  }
+                }
+              },
+              "partial_match": true,
+              "place_id": "EiJXIDEzdGggU3QsIE5ldyBZb3JrLCBOWSAxMDAxMSwgVVNBIi4qLAoUChIJb7MjG75ZwokRJSKQFiRBVn4SFAoSCTl1w9GQWcKJEaoSSchaYGUG",
+              "types": [
+                "route"
               ]
             }
           ],
@@ -507,6 +361,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-10-04T18:33:40.000Z",
-  "versionId": "130255ac-0c0e-4971-9648-e626a66bdc12"
+  "updatedAt": "2025-10-04T19:23:35.000Z",
+  "versionId": "10fc4552-2c66-4950-b5be-78c74e9bc9db"
 }
