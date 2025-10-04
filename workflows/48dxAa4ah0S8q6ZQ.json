@@ -5,25 +5,41 @@
       "main": [
         [
           {
-            "node": "HTTP Request",
+            "node": "Customer Address",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Service Agent Address",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "HTTP Request": {
+    "Customer Address": {
       "main": [
         [
           {
-            "node": "Edit Fields",
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Service Agent Address": {
+      "main": [
+        [
+          {
+            "node": "Merge",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Edit Fields": {
+    "Merge": {
       "main": [
         [
           {
@@ -46,11 +62,50 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -384,
-        -128
+        -528,
+        -32
       ],
       "id": "8041bfcf-94a7-43bb-9267-2db0445393aa",
       "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/distancematrix/json",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "key",
+              "value": "AIzaSyDx9u7u9BEaMo-bUNXmzJXXORd1kHXaLv8"
+            },
+            {
+              "name": "origins",
+              "value": "={{ $json.results[0].geometry.location.lat }},{{ $json.results[0].geometry.location.lng }}"
+            },
+            {
+              "name": "destinations",
+              "value": "={{ $json.results[0].geometry.location.lat }},{{ $json.results[0].geometry.location.lng }}"
+            },
+            {
+              "name": "units",
+              "value": "metric"
+            },
+            {
+              "name": "mode",
+              "value": "driving"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        128,
+        -32
+      ],
+      "id": "81cfe5ca-fd3e-400e-860d-41cfd8ee2b63",
+      "name": "HTTP Request1"
     },
     {
       "parameters": {
@@ -73,47 +128,22 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -176,
-        -128
+        -304,
+        48
       ],
       "id": "5a3bc0d0-24cd-4ea3-8e3f-dfee01f141e3",
-      "name": "HTTP Request"
+      "name": "Customer Address"
     },
     {
       "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "7916ba3e-2e7f-4e96-ae3d-24ac91ef50f7",
-              "name": "results[0].geometry.location.lat",
-              "value": "={{ $json.results[0].geometry.location.lat }}",
-              "type": "number"
-            },
-            {
-              "id": "8b501a11-7baf-4137-a818-d366ae76b34c",
-              "name": "results[0].geometry.location.lng",
-              "value": "={{ $json.results[0].geometry.location.lng }}",
-              "type": "number"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        32,
-        -128
-      ],
-      "id": "f7eafd15-a81b-4e77-b2a0-c3007d73c3eb",
-      "name": "Edit Fields"
-    },
-    {
-      "parameters": {
-        "url": "https://maps.googleapis.com/maps/api/distancematrix/json",
+        "url": "=https://maps.googleapis.com/maps/api/geocode/json",
         "sendQuery": true,
         "queryParameters": {
           "parameters": [
+            {
+              "name": "address",
+              "value": "={{ $json.serviceAgentAddress }}"
+            },
             {
               "name": "key",
               "value": "AIzaSyDx9u7u9BEaMo-bUNXmzJXXORd1kHXaLv8"
@@ -125,18 +155,241 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        240,
+        -304,
         -128
       ],
-      "id": "81cfe5ca-fd3e-400e-860d-41cfd8ee2b63",
-      "name": "HTTP Request1"
+      "id": "0d0f20e6-f563-476d-ae87-97ff2a478775",
+      "name": "Service Agent Address"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -80,
+        -32
+      ],
+      "id": "426a159c-c3b7-4e7c-a19c-2bdee82c58cb",
+      "name": "Merge"
     }
   ],
   "pinData": {
     "When clicking ‘Execute workflow’": [
       {
         "json": {
+          "serviceAgentAddress": "201-10 46th Ave, Bayside, NY 11361, USA",
           "customerAddress": "47 W 13th St, New York, NY 10011, USA"
+        }
+      }
+    ],
+    "Customer Address": [
+      {
+        "json": {
+          "results": [
+            {
+              "address_components": [
+                {
+                  "long_name": "47",
+                  "short_name": "47",
+                  "types": [
+                    "street_number"
+                  ]
+                },
+                {
+                  "long_name": "West 13th Street",
+                  "short_name": "W 13th St",
+                  "types": [
+                    "route"
+                  ]
+                },
+                {
+                  "long_name": "Manhattan",
+                  "short_name": "Manhattan",
+                  "types": [
+                    "political",
+                    "sublocality",
+                    "sublocality_level_1"
+                  ]
+                },
+                {
+                  "long_name": "New York",
+                  "short_name": "New York",
+                  "types": [
+                    "locality",
+                    "political"
+                  ]
+                },
+                {
+                  "long_name": "New York County",
+                  "short_name": "New York County",
+                  "types": [
+                    "administrative_area_level_2",
+                    "political"
+                  ]
+                },
+                {
+                  "long_name": "New York",
+                  "short_name": "NY",
+                  "types": [
+                    "administrative_area_level_1",
+                    "political"
+                  ]
+                },
+                {
+                  "long_name": "United States",
+                  "short_name": "US",
+                  "types": [
+                    "country",
+                    "political"
+                  ]
+                },
+                {
+                  "long_name": "10011",
+                  "short_name": "10011",
+                  "types": [
+                    "postal_code"
+                  ]
+                }
+              ],
+              "formatted_address": "47 W 13th St, New York, NY 10011, USA",
+              "geometry": {
+                "location": {
+                  "lat": 40.7362169,
+                  "lng": -73.9966079
+                },
+                "location_type": "ROOFTOP",
+                "viewport": {
+                  "northeast": {
+                    "lat": 40.73762843029149,
+                    "lng": -73.9952185197085
+                  },
+                  "southwest": {
+                    "lat": 40.73493046970849,
+                    "lng": -73.99791648029151
+                  }
+                }
+              },
+              "navigation_points": [
+                {
+                  "location": {
+                    "latitude": 40.7362869,
+                    "longitude": -73.9965674
+                  }
+                }
+              ],
+              "place_id": "ChIJVULSxpdZwokRHgEApdDc1z8",
+              "types": [
+                "street_address",
+                "subpremise"
+              ]
+            }
+          ],
+          "status": "OK"
+        }
+      }
+    ],
+    "Service Agent Address": [
+      {
+        "json": {
+          "results": [
+            {
+              "address_components": [
+                {
+                  "long_name": "201-10",
+                  "short_name": "201-10",
+                  "types": [
+                    "street_number"
+                  ]
+                },
+                {
+                  "long_name": "46th Avenue",
+                  "short_name": "46th Ave",
+                  "types": [
+                    "route"
+                  ]
+                },
+                {
+                  "long_name": "Bayside",
+                  "short_name": "Bayside",
+                  "types": [
+                    "neighborhood",
+                    "political"
+                  ]
+                },
+                {
+                  "long_name": "Queens",
+                  "short_name": "Queens",
+                  "types": [
+                    "political",
+                    "sublocality",
+                    "sublocality_level_1"
+                  ]
+                },
+                {
+                  "long_name": "Queens County",
+                  "short_name": "Queens County",
+                  "types": [
+                    "administrative_area_level_2",
+                    "political"
+                  ]
+                },
+                {
+                  "long_name": "New York",
+                  "short_name": "NY",
+                  "types": [
+                    "administrative_area_level_1",
+                    "political"
+                  ]
+                },
+                {
+                  "long_name": "United States",
+                  "short_name": "US",
+                  "types": [
+                    "country",
+                    "political"
+                  ]
+                },
+                {
+                  "long_name": "11361",
+                  "short_name": "11361",
+                  "types": [
+                    "postal_code"
+                  ]
+                }
+              ],
+              "formatted_address": "201-10 46th Ave, Bayside, NY 11361, USA",
+              "geometry": {
+                "location": {
+                  "lat": 40.7545696,
+                  "lng": -73.7813128
+                },
+                "location_type": "RANGE_INTERPOLATED",
+                "viewport": {
+                  "northeast": {
+                    "lat": 40.7560224802915,
+                    "lng": -73.78001276970848
+                  },
+                  "southwest": {
+                    "lat": 40.7533245197085,
+                    "lng": -73.7827107302915
+                  }
+                }
+              },
+              "navigation_points": [
+                {
+                  "location": {
+                    "latitude": 40.75476889999999,
+                    "longitude": -73.78140669999999
+                  }
+                }
+              ],
+              "place_id": "EicyMDEtMTAgNDZ0aCBBdmUsIEJheXNpZGUsIE5ZIDExMzYxLCBVU0EiMBIuChQKEgnt75MkxWHCiRFxosxwibr6yRAKKhQKEglHhNcr0GHCiRF9iaKdPoWAPA",
+              "types": [
+                "street_address"
+              ]
+            }
+          ],
+          "status": "OK"
         }
       }
     ]
@@ -156,6 +409,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-10-04T17:47:38.000Z",
-  "versionId": "a78b956e-5f0c-407d-a60e-bf33365ede17"
+  "updatedAt": "2025-10-04T18:30:06.000Z",
+  "versionId": "ed644648-1cc6-4d06-ad30-ebfb0c22940a"
 }
