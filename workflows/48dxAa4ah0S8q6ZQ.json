@@ -215,6 +215,22 @@
       "typeVersion": 1,
       "id": "0f9c6267-0f8c-426d-9820-107e0d5e05e6",
       "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "Available Time:Practice",
+        "height": 352,
+        "width": 1392,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -656,
+        336
+      ],
+      "typeVersion": 1,
+      "id": "13281280-2896-43b1-a20f-13a9ae2d1993",
+      "name": "Sticky Note1"
     }
   ],
   "pinData": {
@@ -482,6 +498,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-10-04T21:10:13.000Z",
-  "versionId": "ce0eade0-1494-46ac-9bbd-3d72b8ef9a54"
+  "updatedAt": "2025-10-04T23:07:17.000Z",
+  "versionId": "97a4eecf-ffa3-462f-af6c-e52693d94784"
 }
