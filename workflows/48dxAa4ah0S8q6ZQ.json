@@ -30,7 +30,13 @@
     },
     "Distance Matrix": {
       "main": [
-        []
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "UNIX TimeStap": {
@@ -157,7 +163,11 @@
       "name": "UNIX TimeStap"
     },
     {
-      "parameters": {},
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
@@ -166,15 +176,38 @@
       ],
       "id": "d5bd7eac-2bb9-4cd8-9e71-cad0da4601c8",
       "name": "Merge"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9adb0118-52c8-4350-9a1d-a5e64c0900cf",
+              "name": "=Answer",
+              "value": "=It would take {{ $json.rows[0].elements[0].duration_in_traffic.text }} to reach your address at {{ $json.destination_addresses[0] }}.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        352,
+        64
+      ],
+      "id": "f65ece3a-271d-4423-98a3-3ea28ba6d777",
+      "name": "Edit Fields"
     }
   ],
   "pinData": {
     "When clicking ‘Execute workflow’": [
       {
         "json": {
-          "serviceAgentAddress": "1560 Broadway, New York, NY 10036, USA",
-          "customerAddress": "11 Brooklyn Bridge Blvd, Brooklyn, NY 11201, USA",
-          "avaiableTime": "2025-10-05T22:30:00+05:00"
+          "serviceAgentAddress": "66 Third Ave, E 11th St, New York, NY 10003, United States",
+          "customerAddress": "New York, NY 10007, United States",
+          "avaiableTime": "2025-10-06T22:30:00+05:00"
         }
       }
     ],
@@ -185,15 +218,8 @@
             {
               "address_components": [
                 {
-                  "long_name": "1560",
-                  "short_name": "1560",
-                  "types": [
-                    "street_number"
-                  ]
-                },
-                {
-                  "long_name": "Broadway",
-                  "short_name": "Broadway",
+                  "long_name": "East 11th Street",
+                  "short_name": "E 11th St",
                   "types": [
                     "route"
                   ]
@@ -240,72 +266,66 @@
                   ]
                 },
                 {
-                  "long_name": "10036",
-                  "short_name": "10036",
+                  "long_name": "10003",
+                  "short_name": "10003",
                   "types": [
                     "postal_code"
                   ]
-                },
-                {
-                  "long_name": "1537",
-                  "short_name": "1537",
-                  "types": [
-                    "postal_code_suffix"
-                  ]
                 }
               ],
-              "formatted_address": "1560 Broadway, New York, NY 10036, USA",
+              "formatted_address": "E 11th St, New York, NY 10003, USA",
               "geometry": {
-                "location": {
-                  "lat": 40.7589202,
-                  "lng": -73.9846853
-                },
-                "location_type": "ROOFTOP",
-                "viewport": {
+                "bounds": {
                   "northeast": {
-                    "lat": 40.7603873802915,
-                    "lng": -73.98320716970849
+                    "lat": 40.73403840000002,
+                    "lng": -73.9840066
                   },
                   "southwest": {
-                    "lat": 40.7576894197085,
-                    "lng": -73.9859051302915
+                    "lat": 40.72938409999998,
+                    "lng": -73.9950466
+                  }
+                },
+                "location": {
+                  "lat": 40.7320044,
+                  "lng": -73.9902169
+                },
+                "location_type": "GEOMETRIC_CENTER",
+                "viewport": {
+                  "northeast": {
+                    "lat": 40.73403840000002,
+                    "lng": -73.9840066
+                  },
+                  "southwest": {
+                    "lat": 40.72938409999998,
+                    "lng": -73.9950466
                   }
                 }
               },
-              "navigation_points": [
-                {
-                  "location": {
-                    "latitude": 40.7590999,
-                    "longitude": -73.9844633
-                  }
-                }
-              ],
               "partial_match": true,
-              "place_id": "ChIJTb4Fv1VYwokRC4f88R92His",
+              "place_id": "EiJFIDExdGggU3QsIE5ldyBZb3JrLCBOWSAxMDAwMywgVVNBIi4qLAoUChIJy_xTzp1ZwokRk6Bv-fxOdHASFAoSCXc5REmZWcKJERmv3uC4ysVC",
               "types": [
-                "street_address",
-                "subpremise"
+                "route"
               ]
             },
             {
               "address_components": [
                 {
-                  "long_name": "11",
-                  "short_name": "11",
+                  "long_name": "66",
+                  "short_name": "66",
                   "types": [
                     "street_number"
                   ]
                 },
                 {
-                  "long_name": "Brooklyn Bridge Boulevard",
-                  "short_name": "Brooklyn Bridge Blvd",
+                  "long_name": "3rd Avenue",
+                  "short_name": "3rd Ave",
                   "types": [
                     "route"
                   ]
                 },
                 {
-                  "long_name": "Downtown Brooklyn",
-                  "short_name": "Downtown Brooklyn",
+                  "long_name": "Boerum Hill",
+                  "short_name": "Boerum Hill",
                   "types": [
                     "neighborhood",
                     "political"
@@ -345,140 +365,50 @@
                   ]
                 },
                 {
-                  "long_name": "11201",
-                  "short_name": "11201",
-                  "types": [
-                    "postal_code"
-                  ]
-                }
-              ],
-              "formatted_address": "11 Brooklyn Bridge Blvd, Brooklyn, NY 11201, USA",
-              "geometry": {
-                "location": {
-                  "lat": 40.6950959,
-                  "lng": -73.9889499
-                },
-                "location_type": "RANGE_INTERPOLATED",
-                "viewport": {
-                  "northeast": {
-                    "lat": 40.6964448802915,
-                    "lng": -73.9876009197085
-                  },
-                  "southwest": {
-                    "lat": 40.6937469197085,
-                    "lng": -73.9902988802915
-                  }
-                }
-              },
-              "partial_match": true,
-              "place_id": "EjAxMSBCcm9va2x5biBCcmlkZ2UgQmx2ZCwgQnJvb2tseW4sIE5ZIDExMjAxLCBVU0EiMBIuChQKEgm1yvuJSVrCiRElQvxu_vntDxALKhQKEgl5IztWSVrCiRHpNw-vY4xa7w",
-              "types": [
-                "street_address"
-              ]
-            },
-            {
-              "address_components": [
-                {
-                  "long_name": "11",
-                  "short_name": "11",
-                  "types": [
-                    "street_number"
-                  ]
-                },
-                {
-                  "long_name": "Broadway",
-                  "short_name": "Broadway",
-                  "types": [
-                    "route"
-                  ]
-                },
-                {
-                  "long_name": "Manhattan",
-                  "short_name": "Manhattan",
-                  "types": [
-                    "political",
-                    "sublocality",
-                    "sublocality_level_1"
-                  ]
-                },
-                {
-                  "long_name": "New York",
-                  "short_name": "New York",
-                  "types": [
-                    "locality",
-                    "political"
-                  ]
-                },
-                {
-                  "long_name": "New York County",
-                  "short_name": "New York County",
-                  "types": [
-                    "administrative_area_level_2",
-                    "political"
-                  ]
-                },
-                {
-                  "long_name": "New York",
-                  "short_name": "NY",
-                  "types": [
-                    "administrative_area_level_1",
-                    "political"
-                  ]
-                },
-                {
-                  "long_name": "United States",
-                  "short_name": "US",
-                  "types": [
-                    "country",
-                    "political"
-                  ]
-                },
-                {
-                  "long_name": "10038",
-                  "short_name": "10038",
+                  "long_name": "11217",
+                  "short_name": "11217",
                   "types": [
                     "postal_code"
                   ]
                 },
                 {
-                  "long_name": "1013",
-                  "short_name": "1013",
+                  "long_name": "1805",
+                  "short_name": "1805",
                   "types": [
                     "postal_code_suffix"
                   ]
                 }
               ],
-              "formatted_address": "11 Broadway, New York, NY 10038, USA",
+              "formatted_address": "66 3rd Ave, Brooklyn, NY 11217, USA",
               "geometry": {
                 "location": {
-                  "lat": 40.73509139999999,
-                  "lng": -73.9931265
+                  "lat": 40.684745,
+                  "lng": -73.9813992
                 },
-                "location_type": "ROOFTOP",
+                "location_type": "RANGE_INTERPOLATED",
                 "viewport": {
                   "northeast": {
-                    "lat": 40.7363708302915,
-                    "lng": -73.9918284197085
+                    "lat": 40.6860477802915,
+                    "lng": -73.97993176970849
                   },
                   "southwest": {
-                    "lat": 40.7336728697085,
-                    "lng": -73.9945263802915
+                    "lat": 40.6833498197085,
+                    "lng": -73.9826297302915
                   }
                 }
               },
               "navigation_points": [
                 {
                   "location": {
-                    "latitude": 40.73500740000001,
-                    "longitude": -73.993188
+                    "latitude": 40.6846567,
+                    "longitude": -73.9811728
                   }
                 }
               ],
               "partial_match": true,
-              "place_id": "ChIJVVUBR5hZwokR16lbNJ_RJHg",
+              "place_id": "EiM2NiAzcmQgQXZlLCBCcm9va2x5biwgTlkgMTEyMTcsIFVTQSIwEi4KFAoSCb2k2BStW8KJEelI5LjQNS33EEIqFAoSCVEAr_S3WsKJEfBWSwm_5RoP",
               "types": [
-                "street_address",
-                "subpremise"
+                "street_address"
               ]
             }
           ],
@@ -490,26 +420,26 @@
       {
         "json": {
           "destination_addresses": [
-            "158 Adams St, Brooklyn, NY 11201, USA"
+            "68 3rd Ave, Brooklyn, NY 11217, USA"
           ],
           "origin_addresses": [
-            "1560 Broadway, New York, NY 10036, USA"
+            "1234 4th Ave, New York, NY 10003, USA"
           ],
           "rows": [
             {
               "elements": [
                 {
                   "distance": {
-                    "text": "9.1 km",
-                    "value": 9086
+                    "text": "6.1 km",
+                    "value": 6102
                   },
                   "duration": {
-                    "text": "33 mins",
-                    "value": 1951
+                    "text": "21 mins",
+                    "value": 1256
                   },
                   "duration_in_traffic": {
-                    "text": "35 mins",
-                    "value": 2124
+                    "text": "21 mins",
+                    "value": 1255
                   },
                   "status": "OK"
                 }
@@ -536,6 +466,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-10-04T20:28:26.000Z",
-  "versionId": "015e418f-4d6d-407a-ac38-35db048b6a79"
+  "updatedAt": "2025-10-04T20:57:44.000Z",
+  "versionId": "b763a060-802e-4b20-8a26-8d20f4046d7c"
 }
