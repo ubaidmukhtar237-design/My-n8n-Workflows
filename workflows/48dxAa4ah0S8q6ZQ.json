@@ -22,6 +22,11 @@
           }
         ]
       ]
+    },
+    "Distance Matrix": {
+      "main": [
+        []
+      ]
     }
   },
   "createdAt": "2025-10-03T22:34:59.149Z",
@@ -62,7 +67,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -336,
+        -304,
         -32
       ],
       "id": "0d0f20e6-f563-476d-ae87-97ff2a478775",
@@ -91,6 +96,10 @@
               "value": "driving"
             },
             {
+              "name": "departure_time",
+              "value": "=now"
+            },
+            {
               "name": "key",
               "value": "AIzaSyDx9u7u9BEaMo-bUNXmzJXXORd1kHXaLv8"
             }
@@ -101,49 +110,32 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -128,
+        -80,
         -32
       ],
       "id": "81cfe5ca-fd3e-400e-860d-41cfd8ee2b63",
       "name": "Distance Matrix"
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\n * Calculates the required UNIX timestamp (seconds since epoch) from an ISO 8601 string.\n * This is the format required by the Google Distance Matrix API for 'departure_time'.\n *\n * The input date string MUST include the timezone offset (e.g., '2025-10-05T22:30:00+05:00').\n *\n * @param {string} isoDateString The ISO 8601 date and time string with timezone offset.\n * @returns {number} The UNIX timestamp in seconds.\n */\nfunction convertIsoToUnixTimestamp(isoDateString) {\n    // 1. Create a Date object from the ISO string.\n    // JavaScript correctly parses the string and accounts for the '+05:00' timezone offset.\n    const targetDate = new Date(isoDateString);\n\n    // Check if the date parsing was successful\n    if (isNaN(targetDate.getTime())) {\n        console.error(\"Error: Invalid date string provided.\");\n        return 0; // Return 0 or handle error as appropriate\n    }\n\n    // 2. Get the time in milliseconds since the epoch.\n    const timeInMilliseconds = targetDate.getTime();\n\n    // 3. Convert milliseconds to seconds by dividing by 1000.\n    // The Math.floor ensures a clean integer, as required by the API.\n    const timeInSeconds = Math.floor(timeInMilliseconds / 1000);\n\n    return timeInSeconds;\n}\n\n// --- EXAMPLE USAGE ---\n\n// The time string you want to use for the API call (e.g., booking time).\nconst bookingTimeString = \"2025-10-05T22:30:00+05:00\";\n\nconst departureTimestamp = convertIsoToUnixTimestamp(bookingTimeString);\n\nconsole.log(\"Input ISO 8601 String:\", bookingTimeString);\nconsole.log(\"Equivalent Date Object (in local time zone):\", new Date(bookingTimeString).toString());\nconsole.log(\"Calculated UNIX Timestamp (seconds) for API:\", departureTimestamp);\n\n// You would then use this 'departureTimestamp' variable in your API call:\n// ...&departure_time=' + departureTimestamp + '&..."
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -528,
+        192
+      ],
+      "id": "7bc857f8-e074-4179-ba49-5f5c436e8d99",
+      "name": "UNIX TimeStap"
     }
   ],
   "pinData": {
     "When clicking ‘Execute workflow’": [
       {
         "json": {
-          "serviceAgentAddress": "201-10 46th Ave, Bayside, NY 11361, USA",
-          "customerAddress": "47 W 13th St, New York, NY 10011, USA"
-        }
-      }
-    ],
-    "Distance Matrix": [
-      {
-        "json": {
-          "destination_addresses": [
-            "501 6th Ave, New York, NY 10011, USA"
-          ],
-          "origin_addresses": [
-            "200-02 46th Ave, Flushing, NY 11361, USA"
-          ],
-          "rows": [
-            {
-              "elements": [
-                {
-                  "distance": {
-                    "text": "23.7 km",
-                    "value": 23700
-                  },
-                  "duration": {
-                    "text": "32 mins",
-                    "value": 1945
-                  },
-                  "status": "OK"
-                }
-              ]
-            }
-          ],
-          "status": "OK"
+          "serviceAgentAddress": "1560 Broadway, New York, NY 10036, USA",
+          "customerAddress": "11 Brooklyn Bridge Blvd, Brooklyn, NY 11201, USA"
         }
       }
     ],
@@ -154,105 +146,15 @@
             {
               "address_components": [
                 {
-                  "long_name": "201-10",
-                  "short_name": "201-10",
+                  "long_name": "1560",
+                  "short_name": "1560",
                   "types": [
                     "street_number"
                   ]
                 },
                 {
-                  "long_name": "46th Avenue",
-                  "short_name": "46th Ave",
-                  "types": [
-                    "route"
-                  ]
-                },
-                {
-                  "long_name": "Bayside",
-                  "short_name": "Bayside",
-                  "types": [
-                    "neighborhood",
-                    "political"
-                  ]
-                },
-                {
-                  "long_name": "Queens",
-                  "short_name": "Queens",
-                  "types": [
-                    "political",
-                    "sublocality",
-                    "sublocality_level_1"
-                  ]
-                },
-                {
-                  "long_name": "Queens County",
-                  "short_name": "Queens County",
-                  "types": [
-                    "administrative_area_level_2",
-                    "political"
-                  ]
-                },
-                {
-                  "long_name": "New York",
-                  "short_name": "NY",
-                  "types": [
-                    "administrative_area_level_1",
-                    "political"
-                  ]
-                },
-                {
-                  "long_name": "United States",
-                  "short_name": "US",
-                  "types": [
-                    "country",
-                    "political"
-                  ]
-                },
-                {
-                  "long_name": "11361",
-                  "short_name": "11361",
-                  "types": [
-                    "postal_code"
-                  ]
-                }
-              ],
-              "formatted_address": "201-10 46th Ave, Bayside, NY 11361, USA",
-              "geometry": {
-                "location": {
-                  "lat": 40.7545696,
-                  "lng": -73.7813128
-                },
-                "location_type": "RANGE_INTERPOLATED",
-                "viewport": {
-                  "northeast": {
-                    "lat": 40.7560224802915,
-                    "lng": -73.78001276970848
-                  },
-                  "southwest": {
-                    "lat": 40.7533245197085,
-                    "lng": -73.7827107302915
-                  }
-                }
-              },
-              "navigation_points": [
-                {
-                  "location": {
-                    "latitude": 40.75476889999999,
-                    "longitude": -73.78140669999999
-                  }
-                }
-              ],
-              "partial_match": true,
-              "place_id": "EicyMDEtMTAgNDZ0aCBBdmUsIEJheXNpZGUsIE5ZIDExMzYxLCBVU0EiMBIuChQKEgnt75MkxWHCiRFxosxwibr6yRAKKhQKEglHhNcr0GHCiRF9iaKdPoWAPA",
-              "types": [
-                "street_address"
-              ]
-            },
-            {
-              "address_components": [
-                {
-                  "long_name": "West 13th Street",
-                  "short_name": "W 13th St",
+                  "long_name": "Broadway",
+                  "short_name": "Broadway",
                   "types": [
                     "route"
                   ]
@@ -299,45 +201,279 @@
                   ]
                 },
                 {
-                  "long_name": "10011",
-                  "short_name": "10011",
+                  "long_name": "10036",
+                  "short_name": "10036",
+                  "types": [
+                    "postal_code"
+                  ]
+                },
+                {
+                  "long_name": "1537",
+                  "short_name": "1537",
+                  "types": [
+                    "postal_code_suffix"
+                  ]
+                }
+              ],
+              "formatted_address": "1560 Broadway, New York, NY 10036, USA",
+              "geometry": {
+                "location": {
+                  "lat": 40.7589202,
+                  "lng": -73.9846853
+                },
+                "location_type": "ROOFTOP",
+                "viewport": {
+                  "northeast": {
+                    "lat": 40.7603873802915,
+                    "lng": -73.98320716970849
+                  },
+                  "southwest": {
+                    "lat": 40.7576894197085,
+                    "lng": -73.9859051302915
+                  }
+                }
+              },
+              "navigation_points": [
+                {
+                  "location": {
+                    "latitude": 40.7590999,
+                    "longitude": -73.9844633
+                  }
+                }
+              ],
+              "partial_match": true,
+              "place_id": "ChIJTb4Fv1VYwokRC4f88R92His",
+              "types": [
+                "street_address",
+                "subpremise"
+              ]
+            },
+            {
+              "address_components": [
+                {
+                  "long_name": "11",
+                  "short_name": "11",
+                  "types": [
+                    "street_number"
+                  ]
+                },
+                {
+                  "long_name": "Brooklyn Bridge Boulevard",
+                  "short_name": "Brooklyn Bridge Blvd",
+                  "types": [
+                    "route"
+                  ]
+                },
+                {
+                  "long_name": "Downtown Brooklyn",
+                  "short_name": "Downtown Brooklyn",
+                  "types": [
+                    "neighborhood",
+                    "political"
+                  ]
+                },
+                {
+                  "long_name": "Brooklyn",
+                  "short_name": "Brooklyn",
+                  "types": [
+                    "political",
+                    "sublocality",
+                    "sublocality_level_1"
+                  ]
+                },
+                {
+                  "long_name": "Kings County",
+                  "short_name": "Kings County",
+                  "types": [
+                    "administrative_area_level_2",
+                    "political"
+                  ]
+                },
+                {
+                  "long_name": "New York",
+                  "short_name": "NY",
+                  "types": [
+                    "administrative_area_level_1",
+                    "political"
+                  ]
+                },
+                {
+                  "long_name": "United States",
+                  "short_name": "US",
+                  "types": [
+                    "country",
+                    "political"
+                  ]
+                },
+                {
+                  "long_name": "11201",
+                  "short_name": "11201",
                   "types": [
                     "postal_code"
                   ]
                 }
               ],
-              "formatted_address": "W 13th St, New York, NY 10011, USA",
+              "formatted_address": "11 Brooklyn Bridge Blvd, Brooklyn, NY 11201, USA",
               "geometry": {
-                "bounds": {
-                  "northeast": {
-                    "lat": 40.73908900000003,
-                    "lng": -73.9941255
-                  },
-                  "southwest": {
-                    "lat": 40.73533119999998,
-                    "lng": -74.003073
-                  }
-                },
                 "location": {
-                  "lat": 40.7367611,
-                  "lng": -73.9975599
+                  "lat": 40.6950959,
+                  "lng": -73.9889499
                 },
-                "location_type": "GEOMETRIC_CENTER",
+                "location_type": "RANGE_INTERPOLATED",
                 "viewport": {
                   "northeast": {
-                    "lat": 40.73908900000003,
-                    "lng": -73.9941255
+                    "lat": 40.6964448802915,
+                    "lng": -73.9876009197085
                   },
                   "southwest": {
-                    "lat": 40.73533119999998,
-                    "lng": -74.003073
+                    "lat": 40.6937469197085,
+                    "lng": -73.9902988802915
                   }
                 }
               },
               "partial_match": true,
-              "place_id": "EiJXIDEzdGggU3QsIE5ldyBZb3JrLCBOWSAxMDAxMSwgVVNBIi4qLAoUChIJb7MjG75ZwokRJSKQFiRBVn4SFAoSCTl1w9GQWcKJEaoSSchaYGUG",
+              "place_id": "EjAxMSBCcm9va2x5biBCcmlkZ2UgQmx2ZCwgQnJvb2tseW4sIE5ZIDExMjAxLCBVU0EiMBIuChQKEgm1yvuJSVrCiRElQvxu_vntDxALKhQKEgl5IztWSVrCiRHpNw-vY4xa7w",
               "types": [
-                "route"
+                "street_address"
+              ]
+            },
+            {
+              "address_components": [
+                {
+                  "long_name": "11",
+                  "short_name": "11",
+                  "types": [
+                    "street_number"
+                  ]
+                },
+                {
+                  "long_name": "Broadway",
+                  "short_name": "Broadway",
+                  "types": [
+                    "route"
+                  ]
+                },
+                {
+                  "long_name": "Manhattan",
+                  "short_name": "Manhattan",
+                  "types": [
+                    "political",
+                    "sublocality",
+                    "sublocality_level_1"
+                  ]
+                },
+                {
+                  "long_name": "New York",
+                  "short_name": "New York",
+                  "types": [
+                    "locality",
+                    "political"
+                  ]
+                },
+                {
+                  "long_name": "New York County",
+                  "short_name": "New York County",
+                  "types": [
+                    "administrative_area_level_2",
+                    "political"
+                  ]
+                },
+                {
+                  "long_name": "New York",
+                  "short_name": "NY",
+                  "types": [
+                    "administrative_area_level_1",
+                    "political"
+                  ]
+                },
+                {
+                  "long_name": "United States",
+                  "short_name": "US",
+                  "types": [
+                    "country",
+                    "political"
+                  ]
+                },
+                {
+                  "long_name": "10038",
+                  "short_name": "10038",
+                  "types": [
+                    "postal_code"
+                  ]
+                },
+                {
+                  "long_name": "1013",
+                  "short_name": "1013",
+                  "types": [
+                    "postal_code_suffix"
+                  ]
+                }
+              ],
+              "formatted_address": "11 Broadway, New York, NY 10038, USA",
+              "geometry": {
+                "location": {
+                  "lat": 40.73509139999999,
+                  "lng": -73.9931265
+                },
+                "location_type": "ROOFTOP",
+                "viewport": {
+                  "northeast": {
+                    "lat": 40.7363708302915,
+                    "lng": -73.9918284197085
+                  },
+                  "southwest": {
+                    "lat": 40.7336728697085,
+                    "lng": -73.9945263802915
+                  }
+                }
+              },
+              "navigation_points": [
+                {
+                  "location": {
+                    "latitude": 40.73500740000001,
+                    "longitude": -73.993188
+                  }
+                }
+              ],
+              "partial_match": true,
+              "place_id": "ChIJVVUBR5hZwokR16lbNJ_RJHg",
+              "types": [
+                "street_address",
+                "subpremise"
+              ]
+            }
+          ],
+          "status": "OK"
+        }
+      }
+    ],
+    "Distance Matrix": [
+      {
+        "json": {
+          "destination_addresses": [
+            "158 Adams St, Brooklyn, NY 11201, USA"
+          ],
+          "origin_addresses": [
+            "1560 Broadway, New York, NY 10036, USA"
+          ],
+          "rows": [
+            {
+              "elements": [
+                {
+                  "distance": {
+                    "text": "9.1 km",
+                    "value": 9086
+                  },
+                  "duration": {
+                    "text": "33 mins",
+                    "value": 1951
+                  },
+                  "duration_in_traffic": {
+                    "text": "35 mins",
+                    "value": 2124
+                  },
+                  "status": "OK"
+                }
               ]
             }
           ],
@@ -361,6 +497,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-10-04T19:23:35.000Z",
-  "versionId": "10fc4552-2c66-4950-b5be-78c74e9bc9db"
+  "updatedAt": "2025-10-04T20:00:11.000Z",
+  "versionId": "1db2a219-5968-48ed-a6fa-3e79148a8f37"
 }
