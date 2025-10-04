@@ -11,6 +11,28 @@
           }
         ]
       ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-10-03T22:34:59.149Z",
@@ -32,13 +54,13 @@
     },
     {
       "parameters": {
-        "url": "=https://maps.googleapis.com/maps/api/geocode/json?",
+        "url": "=https://maps.googleapis.com/maps/api/geocode/json",
         "sendQuery": true,
         "queryParameters": {
           "parameters": [
             {
               "name": "address",
-              "value": "={{encodeURIComponent($json.customerAddress) }}"
+              "value": "={{ $json.customerAddress.replace(/ /g, '+') }}"
             },
             {
               "name": "key",
@@ -56,6 +78,58 @@
       ],
       "id": "5a3bc0d0-24cd-4ea3-8e3f-dfee01f141e3",
       "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7916ba3e-2e7f-4e96-ae3d-24ac91ef50f7",
+              "name": "results[0].geometry.location.lat",
+              "value": "={{ $json.results[0].geometry.location.lat }}",
+              "type": "number"
+            },
+            {
+              "id": "8b501a11-7baf-4137-a818-d366ae76b34c",
+              "name": "results[0].geometry.location.lng",
+              "value": "={{ $json.results[0].geometry.location.lng }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        32,
+        -128
+      ],
+      "id": "f7eafd15-a81b-4e77-b2a0-c3007d73c3eb",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/distancematrix/json",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "key",
+              "value": "AIzaSyDx9u7u9BEaMo-bUNXmzJXXORd1kHXaLv8"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        240,
+        -128
+      ],
+      "id": "81cfe5ca-fd3e-400e-860d-41cfd8ee2b63",
+      "name": "HTTP Request1"
     }
   ],
   "pinData": {
@@ -82,6 +156,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-10-04T17:29:12.000Z",
-  "versionId": "a382b6eb-2ea4-4945-ac25-7501b3e1008e"
+  "updatedAt": "2025-10-04T17:47:38.000Z",
+  "versionId": "a78b956e-5f0c-407d-a60e-bf33365ede17"
 }
