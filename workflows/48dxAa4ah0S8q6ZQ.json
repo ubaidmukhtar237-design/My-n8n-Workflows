@@ -43,6 +43,17 @@
       "main": [
         [
           {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
             "node": "HTTP Request1",
             "type": "main",
             "index": 0
@@ -84,7 +95,7 @@
             },
             {
               "name": "destinations",
-              "value": "={{ $json.results[0].geometry.location.lat }},{{ $json.results[0].geometry.location.lng }}"
+              "value": "="
             },
             {
               "name": "units",
@@ -101,7 +112,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        128,
+        352,
         -32
       ],
       "id": "81cfe5ca-fd3e-400e-860d-41cfd8ee2b63",
@@ -171,6 +182,35 @@
       ],
       "id": "426a159c-c3b7-4e7c-a19c-2bdee82c58cb",
       "name": "Merge"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "62f07509-ef12-45b4-8ffa-2ff8b36616de",
+              "name": "Origins",
+              "value": "={{ $json.results[0].geometry.location.lat }},{{ $json.results[0].geometry.location.lng }}",
+              "type": "string"
+            },
+            {
+              "id": "cb142257-b05d-4293-9257-b833fefb8177",
+              "name": "Destination",
+              "value": "={{ $json.results[0].geometry.location.lat }},{{ $json.results[0].geometry.location.lng }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        128,
+        -32
+      ],
+      "id": "d98c762b-da19-4959-b4b8-f65b894b3fb9",
+      "name": "Edit Fields"
     }
   ],
   "pinData": {
@@ -392,6 +432,64 @@
           "status": "OK"
         }
       }
+    ],
+    "HTTP Request1": [
+      {
+        "json": {
+          "destination_addresses": [
+            "200-02 46th Ave, Flushing, NY 11361, USA"
+          ],
+          "origin_addresses": [
+            "200-02 46th Ave, Flushing, NY 11361, USA"
+          ],
+          "rows": [
+            {
+              "elements": [
+                {
+                  "distance": {
+                    "text": "1 m",
+                    "value": 0
+                  },
+                  "duration": {
+                    "text": "1 min",
+                    "value": 0
+                  },
+                  "status": "OK"
+                }
+              ]
+            }
+          ],
+          "status": "OK"
+        }
+      },
+      {
+        "json": {
+          "destination_addresses": [
+            "13th Street, 47 W 13th St, New York, NY 10011, USA"
+          ],
+          "origin_addresses": [
+            "13th Street, 47 W 13th St, New York, NY 10011, USA"
+          ],
+          "rows": [
+            {
+              "elements": [
+                {
+                  "distance": {
+                    "text": "1 m",
+                    "value": 0
+                  },
+                  "duration": {
+                    "text": "1 min",
+                    "value": 0
+                  },
+                  "status": "OK"
+                }
+              ]
+            }
+          ],
+          "status": "OK"
+        }
+      }
     ]
   },
   "settings": {
@@ -409,6 +507,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-10-04T18:30:06.000Z",
-  "versionId": "ed644648-1cc6-4d06-ad30-ebfb0c22940a"
+  "updatedAt": "2025-10-04T18:33:40.000Z",
+  "versionId": "130255ac-0c0e-4971-9648-e626a66bdc12"
 }
