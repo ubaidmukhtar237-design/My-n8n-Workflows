@@ -32,6 +32,7 @@
     },
     {
       "parameters": {
+        "url": "=https://maps.googleapis.com/maps/api/geocode/json?address={{ $json.customerAddress }}&key=AIzaSyDx9u7u9BEaMo-bUNXmzJXXORd1kHXaLv8",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "options": {}
@@ -52,7 +53,15 @@
       }
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "When clicking ‘Execute workflow’": [
+      {
+        "json": {
+          "customerAddress": "47 W 13th St, New York, NY 10011, USA"
+        }
+      }
+    ]
+  },
   "settings": {
     "executionOrder": "v1"
   },
@@ -68,6 +77,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-10-04T15:42:14.000Z",
-  "versionId": "c872bbcc-75c8-47d2-88b3-99ff2e5528c2"
+  "updatedAt": "2025-10-04T16:53:49.000Z",
+  "versionId": "52e5f313-3044-4fc1-8283-4c4750b29db1"
 }
