@@ -60,13 +60,37 @@
           }
         ]
       ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-10-03T22:34:59.149Z",
   "id": "48dxAa4ah0S8q6ZQ",
   "isArchived": false,
-  "meta": null,
-  "name": "Geocoding and Distance Matrix:Practice",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Available TIme,Geocoding and Distance Matrix:Practice",
   "nodes": [
     {
       "parameters": {},
@@ -231,6 +255,58 @@
       "typeVersion": 1,
       "id": "13281280-2896-43b1-a20f-13a9ae2d1993",
       "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -560,
+        384
+      ],
+      "id": "abc74c2c-06e2-4339-96cc-cb26fec185ef",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "da",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -352,
+        384
+      ],
+      "id": "3b832b0f-d1e2-4cad-8357-8708fd87f9b4",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -432,
+        560
+      ],
+      "id": "e8874480-7008-4983-93ec-459d7800d5c5",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "sPfpmF39mpaLYCjc",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
     }
   ],
   "pinData": {
@@ -481,6 +557,13 @@
           "status": "OK"
         }
       }
+    ],
+    "Schedule Trigger": [
+      {
+        "json": {
+          "name": "First item"
+        }
+      }
     ]
   },
   "settings": {
@@ -498,6 +581,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-10-04T23:07:17.000Z",
-  "versionId": "97a4eecf-ffa3-462f-af6c-e52693d94784"
+  "updatedAt": "2025-10-05T00:13:05.000Z",
+  "versionId": "7785daff-7097-4ed4-80c2-6fc96a6e07ab"
 }
